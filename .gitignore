@@ -1,0 +1,11 @@
+.venv/
+data/
+mlruns/
+mlflow.db
+.env
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.pytest_cache/
+.DS_Store
+.streamlit/secrets.toml
