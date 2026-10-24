@@ -16,6 +16,10 @@ from pathlib import Path
 import duckdb
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))  # lets this script import our `risk` package
+import pandas as pd  # noqa: E402
+from risk.features import FEATURES, clean_origination  # noqa: E402
+PROCESSED_DIR = ROOT / "data" / "processed"
 RAW_DIR = ROOT / "data" / "raw"
 DB_PATH = ROOT / "data" / "credit.duckdb"
 SQL_DIR = ROOT / "sql"
@@ -252,6 +256,33 @@ def summarize_labels(con: duckdb.DuckDBPyConnection) -> bool:
     print(samples.to_string(index=False))
     return ok
 
+def build_loans_table(con: duckdb.DuckDBPyConnection) -> None:
+    """Labeled loans + cleaned origination features -> DuckDB table `loans` and a Parquet file."""
+    raw = con.sql("""
+        SELECT o.*, l.default_24m
+        FROM orig_raw o
+        JOIN labels l ON o.loan_seq_num = l.loan_seq_num
+        WHERE l.default_24m IS NOT NULL
+    """).df()
+    features = clean_origination(raw)
+    loans = pd.concat(
+        [raw[["loan_seq_num", "vintage"]], features, raw[["default_24m"]].astype(int)],
+        axis=1,
+    )
+    PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
+    loans.to_parquet(PROCESSED_DIR / "loans.parquet", index=False)
+    con.register("loans_df", loans)
+    con.execute("CREATE OR REPLACE TABLE loans AS SELECT * FROM loans_df")
+    con.unregister("loans_df")
+
+    print(f"\nSaved {len(loans):,} labeled loans x {len(FEATURES)} features "
+          "-> data/processed/loans.parquet and DuckDB table `loans`")
+    missing = loans[FEATURES].isna().sum()
+    print("Missing values per feature (after mapping unknown codes):")
+    print(missing[missing > 0].to_string())
+
+
+
 
 def main() -> int:
     parser = argparse.ArgumentParser()
@@ -277,6 +308,7 @@ def main() -> int:
         ok = run_code_checks(con) and ok
         build_labels(con)
         ok = summarize_labels(con) and ok
+        build_loans_table(con)
     finally:
         con.close()
 
