@@ -1,0 +1,187 @@
+{
+  "source": "training vintages [2012, 2013, 2014]",
+  "numeric": {
+    "credit_score": {
+      "median": 764.0,
+      "min": 445.0,
+      "max": 840.0
+    },
+    "orig_dti": {
+      "median": 33.0,
+      "min": 1.0,
+      "max": 57.0
+    },
+    "orig_ltv": {
+      "median": 78.0,
+      "min": 3.0,
+      "max": 684.0
+    },
+    "orig_cltv": {
+      "median": 80.0,
+      "min": 3.0,
+      "max": 684.0
+    },
+    "orig_upb": {
+      "median": 180000.0,
+      "min": 10000.0,
+      "max": 1187000.0
+    },
+    "orig_interest_rate": {
+      "median": 4.0,
+      "min": 2.25,
+      "max": 5.875
+    },
+    "mi_pct": {
+      "median": 0.0,
+      "min": 0.0,
+      "max": 42.0
+    },
+    "orig_loan_term": {
+      "median": 360.0,
+      "min": 60.0,
+      "max": 361.0
+    },
+    "num_units": {
+      "median": 1.0,
+      "min": 1.0,
+      "max": 4.0
+    },
+    "num_borrowers": {
+      "median": 2.0,
+      "min": 1.0,
+      "max": 2.0
+    }
+  },
+  "categorical": {
+    "first_time_homebuyer_flag": {
+      "mode": "N",
+      "allowed": [
+        "N",
+        "Y"
+      ],
+      "missing_share": 0.0
+    },
+    "occupancy_status": {
+      "mode": "P",
+      "allowed": [
+        "I",
+        "P",
+        "S"
+      ],
+      "missing_share": 0.0
+    },
+    "channel": {
+      "mode": "R",
+      "allowed": [
+        "B",
+        "C",
+        "R"
+      ],
+      "missing_share": 0.0
+    },
+    "loan_purpose": {
+      "mode": "N",
+      "allowed": [
+        "C",
+        "N",
+        "P"
+      ],
+      "missing_share": 0.0
+    },
+    "property_type": {
+      "mode": "SF",
+      "allowed": [
+        "CO",
+        "CP",
+        "MH",
+        "PU",
+        "SF"
+      ],
+      "missing_share": 0.0
+    },
+    "property_state": {
+      "mode": "CA",
+      "allowed": [
+        "AK",
+        "AL",
+        "AR",
+        "AZ",
+        "CA",
+        "CO",
+        "CT",
+        "DC",
+        "DE",
+        "FL",
+        "GA",
+        "GU",
+        "HI",
+        "IA",
+        "ID",
+        "IL",
+        "IN",
+        "KS",
+        "KY",
+        "LA",
+        "MA",
+        "MD",
+        "ME",
+        "MI",
+        "MN",
+        "MO",
+        "MS",
+        "MT",
+        "NC",
+        "ND",
+        "NE",
+        "NH",
+        "NJ",
+        "NM",
+        "NV",
+        "NY",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "PR",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VA",
+        "VI",
+        "VT",
+        "WA",
+        "WI",
+        "WV",
+        "WY"
+      ],
+      "missing_share": 0.0
+    },
+    "super_conforming_flag": {
+      "mode": "N",
+      "allowed": [
+        "N",
+        "Y"
+      ],
+      "missing_share": 0.0
+    },
+    "harp_indicator": {
+      "mode": "N",
+      "allowed": [
+        "N",
+        "Y"
+      ],
+      "missing_share": 0.0
+    },
+    "special_program_flag": {
+      "mode": "N",
+      "allowed": [
+        "N",
+        "Y"
+      ],
+      "missing_share": 0.0
+    }
+  }
+}
