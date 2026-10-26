@@ -1,0 +1,30 @@
+{
+  "logreg": {
+    "params": {
+      "C": 0.1
+    },
+    "valid_metrics": {
+      "roc_auc": 0.8086520605917004,
+      "pr_auc": 0.03727309328579604,
+      "brier": 0.006974964377331934,
+      "log_loss": 0.03762668412400619
+    }
+  },
+  "lightgbm": {
+    "params": {
+      "learning_rate": 0.05,
+      "num_leaves": 15,
+      "min_child_samples": 50,
+      "subsample": 0.85,
+      "colsample_bytree": 1.0,
+      "reg_lambda": 0.0,
+      "best_iteration": 91
+    },
+    "valid_metrics": {
+      "roc_auc": 0.8194329812066256,
+      "pr_auc": 0.03857673448237173,
+      "brier": 0.006959993382606246,
+      "log_loss": 0.03728578644596487
+    }
+  }
+}

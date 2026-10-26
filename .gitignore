@@ -9,3 +9,7 @@ __pycache__/
 .pytest_cache/
 .DS_Store
 .streamlit/secrets.toml
+models/
+mlflow.db
+mlruns/
+mlartifacts/
