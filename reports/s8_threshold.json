@@ -1,0 +1,6 @@
+{
+  "cost_ratio_ASSUMED": 20,
+  "threshold": 0.04926454346936116,
+  "chosen_on": "validation 2015, calibrated LightGBM",
+  "note": "The cost ratio is an assumption for a portfolio demo, not a measured business number."
+}
