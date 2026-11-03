@@ -95,7 +95,7 @@ def train_lgbm(train_df, valid_df, n_trials=12, n_estimators=3000, seed=SEED) ->
         )
         model.fit(
             Xt, y_tr,
-            eval_set=[(Xv, y_va)],
+            eval_X=Xv, eval_y=y_va,
             eval_metric="binary_logloss",
             callbacks=[lgb.early_stopping(100, verbose=False)],
         )
