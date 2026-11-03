@@ -15,7 +15,8 @@ A mortgage default model built on Freddie Mac loan-level data, with a 24-month d
 | Logistic regression baseline + LightGBM (MLflow tracked) | Done |
 | Evaluation, Platt calibration, cost-based thresholds, SHAP | Done |
 | Model card | Done ([MODEL_CARD.md](MODEL_CARD.md)) |
-| Agent tools + SQL guard | In progress |
+| Agent tools (run_sql, score_loan, explain_score) + SQL guard | Done |
+| CI (pytest on every push) | Done |
 | LangGraph agent, eval harness, CI regression gate | Not started |
 | Streamlit demo | Not started |
 
@@ -65,7 +66,7 @@ There's no random shuffling across time. Tuning, calibration, and threshold choi
 
 | Model | ROC-AUC | PR-AUC | KS | Brier |
 |---|---|---|---|---|
-| Logistic regression (C=0.1) | 0.8008 | 0.0322 | 0.4580 | TBD |
+| Logistic regression (C=0.1) | 0.8008 | 0.0322 | 0.4580 | 0.0081 |
 | LightGBM (lr 0.05, 15 leaves, 91 trees) + Platt | **0.8117** | **0.0340** | **0.4858** | 0.0080 |
 
 - **LightGBM vs baseline:** the ROC-AUC difference is 0.0109, with a paired bootstrap 95% CI of [0.0011, 0.0213]. LightGBM came out ahead in 98.6% of bootstrap resamples.
@@ -74,8 +75,8 @@ There's no random shuffling across time. Tuning, calibration, and threshold choi
 - **Disaster-flagged loans:** after excluding them (49,276 loans, 192 defaults), LightGBM ROC-AUC is 0.8298 and KS is 0.5191.
 - PR-AUC is low in absolute terms because defaults are rare (0.82%). Its baseline is the default rate, not 0.5.
 
-![Calibration curve](reports/s7_calibration.png)  <!-- check filename -->
-![Default rate by decile](reports/s7_deciles.png)  <!-- check filename -->
+![Calibration curve](reports/s7_calibration.png)
+![Default rate by decile](reports/s7_deciles.png)
 
 ## Decision threshold (ASSUMED cost ratios)
 
@@ -83,7 +84,7 @@ The threshold minimizes expected cost, where a missed default costs *R* times a 
 
 | Assumed ratio R | Threshold | Test cost per 1,000 loans | Approve-all cost |
 |---|---|---|---|
-| 10 | TBD | worse than approve-all | TBD |
+| 10 | 0.0947 | 83.13 (worse than approve-all) | 82.06 |
 | 20 (primary) | 0.0493 | 163.21 | 164.11 |
 | 40 | 0.0185 | 274.11 | 328.23 |
 
@@ -116,18 +117,19 @@ python -m risk.train               # baseline + LightGBM, logged to MLflow
 python -m risk.evaluate            # test metrics + plots -> reports/
 python -m risk.threshold           # cost-based thresholds -> reports/s8_threshold.json
 python -m risk.explain             # SHAP -> reports/
-pytest                             # 81 tests
+python -m scripts.build_agent_db   # agent DB + scoring defaults
+pytest                             # 113 tests; 11 skip without local data
 ```
 
 ## Repo structure (current)
 
 ```
 sql/            load_raw.sql, build_label.sql
-scripts/        prepare_data.py
-risk/           features, split, transforms, train, calibration, evaluate, threshold, explain
-agent/          sql_guard.py (in progress)
+scripts/        prepare_data.py, build_agent_db.py
+risk/           features, split, transforms, train, calibration, evaluate, threshold, explain, predict
+agent/          sql_guard.py, tools.py (agent graph in progress)
 notebooks/      01_eda.ipynb
-tests/          label, leakage, split, train, evaluate, threshold, explain, sql_guard
+tests/          label, leakage, split, train, evaluate, threshold, explain, predict, sql_guard, tools
 reports/        metrics, plots, threshold config
 MODEL_CARD.md
 ```
