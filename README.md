@@ -107,7 +107,7 @@ The top features by mean |SHAP| (log-odds) are `credit_score` 0.648, `num_borrow
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
+pip install -r requirements-dev.txt   # or requirements.txt to run without tests
 
 python scripts/prepare_data.py     # load raw files, build label -> data/credit.duckdb
 python -m risk.train               # baseline + LightGBM, logged to MLflow
