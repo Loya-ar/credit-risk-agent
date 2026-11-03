@@ -69,7 +69,7 @@ def test_run_sql_unknown_column(tiny_db):
 
 
 def test_run_sql_missing_db(tmp_path):
-    with pytest.raises(ToolError, match="build_agent_db"):
+    with pytest.raises(ToolError, match="not found"):
         run_sql("SELECT * FROM loans", tmp_path / "missing.duckdb")
 
 

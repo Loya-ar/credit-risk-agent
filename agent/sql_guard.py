@@ -1,6 +1,7 @@
 """Validate SQL written by the agent before it touches the database.
 
-Rules: exactly one SELECT statement, only allowlisted tables, no
+Rules: exactly one SELECT statement, only allowlisted tables (by default the
+local loan-level tables; run_sql passes the tables of the database it uses), no
 file/table functions, and a LIMIT (default 200, never above 1000).
 The GuardError message is shown to the LLM so it can repair the query.
 """
@@ -32,8 +33,9 @@ def _function_name(func: exp.Func) -> str:
     return func.sql_name().lower()
 
 
-def validate_sql(query: str) -> str:
+def validate_sql(query: str, allowed_tables=ALLOWED_TABLES) -> str:
     """Return a safe version of the query (with a LIMIT) or raise GuardError."""
+    allowed = {t.lower() for t in allowed_tables}
     if not query or not query.strip():
         raise GuardError("Empty query. Write one SELECT statement.")
 
@@ -58,14 +60,14 @@ def validate_sql(query: str) -> str:
     for table in tree.find_all(exp.Table):
         if not isinstance(table.this, exp.Identifier):
             raise GuardError(
-                "Table functions are not allowed. Query loans or test_scores directly."
+                f"Table functions are not allowed. Query one of {sorted(allowed)} directly."
             )
         if table.db or table.catalog:
             raise GuardError(f"Use plain table names, not '{table.sql()}'.")
         name = table.name.lower()
-        if name not in ALLOWED_TABLES and name not in cte_names:
+        if name not in allowed and name not in cte_names:
             raise GuardError(
-                f"Unknown table '{table.name}'. Allowed tables: {sorted(ALLOWED_TABLES)}."
+                f"Unknown table '{table.name}'. Allowed tables: {sorted(allowed)}."
             )
 
     for func in tree.find_all(exp.Func):

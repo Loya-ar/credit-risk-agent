@@ -1,6 +1,8 @@
 """A1d: the three tools the agent can call.
 
-run_sql(query)          -> guarded, read-only SQL on data/agent.duckdb
+run_sql(query)          -> guarded, read-only SQL. By default on the public,
+                           aggregate-only DB (agent/public_tables.py); set
+                           AGENT_DB=local for the loan-level data/agent.duckdb
 score_loan(features)    -> calibrated default probability + decision at the threshold
 explain_score(features) -> top 5 SHAP drivers in plain words
 
@@ -9,17 +11,19 @@ Every failure is raised as ToolError with a message the LLM can act on
 """
 from __future__ import annotations
 
+import os
 import threading
 from decimal import Decimal
 from pathlib import Path
 
 import duckdb
 
+from agent.public_tables import ensure_public_db
 from agent.sql_guard import GuardError, validate_sql
 from risk import predict
 
 ROOT = Path(__file__).resolve().parents[1]
-AGENT_DB_PATH = ROOT / "data" / "agent.duckdb"
+AGENT_DB_PATH = ROOT / "data" / "agent.duckdb"  # loan-level, local only
 TIMEOUT_SECONDS = 5.0
 
 FEATURE_LABELS = {
@@ -88,19 +92,37 @@ def _execute(con, sql: str, timeout: float) -> tuple[list[str], list[list]]:
     return columns, rows
 
 
-def run_sql(query: str, db_path: Path = AGENT_DB_PATH, timeout: float = TIMEOUT_SECONDS) -> dict:
+def default_db_path() -> Path:
+    """Public aggregate DB unless AGENT_DB=local (loan-level data, never deployed)."""
+    mode = os.environ.get("AGENT_DB", "public").lower()
+    if mode == "local":
+        if not AGENT_DB_PATH.exists():
+            raise ToolError(
+                f"Agent database not found at {AGENT_DB_PATH}. Run: python -m scripts.build_agent_db"
+            )
+        return AGENT_DB_PATH
+    if mode != "public":
+        raise ToolError(f"AGENT_DB must be 'public' or 'local', got '{mode}'.")
     try:
-        safe_sql = validate_sql(query)
-    except GuardError as e:
-        raise ToolError(f"SQL rejected by guard: {e}") from None
+        return ensure_public_db()
+    except FileNotFoundError as e:
+        raise ToolError(f"Public tables are not available: {e}") from None
 
-    if not Path(db_path).exists():
-        raise ToolError(
-            f"Agent database not found at {db_path}. Run: python -m scripts.build_agent_db"
-        )
+
+def run_sql(query: str, db_path: Path | None = None, timeout: float = TIMEOUT_SECONDS) -> dict:
+    db_path = default_db_path() if db_path is None else Path(db_path)
+    if not db_path.exists():
+        raise ToolError(f"Agent database not found at {db_path}.")
 
     con = _connect(db_path)
     try:
+        # The guard allows exactly the tables this database has, so the public DB
+        # can never be asked for loan rows.
+        tables = {r[0] for r in con.execute("SHOW TABLES").fetchall()}
+        try:
+            safe_sql = validate_sql(query, allowed_tables=tables)
+        except GuardError as e:
+            raise ToolError(f"SQL rejected by guard: {e}") from None
         columns, rows = _execute(con, safe_sql, timeout)
     finally:
         con.close()

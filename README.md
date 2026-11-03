@@ -18,6 +18,7 @@ A mortgage default model built on Freddie Mac loan-level data, with a 24-month d
 | Agent tools (run_sql, score_loan, explain_score) + SQL guard | Done |
 | CI (pytest on every push) | Done |
 | LangGraph agent, eval harness, CI regression gate | Not started |
+| Public demo data (aggregate tables, small groups pooled) | Code done; tables not generated yet |
 | Streamlit demo | Not started |
 
 ## Architecture (current)
@@ -96,6 +97,15 @@ At R=20, the model only roughly breaks even with approving every loan. It adds c
 
 The top features by mean |SHAP| (log-odds) are `credit_score` 0.648, `num_borrowers` 0.425, `orig_dti` 0.261, and `orig_interest_rate` 0.169. `harp_indicator` gets 0, but that doesn't mean HARP is irrelevant: every HARP loan has a missing DTI, so the model picks up HARP through `orig_dti` instead. SHAP explains the model, not causes in the world.
 
+## Demo data (what the public agent can see)
+
+Freddie Mac allows publishing noncommercial research results and derived products only if they can't be used to recreate any part of the dataset ([FAQ](https://www.freddiemac.com/fmac-resources/research/pdf/faq.pdf), Q9). So the deployed agent never sees loan rows:
+
+- **`run_sql`** queries an aggregate-only database built from `public_data/`: `segments` (default rate by one dimension at a time, such as credit score band, LTV band or state, per vintage, plus model predictions for 2016), `deciles`, `model_metrics` and `thresholds`. Groups under 50 loans are pooled into "Other (small groups)", and pooling never drops loans, so a hidden group can't be recovered by subtracting from the total.
+- **`score_loan` / `explain_score`** score loans the user types in.
+- The SQL guard only allows the tables of the database in use, so the public database can't be asked for `loans`.
+- The loan-level `data/agent.duckdb` stays local (gitignored) for development; use it with `AGENT_DB=local`.
+
 ## Design decisions
 
 - **90+ days delinquent within 24 months:** a common industry-style serious-delinquency definition, with a fixed window so every loan gets the same amount of time to default.
@@ -117,19 +127,21 @@ python -m risk.train               # baseline + LightGBM, logged to MLflow
 python -m risk.evaluate            # test metrics + plots -> reports/
 python -m risk.threshold           # cost-based thresholds -> reports/s8_threshold.json
 python -m risk.explain             # SHAP -> reports/
-python -m scripts.build_agent_db   # agent DB + scoring defaults
-pytest                             # 113 tests; 11 skip without local data
+python -m scripts.build_agent_db   # local loan-level agent DB + scoring defaults
+python -m scripts.build_public_tables  # aggregate-only tables -> public_data/
+pytest                             # 134 tests; 11 skip without local data
 ```
 
 ## Repo structure (current)
 
 ```
 sql/            load_raw.sql, build_label.sql
-scripts/        prepare_data.py, build_agent_db.py
+scripts/        prepare_data.py, build_agent_db.py, build_public_tables.py
 risk/           features, split, transforms, train, calibration, evaluate, threshold, explain, predict
-agent/          sql_guard.py, tools.py (agent graph in progress)
+agent/          sql_guard.py, tools.py, public_tables.py (agent graph in progress)
+public_data/    aggregate-only tables for the public demo
 notebooks/      01_eda.ipynb
-tests/          label, leakage, split, train, evaluate, threshold, explain, predict, sql_guard, tools
+tests/          label, leakage, split, train, evaluate, threshold, explain, predict, sql_guard, tools, public_tables
 reports/        metrics, plots, threshold config
 MODEL_CARD.md
 ```
