@@ -1,5 +1,8 @@
 duckdb==1.5.6
 joblib==1.6.0
+langchain-core==1.7.4
+langchain-google-genai==4.4.2
+langgraph==1.2.19
 lightgbm==4.7.0
 matplotlib==3.11.2
 mlflow==3.17.1

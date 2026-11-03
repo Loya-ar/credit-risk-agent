@@ -27,13 +27,14 @@ from pathlib import Path
 
 import duckdb
 
+from agent.grounding import is_number as _is_number
+from agent.grounding import numbers_in, shown_as
+from agent.grounding import ungrounded_numbers as _ungrounded
 from agent.tools import FEATURE_LABELS
 
 CASES_PATH = Path(__file__).resolve().parent / "cases.jsonl"
 ANSWER_CATEGORIES = {"sql", "score", "explain"}
 LEAK_COLUMNS = {"loan_seq_num", "pre_harp_loan_seq_num", "postal_code"}
-
-_NUMBER = re.compile(r"(?<![\w.])-?\$?(\d{1,3}(?:,\d{3})+|\d+)(\.\d+)?(%|k\b)?", re.IGNORECASE)
 
 
 def load_cases(path: Path = CASES_PATH) -> list[dict]:
@@ -68,10 +69,6 @@ def reference(case: dict, db_path: Path | None) -> dict | None:
 
 
 # ---------- matching helpers ----------
-
-def _is_number(v) -> bool:
-    return isinstance(v, (int, float)) and not isinstance(v, bool) and not math.isnan(v)
-
 
 def _close(a, b) -> bool:
     """a (agent) equals b (reference), allowing rounding and percent scaling."""
@@ -121,65 +118,14 @@ def _match_any_order(ref_rows: list[list], agent_rows: list[list]) -> bool:
     return True
 
 
-def numbers_in(text: str) -> list[tuple[float, int]]:
-    """(value, decimals shown) for every number in the text; '$150k' -> 150000."""
-    out = []
-    for m in _NUMBER.finditer(text or ""):
-        whole, frac, suffix = m.group(1).replace(",", ""), m.group(2) or "", (m.group(3) or "").lower()
-        value = float(whole + frac)
-        if m.group(0).startswith("-"):
-            value = -value
-        decimals = len(frac) - 1 if frac else 0
-        if suffix == "k":
-            value, decimals = value * 1000, 0
-        out.append((value, decimals))
-    return out
-
-
-def _shown_as(value: float, decimals: int, target) -> bool:
-    """The number as written could be `target` rounded (as is or as a percent)."""
-    if not _is_number(target):
-        return False
-    tol = 0.5 * 10 ** -decimals + 1e-9
-    return any(abs(value - target * s) <= tol * max(1, s / 100) for s in (1, 100))
-
-
 def text_has_value(text: str, target) -> bool:
     if _is_number(target):
-        return any(_shown_as(v, d, target) for v, d in numbers_in(text))
+        return any(shown_as(v, d, target) for v, d in numbers_in(text))
     return re.search(rf"(?<!\w){re.escape(str(target))}(?!\w)", text or "", re.IGNORECASE) is not None
 
 
-def _collect_numbers(obj, out: list) -> list:
-    if isinstance(obj, dict):
-        for v in obj.values():
-            _collect_numbers(v, out)
-    elif isinstance(obj, (list, tuple)):
-        for v in obj:
-            _collect_numbers(v, out)
-    elif _is_number(obj):
-        out.append(float(obj))
-    elif isinstance(obj, str):
-        out.extend(v for v, _ in numbers_in(obj))
-    return out
-
-
 def ungrounded_numbers(question: str, result: dict) -> list[float]:
-    """Numbers in the answer that no tool output, tool argument or the question contains.
-
-    Integers up to 10 are ignored ("top 5 drivers", "decile 10").
-    """
-    pool = [v for v, _ in numbers_in(question)]
-    for call in result.get("tool_calls", []):
-        _collect_numbers(call.get("args"), pool)
-        _collect_numbers(call.get("result"), pool)
-    missing = []
-    for value, decimals in numbers_in(result.get("answer", "")):
-        if decimals == 0 and abs(value) <= 10:
-            continue
-        if not any(_shown_as(value, decimals, p) for p in pool):
-            missing.append(value)
-    return missing
+    return _ungrounded(question, result.get("answer", ""), result.get("tool_calls", []))
 
 
 def _same_loan(args, loan: dict) -> bool:

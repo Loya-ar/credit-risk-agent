@@ -18,7 +18,8 @@ A mortgage default model built on Freddie Mac loan-level data, with a 24-month d
 | Agent tools (run_sql, score_loan, explain_score) + SQL guard | Done |
 | CI (pytest on every push) | Done |
 | Evaluation set (54 cases) + harness | Done; expected values fill in once `public_data/` is built |
-| LangGraph agent, CI regression gate | Not started |
+| LangGraph agent (Gemini 2.5 Flash): routing, one SQL repair, grounding check in code | Done; tested with a scripted model, not yet run on live Gemini |
+| CI regression gate | Not started |
 | Public demo data (aggregate tables, small groups pooled) | Code done; tables not generated yet |
 | Streamlit demo | Not started |
 
@@ -107,6 +108,19 @@ Freddie Mac allows publishing noncommercial research results and derived product
 - The SQL guard only allows the tables of the database in use, so the public database can't be asked for `loans`.
 - The loan-level `data/agent.duckdb` stays local (gitignored) for development; use it with `AGENT_DB=local`.
 
+## Agent
+
+[`agent/graph.py`](agent/graph.py) is a LangGraph agent on Gemini 2.5 Flash (`temperature=0`):
+
+- **Routing:** the model chooses `run_sql` (public aggregate tables only), `score_loan`, `explain_score`, or `decline` for out-of-scope, loan-level and guard-bypass requests.
+- **Repair:** a `run_sql` error goes back to the model once; a second error ends the run. Invalid loans are never repaired, because the model mustn't change the user's values, so the validation message is returned instead.
+- **Grounding, checked in code:** every number in the final answer must appear in a tool output, a tool argument or the question ([`agent/grounding.py`](agent/grounding.py), the same check the harness uses). The model gets one rewrite; after that the answer is withheld.
+
+```powershell
+$env:GOOGLE_API_KEY = "..."
+python -m agent.graph "What was the default rate for 2016 loans with credit scores below 620?"
+```
+
 ## Evaluation set (built before the agent)
 
 [`evals/cases.jsonl`](evals/cases.jsonl) has 54 questions: 24 answerable with SQL on the public tables, 7 loans to score, 3 to explain, 5 invalid loans (out of the training range, missing DTI, non-US state), 7 attempts to get past the SQL guard, 4 requests for loan-level data, and 4 out-of-scope questions (real credit decisions, protected attributes, future vintages, stock advice).
@@ -118,7 +132,7 @@ Freddie Mac allows publishing noncommercial research results and derived product
 
 ```powershell
 python -m scripts.run_eval --agent oracle               # harness self-test
-python -m scripts.run_eval --agent agent.graph:answer   # once the agent exists
+python -m scripts.run_eval --agent agent.graph:answer --price-in 0.3 --price-out 2.5   # needs GOOGLE_API_KEY
 ```
 
 ## Design decisions
@@ -144,7 +158,7 @@ python -m risk.threshold           # cost-based thresholds -> reports/s8_thresho
 python -m risk.explain             # SHAP -> reports/
 python -m scripts.build_agent_db   # local loan-level agent DB + scoring defaults
 python -m scripts.build_public_tables  # aggregate-only tables -> public_data/
-pytest                             # 218 tests; 11 skip without local data
+pytest                             # 230 tests; 11 skip without local data
 ```
 
 ## Repo structure (current)
@@ -153,11 +167,11 @@ pytest                             # 218 tests; 11 skip without local data
 sql/            load_raw.sql, build_label.sql
 scripts/        prepare_data.py, build_agent_db.py, build_public_tables.py
 risk/           features, split, transforms, train, calibration, evaluate, threshold, explain, predict
-agent/          sql_guard.py, tools.py, public_tables.py (agent graph in progress)
+agent/          graph.py (LangGraph agent), tools.py, sql_guard.py, grounding.py, public_tables.py
 public_data/    aggregate-only tables for the public demo
 evals/          cases.jsonl (54 questions) and the scoring harness
 notebooks/      01_eda.ipynb
-tests/          label, leakage, split, train, evaluate, threshold, explain, predict, sql_guard, tools, public_tables, evals
+tests/          label, leakage, split, train, evaluate, threshold, explain, predict, sql_guard, tools, public_tables, evals, graph
 reports/        metrics, plots, threshold config
 MODEL_CARD.md
 ```
