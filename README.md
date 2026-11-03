@@ -1,5 +1,7 @@
 # credit-risk-agent
 
+[![tests](https://github.com/Loya-ar/credit-risk-agent/actions/workflows/tests.yml/badge.svg)](https://github.com/Loya-ar/credit-risk-agent/actions/workflows/tests.yml)
+
 A mortgage default model built on Freddie Mac loan-level data, with a 24-month default label, a time-based holdout, and calibrated probabilities. A LangGraph agent that answers portfolio questions through validated SQL and model-scoring tools is **in progress** (see [Status](#status)).
 
 > **Portfolio project on public data.** Not used for real credit decisions, and not work done at a job.
