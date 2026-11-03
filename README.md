@@ -17,7 +17,8 @@ A mortgage default model built on Freddie Mac loan-level data, with a 24-month d
 | Model card | Done ([MODEL_CARD.md](MODEL_CARD.md)) |
 | Agent tools (run_sql, score_loan, explain_score) + SQL guard | Done |
 | CI (pytest on every push) | Done |
-| LangGraph agent, eval harness, CI regression gate | Not started |
+| Evaluation set (54 cases) + harness | Done; expected values fill in once `public_data/` is built |
+| LangGraph agent, CI regression gate | Not started |
 | Public demo data (aggregate tables, small groups pooled) | Code done; tables not generated yet |
 | Streamlit demo | Not started |
 
@@ -106,6 +107,20 @@ Freddie Mac allows publishing noncommercial research results and derived product
 - The SQL guard only allows the tables of the database in use, so the public database can't be asked for `loans`.
 - The loan-level `data/agent.duckdb` stays local (gitignored) for development; use it with `AGENT_DB=local`.
 
+## Evaluation set (built before the agent)
+
+[`evals/cases.jsonl`](evals/cases.jsonl) has 54 questions: 24 answerable with SQL on the public tables, 7 loans to score, 3 to explain, 5 invalid loans (out of the training range, missing DTI, non-US state), 7 attempts to get past the SQL guard, 4 requests for loan-level data, and 4 out-of-scope questions (real credit decisions, protected attributes, future vintages, stock advice).
+
+- **Graded on results, not SQL text:** a SQL answer passes if a `run_sql` result matches the reference query's rows (allowing rounding, percent scaling, extra columns and any row order) or if every reference value appears in the answer.
+- **Every number must be grounded:** each number in an answer has to appear in a tool output, a tool argument or the question.
+- **Metrics:** pass rate, tool-call accuracy, answer accuracy, refusal accuracy, false-refusal rate, grounding rate, leaked loan-level columns, tokens, cost and latency.
+- **Checks that need no LLM run in CI** (`tests/test_evals.py`): every reference query passes the guard and runs, every attack in the set is blocked by the real tools, invalid loans are rejected, the reference agent scores 100% and a bad agent close to 0%.
+
+```powershell
+python -m scripts.run_eval --agent oracle               # harness self-test
+python -m scripts.run_eval --agent agent.graph:answer   # once the agent exists
+```
+
 ## Design decisions
 
 - **90+ days delinquent within 24 months:** a common industry-style serious-delinquency definition, with a fixed window so every loan gets the same amount of time to default.
@@ -129,7 +144,7 @@ python -m risk.threshold           # cost-based thresholds -> reports/s8_thresho
 python -m risk.explain             # SHAP -> reports/
 python -m scripts.build_agent_db   # local loan-level agent DB + scoring defaults
 python -m scripts.build_public_tables  # aggregate-only tables -> public_data/
-pytest                             # 134 tests; 11 skip without local data
+pytest                             # 218 tests; 11 skip without local data
 ```
 
 ## Repo structure (current)
@@ -140,8 +155,9 @@ scripts/        prepare_data.py, build_agent_db.py, build_public_tables.py
 risk/           features, split, transforms, train, calibration, evaluate, threshold, explain, predict
 agent/          sql_guard.py, tools.py, public_tables.py (agent graph in progress)
 public_data/    aggregate-only tables for the public demo
+evals/          cases.jsonl (54 questions) and the scoring harness
 notebooks/      01_eda.ipynb
-tests/          label, leakage, split, train, evaluate, threshold, explain, predict, sql_guard, tools, public_tables
+tests/          label, leakage, split, train, evaluate, threshold, explain, predict, sql_guard, tools, public_tables, evals
 reports/        metrics, plots, threshold config
 MODEL_CARD.md
 ```
