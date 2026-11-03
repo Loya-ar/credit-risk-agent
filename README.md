@@ -19,7 +19,7 @@ A mortgage default model built on Freddie Mac loan-level data, with a 24-month d
 | CI (pytest on every push) | Done |
 | Evaluation set (54 cases) + harness | Done; expected values fill in once `public_data/` is built |
 | LangGraph agent (Gemini 2.5 Flash): routing, one SQL repair, grounding check in code | Done; tested with a scripted model, not yet run on live Gemini |
-| CI regression gate | Not started |
+| CI regression gate: replays on every push, live eval nightly | Done; waiting on recordings and the `GOOGLE_API_KEY` secret |
 | Public demo data (aggregate tables, small groups pooled) | Code done; tables not generated yet |
 | Streamlit demo | Not started |
 
@@ -133,7 +133,12 @@ python -m agent.graph "What was the default rate for 2016 loans with credit scor
 ```powershell
 python -m scripts.run_eval --agent oracle               # harness self-test
 python -m scripts.run_eval --agent agent.graph:answer --price-in 0.3 --price-out 2.5   # needs GOOGLE_API_KEY
+python -m scripts.run_eval --agent agent.graph:answer --record   # save responses for CI replay
 ```
+
+**CI regression gate:**
+- **Every push** ([tests.yml](.github/workflows/tests.yml)): the checks that need no LLM, plus a replay of every recorded Gemini run in `evals/recordings/` through the real graph, tools and grader ([tests/test_replay.py](tests/test_replay.py)). The model's side is fixed, so a case that passed when recorded and fails now means our code changed behaviour. No API key needed.
+- **Nightly and on demand** ([eval.yml](.github/workflows/eval.yml)): the full evaluation on live Gemini, using the `GOOGLE_API_KEY` repository secret. It fails below the pass-rate threshold or on any leaked loan-level column, and writes the metrics to the job summary.
 
 ## Design decisions
 
@@ -158,7 +163,7 @@ python -m risk.threshold           # cost-based thresholds -> reports/s8_thresho
 python -m risk.explain             # SHAP -> reports/
 python -m scripts.build_agent_db   # local loan-level agent DB + scoring defaults
 python -m scripts.build_public_tables  # aggregate-only tables -> public_data/
-pytest                             # 230 tests; 11 skip without local data
+pytest                             # 234 tests; 12 skip without local data or recordings
 ```
 
 ## Repo structure (current)
@@ -169,9 +174,9 @@ scripts/        prepare_data.py, build_agent_db.py, build_public_tables.py
 risk/           features, split, transforms, train, calibration, evaluate, threshold, explain, predict
 agent/          graph.py (LangGraph agent), tools.py, sql_guard.py, grounding.py, public_tables.py
 public_data/    aggregate-only tables for the public demo
-evals/          cases.jsonl (54 questions) and the scoring harness
+evals/          cases.jsonl (54 questions), scoring harness, record/replay, recordings/
 notebooks/      01_eda.ipynb
-tests/          label, leakage, split, train, evaluate, threshold, explain, predict, sql_guard, tools, public_tables, evals, graph
+tests/          label, leakage, split, train, evaluate, threshold, explain, predict, sql_guard, tools, public_tables, evals, graph, replay
 reports/        metrics, plots, threshold config
 MODEL_CARD.md
 ```

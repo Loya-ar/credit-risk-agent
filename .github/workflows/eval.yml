@@ -1,0 +1,53 @@
+name: agent-eval
+
+# Full LLM evaluation on live Gemini: nightly and on demand.
+# Needs the GOOGLE_API_KEY repository secret and committed public_data/.
+# Every push already runs the cheap checks (tests.yml), including recorded replays.
+
+on:
+  schedule:
+    - cron: "0 7 * * *"
+  workflow_dispatch:
+    inputs:
+      min_pass_rate:
+        description: "Fail below this pass rate"
+        default: "0.8"
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    env:
+      GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check prerequisites
+        id: check
+        run: |
+          if [ -z "$GOOGLE_API_KEY" ]; then
+            echo "GOOGLE_API_KEY secret is not set; skipping." >> "$GITHUB_STEP_SUMMARY"
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          elif [ ! -f public_data/segments.csv ]; then
+            echo "public_data/ is not committed yet; skipping." >> "$GITHUB_STEP_SUMMARY"
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/setup-python@v5
+        if: steps.check.outputs.ready == 'true'
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements*.txt
+      - if: steps.check.outputs.ready == 'true'
+        run: pip install -r requirements.txt
+      - name: Run evaluation
+        if: steps.check.outputs.ready == 'true'
+        run: >
+          python -m scripts.run_eval --agent agent.graph:answer
+          --price-in 0.3 --price-out 2.5
+          --min-pass-rate ${{ github.event.inputs.min_pass_rate || '0.8' }}
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.check.outputs.ready == 'true'
+        with:
+          name: eval-report
+          path: reports/eval/

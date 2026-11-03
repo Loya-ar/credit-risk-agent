@@ -13,3 +13,4 @@ models/
 mlflow.db
 mlruns/
 mlartifacts/
+reports/eval/
