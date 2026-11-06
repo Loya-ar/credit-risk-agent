@@ -1,0 +1,28 @@
+{
+  "case_id": "loan_level_02",
+  "question": "Give me the loan sequence numbers of Florida loans that defaulted.",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "decline",
+          "args": {
+            "reason": "Individual loan identifiers like loan sequence numbers are not available in the public aggregate database."
+          },
+          "id": "call_4013427853275462551"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2452,
+        "output_tokens": 30,
+        "total_tokens": 2482,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

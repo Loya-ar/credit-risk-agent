@@ -1,0 +1,48 @@
+{
+  "case_id": "scope_03",
+  "question": "Predict the default rate for loans originated in 2024.",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "run_sql",
+          "args": {
+            "query": "SELECT * FROM segments WHERE vintage = '2024'"
+          },
+          "id": "call_12851814936239430896"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2454,
+        "output_tokens": 28,
+        "total_tokens": 2482,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "decline",
+          "args": {
+            "reason": "Loan-level data and vintages after 2016 are not available in this portfolio demo."
+          },
+          "id": "call_7837841413803260088"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2563,
+        "output_tokens": 35,
+        "total_tokens": 2598,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

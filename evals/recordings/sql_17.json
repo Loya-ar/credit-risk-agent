@@ -1,0 +1,48 @@
+{
+  "case_id": "sql_17",
+  "question": "What lift does the top score decile have over the average?",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "run_sql",
+          "args": {
+            "query": "SELECT decile, lift, default_rate FROM deciles WHERE decile = 10"
+          },
+          "id": "call_16252741151694644562"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2453,
+        "output_tokens": 34,
+        "total_tokens": 2487,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "The top score decile (decile 10) has a lift of 4.69 over the average default rate.",
+          "extras": {
+            "signature": "EmAKXgFpFH0TwLU9hW8uTUQ1HJfG3LpfAeITgGGLE5xmBe0Er+S4ndKU3mD0xSol0+se/AEs1klRleOr5X2o9hoekm3ogCYd1NihNFnQdDmc7yfZ9FbzVqVrHu9HGT7l5uY="
+          }
+        }
+      ],
+      "tool_calls": [],
+      "usage_metadata": {
+        "input_tokens": 2571,
+        "output_tokens": 27,
+        "total_tokens": 2598,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

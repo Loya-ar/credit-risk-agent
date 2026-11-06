@@ -1,0 +1,48 @@
+{
+  "case_id": "sql_23",
+  "question": "How many loans to repeat buyers (not first-time homebuyers) defaulted in the 2015 vintage?",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "run_sql",
+          "args": {
+            "query": "SELECT dimension, bucket, vintage, loans, defaults, default_rate FROM segments WHERE dimension = 'first_time_homebuyer' AND vintage = 2015"
+          },
+          "id": "call_15403352228304779022"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2463,
+        "output_tokens": 50,
+        "total_tokens": 2513,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "In the 2015 vintage, repeat buyers (non-first-time homebuyers, bucket 'N') had 270 defaults out of 41,070 loans.",
+          "extras": {
+            "signature": "EmAKXgFpFH0TOiCawy/NYW34UXLFSiwoJgwOshsIQwy9OTATrxNLb/ts3EpvJM6Pm0C8jMVKvTg7lHVbFx9eAbWc/92FWo/yP01Hg47s4lWm1zlmXjJ3bh7thj2lhyMVwko="
+          }
+        }
+      ],
+      "tool_calls": [],
+      "usage_metadata": {
+        "input_tokens": 2679,
+        "output_tokens": 40,
+        "total_tokens": 2719,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

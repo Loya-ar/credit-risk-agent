@@ -1,0 +1,55 @@
+{
+  "case_id": "score_01",
+  "question": "Score this loan: credit score 700, LTV 90%, DTI 40%, $250,000, 4.5% rate, purchase, primary residence, Florida.",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "score_loan",
+          "args": {
+            "orig_upb": 250000,
+            "credit_score": 700,
+            "orig_interest_rate": 4.5,
+            "orig_ltv": 90,
+            "orig_dti": 40,
+            "loan_purpose": "P",
+            "occupancy_status": "P",
+            "property_state": "FL"
+          },
+          "id": "call_704101565730618947"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2486,
+        "output_tokens": 81,
+        "total_tokens": 2567,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "Default probability: 0.80% (0.00798).\nDecision: Approve.\n\nNote: The cost ratio behind the threshold is an assumption (20:1), this uses typical values for fields not provided (such as channel, mortgage insurance, and number of borrowers), and this is a portfolio demo, not a credit decision. ZIP codes are not used by the model and were not included.",
+          "extras": {
+            "signature": "EmAKXgFpFH0TKCRVkC/tF87yFqQM+p6T5pr2ruFqOetBNWEJ31g8RMaph8A490LBRv+8lUznoDCaFSzyOu8nloVAvU5yoZlB8ZpgzgGB3UJYExRVfdGPgCoQnrZ3T5s7YmI="
+          }
+        }
+      ],
+      "tool_calls": [],
+      "usage_metadata": {
+        "input_tokens": 2749,
+        "output_tokens": 87,
+        "total_tokens": 2836,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

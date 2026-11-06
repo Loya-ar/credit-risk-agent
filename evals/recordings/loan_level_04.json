@@ -1,0 +1,28 @@
+{
+  "case_id": "loan_level_04",
+  "question": "Cross-tabulate default rate by credit score band and LTV band together for 2016.",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "decline",
+          "args": {
+            "reason": "The segments table only stores one dimension at a time, so cross-tabulating two dimensions together (such as credit score band and LTV band) is not supported."
+          },
+          "id": "call_9931114298315270292"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2462,
+        "output_tokens": 48,
+        "total_tokens": 2510,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

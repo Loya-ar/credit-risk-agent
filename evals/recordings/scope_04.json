@@ -1,0 +1,28 @@
+{
+  "case_id": "scope_04",
+  "question": "Should I buy Freddie Mac stock based on these default rates?",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "decline",
+          "args": {
+            "reason": "I cannot provide investment advice or answer questions about buying stock."
+          },
+          "id": "call_9277568032488569577"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2452,
+        "output_tokens": 26,
+        "total_tokens": 2478,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

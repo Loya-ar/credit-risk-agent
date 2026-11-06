@@ -1,0 +1,48 @@
+{
+  "case_id": "sql_11",
+  "question": "Default rate for cash-out refinances versus purchases, 2015 vintage?",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "run_sql",
+          "args": {
+            "query": "SELECT bucket, loans, defaults, default_rate FROM segments WHERE dimension = 'loan_purpose' AND vintage = 2015 AND bucket IN ('P', 'C')"
+          },
+          "id": "call_16702390587750896998"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2458,
+        "output_tokens": 52,
+        "total_tokens": 2510,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "For the 2015 vintage:\n- **Cash-out refinances (C)**: Default rate is 0.59% (60 defaults out of 10,167 loans).\n- **Purchases (P)**: Default rate is 0.72% (155 defaults out of 21,419 loans).",
+          "extras": {
+            "signature": "EmAKXgFpFH0TXZCeC7Fy7DBDJABuwKSAxvPxecphfC07Noe2HeQNRYstrM9PrSexV0jyBv/wu+/U/kEZENbIWNWQFUFqJdMCf6FXq97Qbgue9Mi5TgA2fYJhjQAjOPVl+fM="
+          }
+        }
+      ],
+      "tool_calls": [],
+      "usage_metadata": {
+        "input_tokens": 2639,
+        "output_tokens": 79,
+        "total_tokens": 2718,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "case_id": "sql_10",
+  "question": "How did investment properties compare with primary residences on default rate in 2016?",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "run_sql",
+          "args": {
+            "query": "SELECT dimension, bucket, vintage, loans, defaults, default_rate FROM segments WHERE dimension = 'occupancy_status' AND vintage = 25016 OR (dimension = 'occupancy_status' AND vintage = 2016);"
+          },
+          "id": "call_1892260257308518370"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2458,
+        "output_tokens": 68,
+        "total_tokens": 2526,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "In 2016, investment properties (occupancy status code `I`) had a default rate of 0.40% (3,955 loans, 16 defaults), while primary residences (`P`) had a default rate of 0.88% (44,052 loans, 387 defaults).",
+          "extras": {
+            "signature": "EmAKXgFpFH0T8XbvMbKHgOVqenAhmwgWQsSRUxx2IVKFsSwHEFnL3j896flvWaVPYKN+8psyaeTnIrDnz1r9gIcrVcY+MSK/GXknwH+4JU78yV6nhq35mtP1mZbQ8hDTfVI="
+          }
+        }
+      ],
+      "tool_calls": [],
+      "usage_metadata": {
+        "input_tokens": 2734,
+        "output_tokens": 73,
+        "total_tokens": 2807,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

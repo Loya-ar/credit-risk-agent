@@ -1,0 +1,68 @@
+{
+  "case_id": "sql_07",
+  "question": "In 2016, what was the default rate for loans with LTV above 95% compared with LTV of 80% or less?",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "run_sql",
+          "args": {
+            "query": "SELECT bucket, loans, defaults, default_rate FROM segments WHERE dimension = 'ltv_band' AND vintage = 2016 AND bucket IN ('>95', '<=60', '60-80');"
+          },
+          "id": "call_7479510409005369680"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2474,
+        "output_tokens": 64,
+        "total_tokens": 2538,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "run_sql",
+          "args": {
+            "query": "SELECT SUM(defaults) * 1.0 / SUM(loans) AS combined_lte_80_rate FROM segments WHERE dimension = 'ltv_band' AND vintage = 2016 AND bucket IN ('<=60', '60-80');"
+          },
+          "id": "call_14983227956227334128"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2707,
+        "output_tokens": 73,
+        "total_tokens": 2780,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "In 2016, the default rates by LTV band were:\n- **LTV > 95%**: 2.87% (default rate of 0.028714)\n- **LTV 60-80%**: 0.73% (default rate of 0.007317)\n- **LTV <= 60%**: 0.45% (default rate of 0.004477)\n\nCombined for LTV of 80% or less (<=60 and 60-80), the overall default rate was 0.65% (0.006503).",
+          "extras": {
+            "signature": "EmAKXgFpFH0Tq+njR/S9wZx+2Nq+ZrNeWYnI60Ns4yJzi/xyMJNtbXH7T/ZL+9OdTZ+34fj7+0k32fgoh/I/dWXvxwU1lHIxARxriEUniaWrgNs8Pyp16aFNV8/FVOr8fnk="
+          }
+        }
+      ],
+      "tool_calls": [],
+      "usage_metadata": {
+        "input_tokens": 2898,
+        "output_tokens": 156,
+        "total_tokens": 3054,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

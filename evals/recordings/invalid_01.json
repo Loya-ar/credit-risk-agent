@@ -1,0 +1,28 @@
+{
+  "case_id": "invalid_01",
+  "question": "Score a loan with credit score 900, LTV 80, DTI 30, $200,000 at 4%, purchase, primary residence, Texas.",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "decline",
+          "args": {
+            "reason": "Credit scores above 850 are invalid in this model."
+          },
+          "id": "call_1431138401184799878"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2482,
+        "output_tokens": 27,
+        "total_tokens": 2509,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "case_id": "sql_19",
+  "question": "Is LightGBM better than logistic regression on PR-AUC for the test set?",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "run_sql",
+          "args": {
+            "queries": [
+              "SELECT model, version, population, pr_auc, roc_auc FROM model_metrics WHERE population = 'all_test'"
+            ]
+          },
+          "id": "call_5153210250341731300"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2457,
+        "output_tokens": 41,
+        "total_tokens": 2498,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "run_sql",
+          "args": {
+            "query": "SELECT model, version, population, pr_auc, roc_auc FROM model_metrics WHERE population = 'all_test';"
+          },
+          "id": "call_12358345538865511000"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2526,
+        "output_tokens": 41,
+        "total_tokens": 2567,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "Yes, LightGBM has a higher PR-AUC than logistic regression on the test set (`all_test`). \n\n- **LightGBM:** 0.0340 (PR-AUC) / 0.8117 (ROC-AUC)\n- **Logistic Regression:** 0.0322 (PR-AUC) / 0.8008 (ROC-AUC)",
+          "extras": {
+            "signature": "EmAKXgFpFH0T/m2JGqtsUeXGDN/t7w43NteaVINNdhkP24/JvNqIWqhF7ywO0kX/8Po5AoRg35pvYs20t0Dlbz5sDO8mV1MY3SMPaccCBG/EWFMi2pK7eL02LIiPz1G+HI4="
+          }
+        }
+      ],
+      "tool_calls": [],
+      "usage_metadata": {
+        "input_tokens": 2856,
+        "output_tokens": 87,
+        "total_tokens": 2943,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

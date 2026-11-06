@@ -1,0 +1,48 @@
+{
+  "case_id": "sql_21",
+  "question": "What's the LightGBM ROC-AUC after excluding disaster-flagged loans?",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "run_sql",
+          "args": {
+            "query": "SELECT roc_auc FROM model_metrics WHERE model = 'lightgbm' AND population = 'no_disaster_flag';"
+          },
+          "id": "call_15892942943108278881"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2458,
+        "output_tokens": 41,
+        "total_tokens": 2499,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "The LightGBM ROC-AUC after excluding disaster-flagged loans is 0.8298 (or about 82.98%).",
+          "extras": {
+            "signature": "EmAKXgFpFH0Tv+JMpVwDAk4QraEeiB6+s2A3n6axUBtVRbU0CmalJ3lA4IODdVWdipd9quYewYk3QFiLC+hF3a49cIuISx8bOG3AlStNmnwlfPLq9Qo70EsIMt8XwsPiqJw="
+          }
+        }
+      ],
+      "tool_calls": [],
+      "usage_metadata": {
+        "input_tokens": 2578,
+        "output_tokens": 32,
+        "total_tokens": 2610,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

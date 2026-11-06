@@ -1,0 +1,48 @@
+{
+  "case_id": "sql_18",
+  "question": "What is the LightGBM model's ROC-AUC on the 2016 test set?",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "run_sql",
+          "args": {
+            "query": "SELECT roc_auc FROM model_metrics WHERE model = 'lightgbm' AND population = 'all_test';"
+          },
+          "id": "call_4437965952805157436"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2462,
+        "output_tokens": 38,
+        "total_tokens": 2500,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "The LightGBM model's ROC-AUC on the 2016 test set is 0.8117 (or 81.17%).",
+          "extras": {
+            "signature": "EmAKXgFpFH0TflF3hexKyzqN9RVluZ2Pi/EsK8Nxa+6/H23Onmeeu+TIdGDGEKFRDgvYIoFYbDZ4dloprLrrnmleZKSo2OitGfquwmDZfjdyc7uuiBZy1fzZgbOiRWeMgCU="
+          }
+        }
+      ],
+      "tool_calls": [],
+      "usage_metadata": {
+        "input_tokens": 2594,
+        "output_tokens": 36,
+        "total_tokens": 2630,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

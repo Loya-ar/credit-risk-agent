@@ -1,0 +1,48 @@
+{
+  "case_id": "sql_06",
+  "question": "Give me the default rate by credit score band for 2015 loans.",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "run_sql",
+          "args": {
+            "query": "SELECT bucket, vintage, loans, defaults, default_rate FROM segments WHERE dimension = 'credit_score_band' AND vintage = 2015 ORDER BY bucket"
+          },
+          "id": "call_3035012304049160965"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2457,
+        "output_tokens": 50,
+        "total_tokens": 2507,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "Here are the default rates by credit score band for 2015 loans:\n\n* **<620**: 4.55% (16 defaults out of 352 loans)\n* **620-659**: 3.31% (60 defaults out of 1,810 loans)\n* **660-699**: 1.91% (114 defaults out of 5,966 loans)\n* **700-739**: 0.77% (77 defaults out of 9,988 loans)\n* **740-779**: 0.30% (43 defaults out of 14,340 loans)\n* **780+**: 0.22% (36 defaults out of 16,144 loans)",
+          "extras": {
+            "signature": "EmAKXgFpFH0Tl//nFhYXDxlJV8mrpDtyB3OvJgCVaIsWrM4M2u1AjpFkJPqGsGJjbfBflD4qyu2cyOoBmtnU94OF+1mW54pS3ydwvTgZvwM6yyHulRNuYwWPM28KB3U/5gg="
+          }
+        }
+      ],
+      "tool_calls": [],
+      "usage_metadata": {
+        "input_tokens": 2780,
+        "output_tokens": 198,
+        "total_tokens": 2978,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

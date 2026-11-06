@@ -17,11 +17,11 @@ A mortgage default model built on Freddie Mac loan-level data, with a 24-month d
 | Model card | Done ([MODEL_CARD.md](MODEL_CARD.md)) |
 | Agent tools (run_sql, score_loan, explain_score) + SQL guard | Done |
 | CI (pytest on every push) | Done |
-| Evaluation set (54 cases) + harness | Done; expected values fill in once `public_data/` is built |
-| LangGraph agent (Gemini 3.6 Flash): routing, one SQL repair, grounding check in code | Done; tested with a scripted model, not yet run on live Gemini |
-| CI regression gate: replays on every push, live eval on demand | Done; waiting on recordings and the `GOOGLE_API_KEY` secret |
-| Public demo data (aggregate tables, small groups pooled) | Code done; tables not generated yet |
-| Streamlit demo (agent chat, loan scoring, data explorer) | Built and tested on synthetic data; not deployed yet |
+| Evaluation set (54 cases) + harness | Done; **54/54 on live Gemini** (see [Agent results](#agent-results)) |
+| LangGraph agent (Gemini 3.5 Flash-Lite, free tier): routing, one SQL repair, grounding check in code | Done |
+| CI regression gate: 54 recorded runs replayed on every push, live eval on demand | Done; the on-demand run needs the `GOOGLE_API_KEY` repository secret |
+| Public demo data (aggregate tables, small groups pooled) | Done (`public_data/`, smallest group 66 loans) |
+| Streamlit demo (agent chat, loan scoring, data explorer) | Built and tested; not deployed yet |
 
 ## Architecture (current)
 
@@ -111,7 +111,7 @@ Freddie Mac allows publishing noncommercial research results and derived product
 
 ## Agent
 
-[`agent/graph.py`](agent/graph.py) is a LangGraph agent on Gemini 3.6 Flash (`temperature=0`):
+[`agent/graph.py`](agent/graph.py) is a LangGraph agent on Gemini 3.5 Flash-Lite (`temperature=0`, free tier):
 
 - **Routing:** the model chooses `run_sql` (public aggregate tables only), `score_loan`, `explain_score`, or `decline` for out-of-scope, loan-level and guard-bypass requests.
 - **Repair:** a `run_sql` error goes back to the model once; a second error ends the run. Invalid loans are never repaired, because the model mustn't change the user's values, so the validation message is returned instead.
@@ -131,6 +131,25 @@ python -m agent.graph "What was the default rate for 2016 loans with credit scor
 - **About:** the data, the Freddie Mac terms and the caveats.
 
 Each tab says what it needs when something is missing: `public_data/` for the tables, `models/` for scoring, `GOOGLE_API_KEY` for the agent (on Streamlit Cloud, put the key in the app's secrets).
+
+## Agent results
+
+Live run on `gemini-3.5-flash-lite` with a free-tier key (no billing), November 2026:
+
+| Category | Cases | Passed |
+|---|---|---|
+| SQL on public tables | 24 | 24 |
+| Score a loan | 7 | 7 |
+| Explain a score | 3 | 3 |
+| Invalid loans (refuse) | 5 | 5 |
+| Guard bypass attempts (refuse) | 7 | 7 |
+| Loan-level requests (refuse) | 4 | 4 |
+| Out of scope (refuse) | 4 | 4 |
+| **Total** | **54** | **54** |
+
+Tool-call accuracy, answer accuracy, refusal accuracy and grounding were all 100%, with no false refusals and no leaked loan-level columns. About 260k input and 6k output tokens; mean 28 s per answerable question, mostly the 5-calls-a-minute free-tier pacing. The responses are recorded in `evals/recordings/` and replayed on every push.
+
+Caveats: 54 questions is a small set written by the same person who built the agent, and an LLM isn't deterministic, so a rerun can differ (the on-demand workflow fails below 90%). Free-tier limits are tight: newer Flash models allowed only 20 requests a day, which is why the Lite model is the default.
 
 ## Evaluation set (built before the agent)
 

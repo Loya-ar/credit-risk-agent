@@ -1,0 +1,48 @@
+{
+  "case_id": "sql_02",
+  "question": "How many loans are in the 2014 vintage?",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "run_sql",
+          "args": {
+            "query": "SELECT sum(loans) FROM segments WHERE dimension = 'all' AND vintage = 2014;"
+          },
+          "id": "call_5280725759386877449"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2453,
+        "output_tokens": 37,
+        "total_tokens": 2490,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "There are 49,241 loans in the 2014 vintage.",
+          "extras": {
+            "signature": "EmAKXgFpFH0T/TgMvAzw10c8Wd92iTgJefMPTc4K0FNx5Kc6VtMvcK2jJPLB+C3N6Jbnm1FkMoBWcPCg7mIqc1znSboSeuGCK4JVqiV3Wc9+K1IczvDj2Yp2sno8Tk5dTZ4="
+          }
+        }
+      ],
+      "tool_calls": [],
+      "usage_metadata": {
+        "input_tokens": 2553,
+        "output_tokens": 19,
+        "total_tokens": 2572,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

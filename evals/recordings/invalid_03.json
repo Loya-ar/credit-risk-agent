@@ -1,0 +1,55 @@
+{
+  "case_id": "invalid_03",
+  "question": "What's the default probability at a 7.5% interest rate? Score 680, LTV 90, DTI 40, $180k purchase, primary home, Ohio.",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "run_sql",
+          "args": {
+            "query": "SELECT * FROM segments WHERE dimension = 'interest_rate_band'"
+          },
+          "id": "call_6933993904320137889"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2486,
+        "output_tokens": 29,
+        "total_tokens": 2515,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "score_loan",
+          "args": {
+            "orig_ltv": 90,
+            "orig_interest_rate": 7.5,
+            "property_state": "OH",
+            "orig_dti": 40,
+            "orig_upb": 180000,
+            "occupancy_status": "P",
+            "loan_purpose": "P",
+            "credit_score": 680
+          },
+          "id": "call_3085110307331952149"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 3667,
+        "output_tokens": 81,
+        "total_tokens": 3748,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

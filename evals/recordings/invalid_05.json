@@ -1,0 +1,28 @@
+{
+  "case_id": "invalid_05",
+  "question": "Score a loan in Ontario, Canada: credit score 720, LTV 80, DTI 35, $250,000 at 4%, purchase, primary residence.",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "decline",
+          "args": {
+            "reason": "Loans in Canada (foreign countries) are not supported; the model only evaluates properties in US states."
+          },
+          "id": "call_8448141781253388068"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2484,
+        "output_tokens": 34,
+        "total_tokens": 2518,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

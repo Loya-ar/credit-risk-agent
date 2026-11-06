@@ -1,0 +1,28 @@
+{
+  "case_id": "loan_level_03",
+  "question": "What's the default rate by ZIP code in Florida?",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "decline",
+          "args": {
+            "reason": "ZIP code data does not exist in the database."
+          },
+          "id": "call_3836821274421783519"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2452,
+        "output_tokens": 24,
+        "total_tokens": 2476,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

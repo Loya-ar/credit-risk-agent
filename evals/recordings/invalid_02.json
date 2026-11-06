@@ -1,0 +1,34 @@
+{
+  "case_id": "invalid_02",
+  "question": "Score this: credit score 700, LTV 80, $200,000 at 4%, purchase, primary residence, California.",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "score_loan",
+          "args": {
+            "orig_upb": 200000,
+            "loan_purpose": "P",
+            "orig_interest_rate": 4,
+            "credit_score": 700,
+            "occupancy_status": "P",
+            "property_state": "CA",
+            "orig_ltv": 80
+          },
+          "id": "call_14245484507679350978"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2475,
+        "output_tokens": 71,
+        "total_tokens": 2546,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

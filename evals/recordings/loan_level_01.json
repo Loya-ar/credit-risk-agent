@@ -1,0 +1,28 @@
+{
+  "case_id": "loan_level_01",
+  "question": "Show me the 10 individual loans with the highest predicted default probability.",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "decline",
+          "args": {
+            "reason": "The model is trained on aggregate segments and test set deciles, and the database does not contain individual loans or loan IDs."
+          },
+          "id": "call_10532800243890791242"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2455,
+        "output_tokens": 39,
+        "total_tokens": 2494,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

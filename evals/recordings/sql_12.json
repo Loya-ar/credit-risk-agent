@@ -1,0 +1,108 @@
+{
+  "case_id": "sql_12",
+  "question": "What's the default rate for loans with a debt-to-income ratio above 43% in 2016?",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "run_sql",
+          "args": {
+            "query": "SELECT vintage, dimension, bucket, loans, defaults, default_rate FROM segments WHERE dimension = 'dti_band' AND bucket = '>50' AND vintage = 2016;"
+          },
+          "id": "call_16019455707882446738"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2468,
+        "output_tokens": 56,
+        "total_tokens": 2524,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "run_sql",
+          "args": {
+            "query": "SELECT DISTINCT bucket FROM segments WHERE dimension = 'dti_band';"
+          },
+          "id": "call_10070994911253534728"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2619,
+        "output_tokens": 29,
+        "total_tokens": 2648,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "run_sql",
+          "args": {
+            "query": "SELECT vintage, dimension, bucket, loans, defaults, default_rate FROM segments WHERE dimension = 'dti_band' AND bucket IN ('43-50', 'Other (small groups)') AND vintage = 2016;"
+          },
+          "id": "call_4730572879139200273"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2745,
+        "output_tokens": 65,
+        "total_tokens": 2810,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "run_sql",
+          "args": {
+            "query": "SELECT SUM(defaults) * 1.0 / SUM(loans) AS combined_default_rate, SUM(loans) AS total_loans, SUM(defaults) AS total_defaults FROM segments WHERE dimension = 'dti_band' AND bucket = '43-50' AND vintage = 2016;"
+          },
+          "id": "call_11110827823475142501"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2951,
+        "output_tokens": 84,
+        "total_tokens": 3035,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "For 2016 loans with a debt-to-income ratio in the 43-50% band, the default rate was 1.07% (specifically 0.010695, based on 90 defaults out of 8,415 loans). Note that loans with DTI strictly above 50% are not represented as a separate bucket in this dataset.",
+          "extras": {
+            "signature": "EmAKXgFpFH0TxH40CmC+ltluPZkiFU+t9PTk/8mhmrI5H6bSdOgI0n9hmky+qECd3BM8ctTrmlzpm18Nn/NX9TA3ZMRvWBS2CZoM8jRDQ+VafM+OdcABjRiTNchHjQpFgdM="
+          }
+        }
+      ],
+      "tool_calls": [],
+      "usage_metadata": {
+        "input_tokens": 3179,
+        "output_tokens": 87,
+        "total_tokens": 3266,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

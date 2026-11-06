@@ -1,0 +1,48 @@
+{
+  "case_id": "sql_16",
+  "question": "In the riskiest score decile, what's the default rate and what share of all defaults does it capture?",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "run_sql",
+          "args": {
+            "query": "SELECT decile, default_rate, share_of_defaults FROM deciles WHERE decile = 10"
+          },
+          "id": "call_12855709616186706791"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2465,
+        "output_tokens": 38,
+        "total_tokens": 2503,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "In the riskiest score decile (decile 10), the default rate is 3.85% (0.038508) and it captures 46.93% (0.469287) of all defaults.",
+          "extras": {
+            "signature": "EmAKXgFpFH0TCVjegMeaGDr2dhA5vRvIFmYc+yR8MnbtME+piVJ8jqlYjNZ8DPd1/IkvtVXe6zIGYEhoNXzTiv3yx57AvBu0B3z9N49XztO3MWP/j0D4LxEthPGOrMGh9bU="
+          }
+        }
+      ],
+      "tool_calls": [],
+      "usage_metadata": {
+        "input_tokens": 2595,
+        "output_tokens": 59,
+        "total_tokens": 2654,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

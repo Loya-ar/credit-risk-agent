@@ -1,4 +1,4 @@
-"""A2: the LangGraph agent (Gemini 3.6 Flash by default).
+"""A2: the LangGraph agent (Gemini 3.5 Flash-Lite by default).
 
     llm ──tool calls──> tools ──> llm ... ──final text──> check ──grounded──> END
 
@@ -35,7 +35,7 @@ from agent import tools as agent_tools
 from agent.grounding import ungrounded_numbers
 from agent.public_tables import CATEGORICAL_DIMENSIONS, NUMERIC_BANDS, OTHER
 
-DEFAULT_MODEL = "gemini-3.6-flash"
+DEFAULT_MODEL = "gemini-3.5-flash-lite"
 MAX_LLM_CALLS = 8
 MAX_RESULT_CHARS = 6000
 LOAN_TOOLS = {"score_loan", "explain_score"}

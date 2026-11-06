@@ -10,7 +10,7 @@ on:
     inputs:
       min_pass_rate:
         description: "Fail below this pass rate"
-        default: "0.8"
+        default: "0.9"
 
 jobs:
   eval:
@@ -43,7 +43,7 @@ jobs:
         if: steps.check.outputs.ready == 'true'
         run: >
           python -m scripts.run_eval --agent agent.graph:answer
-          --min-pass-rate ${{ github.event.inputs.min_pass_rate || '0.8' }}
+          --min-pass-rate ${{ github.event.inputs.min_pass_rate || '0.9' }}
       - uses: actions/upload-artifact@v4
         if: always() && steps.check.outputs.ready == 'true'
         with:

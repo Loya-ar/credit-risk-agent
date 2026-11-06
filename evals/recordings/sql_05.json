@@ -1,0 +1,48 @@
+{
+  "case_id": "sql_05",
+  "question": "What's the default rate for borrowers with credit scores below 620 in the 2016 vintage?",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "run_sql",
+          "args": {
+            "query": "SELECT loans, defaults, default_rate FROM segments WHERE dimension = 'credit_score_band' AND bucket = '<620' AND vintage = 2016"
+          },
+          "id": "call_1046538979241190638"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2465,
+        "output_tokens": 51,
+        "total_tokens": 2516,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "For borrowers with credit scores below 620 in the 2016 vintage, the default rate was 5.07% (11 defaults out of 217 loans).",
+          "extras": {
+            "signature": "EmAKXgFpFH0TZ6mJFrX89Xaf9ZD6IhQG4z50FduR0gZUNIV09FjLxcd9uHOPtHlQyotOzjhEBf5F0ZEF/tKQd/5SEqyK68bJrXkT54lM66BbIUtoRU+VmDD8+uRQ4+kA+wI="
+          }
+        }
+      ],
+      "tool_calls": [],
+      "usage_metadata": {
+        "input_tokens": 2611,
+        "output_tokens": 41,
+        "total_tokens": 2652,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

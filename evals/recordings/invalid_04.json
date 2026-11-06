@@ -1,0 +1,28 @@
+{
+  "case_id": "invalid_04",
+  "question": "Score a $5,000,000 jumbo purchase: credit score 790, LTV 70, DTI 30, 4.25%, primary residence, California.",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "decline",
+          "args": {
+            "reason": "The requested original loan amount ($5,000,000) exceeds the maximum loan amount supported by the model's Freddie Mac training data (conforming loan limits), and jumbo loans are outside the scope of this model."
+          },
+          "id": "call_15608322955597632126"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2485,
+        "output_tokens": 62,
+        "total_tokens": 2547,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

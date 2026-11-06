@@ -1,0 +1,48 @@
+{
+  "case_id": "sql_15",
+  "question": "For 2016, compare predicted and actual default rates by credit score band.",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "run_sql",
+          "args": {
+            "query": "SELECT bucket, loans, defaults, default_rate, mean_predicted FROM segments WHERE dimension = 'credit_score_band' AND vintage = 2016 ORDER BY bucket"
+          },
+          "id": "call_341292986496958258"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2458,
+        "output_tokens": 52,
+        "total_tokens": 2510,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "For 2016 test loans, here is the comparison of actual default rates versus the model's mean predicted default rates by credit score band:\n\n- **<620**: Actual 5.07%, Predicted 4.39% (217 loans, 11 defaults)\n- **620-659**: Actual 3.56%, Predicted 2.77% (1,992 loans, 71 defaults)\n- **660-699**: Actual 2.19%, Predicted 1.52% (6,039 loans, 132 defaults)\n- **700-739**: Actual 1.08%, Predicted 0.80% (10,720 loans, 116 defaults)\n- **740-779**: Actual 0.36%, Predicted 0.38% (14,605 loans, 53 defaults)\n- **780+**: Actual 0.15%, Predicted 0.16% (16,027 loans, 24 defaults)",
+          "extras": {
+            "signature": "EmAKXgFpFH0Tan9HyZHxNlrLZfVIEEUmi1xAbObtt3nJ6lpc015deHa29hva39ljEo1uh7EyW95RKbhZ7O9r6E3OIe9DvdCrucIexvsak/NSv2d4pSyRqB9IG9g5r9EblYc="
+          }
+        }
+      ],
+      "tool_calls": [],
+      "usage_metadata": {
+        "input_tokens": 2813,
+        "output_tokens": 256,
+        "total_tokens": 3069,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "case_id": "score_05",
+  "question": "Would the model approve or decline this loan: credit score 640, LTV 95, DTI 45, $180,000 at 5.25%, cash-out refinance, primary residence, Illinois?",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "score_loan",
+          "args": {
+            "loan_purpose": "C",
+            "orig_dti": 45,
+            "occupancy_status": "P",
+            "property_state": "IL",
+            "credit_score": 640,
+            "orig_upb": 180000,
+            "orig_interest_rate": 5.25,
+            "orig_ltv": 95
+          },
+          "id": "call_17181295580425401836"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2493,
+        "output_tokens": 82,
+        "total_tokens": 2575,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "The model would **decline** this loan.\n\nThe calibrated default probability is **5.57%**, which exceeds the decision threshold of **4.93%**. \n\n*(Note: The cost ratio behind the threshold is an assumption, and this is a portfolio demo, not a credit decision.)*",
+          "extras": {
+            "signature": "EmAKXgFpFH0Tsr0ZwqQrvRdJHkFrDqcZi+W4V2ni0yYeiFQcUkil+4jythMEWGNHdZQpm/9/ek10jyIEo4VwaGKI+hUd+e53XaafQlk9o5S11UwkdFhE6zZaCfedN1DBGhk="
+          }
+        }
+      ],
+      "tool_calls": [],
+      "usage_metadata": {
+        "input_tokens": 2756,
+        "output_tokens": 64,
+        "total_tokens": 2820,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

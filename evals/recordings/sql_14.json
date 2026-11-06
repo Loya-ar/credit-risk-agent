@@ -1,0 +1,72 @@
+{
+  "case_id": "sql_14",
+  "question": "What share of 2016 loans would the model decline at the current threshold?",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "run_sql",
+          "args": {
+            "query": "SELECT test_decline_rate FROM thresholds"
+          },
+          "id": "call_1849068192366359156"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2458,
+        "output_tokens": 24,
+        "total_tokens": 2482,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "run_sql",
+          "args": {
+            "query": "SELECT cost_ratio_ASSUMED, test_decline_rate FROM thresholds"
+          },
+          "id": "call_16726993475054303669"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2587,
+        "output_tokens": 32,
+        "total_tokens": 2619,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "The model decline rate for 2016 loans depends on the assumed cost ratio (the cost of a default relative to the cost of a declined good loan):\n\n- At a cost ratio of 10: **0.11%** (decline rate of 0.00107)\n- At a cost ratio of 20:"
+        },
+        {
+          "type": "text",
+          "text": " **1.09%** (decline rate of 0.01095)\n- At a cost ratio of 40: **7.90%** (decline rate of 0.07897)\n\nNote that these cost ratios are assumed parameters, and this is a portfolio demo rather than an operational lending system.",
+          "extras": {
+            "signature": "EmAKXgFpFH0T7c6u+u1z86jae6JT72eWeyUTznGR0SKlWqOUXrEO3NnbjlOSQCRqHdtx97WA1Wzlu4q8b7zGs2YMP/GMG6AZg01Ou5Ubrc8g1WJYk8n3tuZ/6iuZrZ1kH7o="
+          }
+        }
+      ],
+      "tool_calls": [],
+      "usage_metadata": {
+        "input_tokens": 2751,
+        "output_tokens": 152,
+        "total_tokens": 2903,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "case_id": "sql_13",
+  "question": "What was the default rate for 2014 loans with no reported DTI?",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "run_sql",
+          "args": {
+            "query": "SELECT dimension, bucket, vintage, loans, defaults, default_rate FROM segments WHERE vintage = 2014 AND dimension = 'dti_band'"
+          },
+          "id": "call_15254514772527759334"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2458,
+        "output_tokens": 48,
+        "total_tokens": 2506,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "For 2014 loans with missing (no reported) DTI, the default rate was 1.9805% (144 defaults out of 7,271 loans).",
+          "extras": {
+            "signature": "EmAKXgFpFH0TvDmnitzrQ1PXFB+YZ57uguqaY7J0XeVhnDMw/W6s3j4yIQdTmUY/IJV2tizbVJnILgbyfvfU5l+pTZlnhxQm0YtT2f7Y3LG3Yk5M97cp/9B+KyxNKaKmpH4="
+          }
+        }
+      ],
+      "tool_calls": [],
+      "usage_metadata": {
+        "input_tokens": 2812,
+        "output_tokens": 43,
+        "total_tokens": 2855,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

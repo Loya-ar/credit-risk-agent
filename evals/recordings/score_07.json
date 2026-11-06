@@ -1,0 +1,55 @@
+{
+  "case_id": "score_07",
+  "question": "Score this purchase loan in ZIP code 33101: credit score 710, LTV 80, DTI 36, $275,000 at 4.0%, primary residence, Florida.",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "score_loan",
+          "args": {
+            "orig_interest_rate": 4,
+            "orig_dti": 36,
+            "orig_upb": 275000,
+            "orig_ltv": 80,
+            "occupancy_status": "P",
+            "credit_score": 710,
+            "loan_purpose": "P",
+            "property_state": "FL"
+          },
+          "id": "call_8532613171198506380"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2492,
+        "output_tokens": 79,
+        "total_tokens": 2571,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "ZIP codes are not used by the model, so that detail was left out.\n\nThe model default probability is **0.46%** (0.004573), and the decision is **approve**. \n\nNote: The cost ratio behind the threshold is an assumption, and this is a portfolio demo, not a credit decision.",
+          "extras": {
+            "signature": "EmAKXgFpFH0TgQaTCREGOo/JFZW2FJX/oC35zYecOyPtJH04kFEaDwyExe/Uc5Jjlr54n+CH3VqKh83vKyN4AECUQjfTQOcy3V8ofP47abYODrdJcp1ge5h9C1aTZd5NPqs="
+          }
+        }
+      ],
+      "tool_calls": [],
+      "usage_metadata": {
+        "input_tokens": 2753,
+        "output_tokens": 72,
+        "total_tokens": 2825,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

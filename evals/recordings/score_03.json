@@ -1,0 +1,55 @@
+{
+  "case_id": "score_03",
+  "question": "Score a no-cash-out refinance: credit score 800, LTV 60, DTI 20, $300,000 at 3.5%, owner-occupied, California.",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "score_loan",
+          "args": {
+            "occupancy_status": "P",
+            "credit_score": 800,
+            "property_state": "CA",
+            "orig_interest_rate": 3.5,
+            "orig_ltv": 60,
+            "orig_dti": 20,
+            "loan_purpose": "N",
+            "orig_upb": 300000
+          },
+          "id": "call_2495702827228009971"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2488,
+        "output_tokens": 81,
+        "total_tokens": 2569,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "Default probability: 0.06% (0.00056). Decision: approve.\n\nNote: The cost ratio behind the threshold is an assumption, and this is a portfolio demo, not a credit decision. Unspecified fields (such as channel, mortgage insurance, property type, and number of borrowers) were filled with typical default values; ZIP codes are not used by the model and were left out.",
+          "extras": {
+            "signature": "EmAKXgFpFH0TfVEkJLiYtRTl+eSO9KpFyH1p1didHx3kNqGoyhOxojqsQOTwAASu+/RixnuUDKXSovG/jfQNx5QiPar0tAoFTWUkLI73gTAN1zrS8IanydEuoXbgaYJ1Iug="
+          }
+        }
+      ],
+      "tool_calls": [],
+      "usage_metadata": {
+        "input_tokens": 2752,
+        "output_tokens": 86,
+        "total_tokens": 2838,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

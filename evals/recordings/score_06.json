@@ -1,0 +1,59 @@
+{
+  "case_id": "score_06",
+  "question": "Score a condo purchase by a first-time buyer with two borrowers: score 740, LTV 85, DTI 38, $220,000 at 4.25%, primary residence, New York.",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "score_loan",
+          "args": {
+            "num_borrowers": 2,
+            "orig_dti": 38,
+            "num_units": 1,
+            "occupancy_status": "P",
+            "credit_score": 740,
+            "property_type": "CO",
+            "loan_purpose": "P",
+            "first_time_homebuyer_flag": "Y",
+            "property_state": "NY",
+            "orig_ltv": 85,
+            "orig_upb": 220000,
+            "orig_interest_rate": 4.25
+          },
+          "id": "call_18085021151825614457"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2493,
+        "output_tokens": 116,
+        "total_tokens": 2609,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "Default probability: 0.35% (Decision: approve). \n\nNote: The cost ratio behind the threshold is an assumption, and this is a portfolio demo, not a credit decision. ZIP codes are not used by the model and were omitted.",
+          "extras": {
+            "signature": "EmAKXgFpFH0Ta6Lq1b3G5Xwp5vZ4CmoMXjB9R/qNCifIuOoDvTdUb17/pCwgUTqa8tkTkRExXG4BG/83Ehy/GfrJ0FnXK7SQxzLyd41L4NEqNh/GVccolPaomR+ptmLPVnU="
+          }
+        }
+      ],
+      "tool_calls": [],
+      "usage_metadata": {
+        "input_tokens": 2757,
+        "output_tokens": 52,
+        "total_tokens": 2809,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

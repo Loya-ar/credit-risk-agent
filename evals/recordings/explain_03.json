@@ -1,0 +1,66 @@
+{
+  "case_id": "explain_03",
+  "question": "Explain the main risk factors for a single-borrower investment purchase: score 690, LTV 80, DTI 42, $190k at 4.875%, Georgia.",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "explain_score",
+          "args": {
+            "loan_purpose": "P",
+            "property_type": "SF",
+            "special_program_flag": null,
+            "orig_cltv": null,
+            "mi_pct": null,
+            "orig_dti": 42,
+            "occupancy_status": "I",
+            "harp_indicator": null,
+            "num_borrowers": 1,
+            "orig_upb": 190000,
+            "property_state": "GA",
+            "channel": null,
+            "orig_ltv": 80,
+            "num_units": null,
+            "credit_score": 690,
+            "orig_interest_rate": 4.875,
+            "orig_loan_term": null,
+            "first_time_homebuyer_flag": null,
+            "super_conforming_flag": null
+          },
+          "id": "call_12277021823420509084"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2487,
+        "output_tokens": 163,
+        "total_tokens": 2650,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "The top 5 risk factors (SHAP drivers) for this loan are:\n\n1. **Credit score (690)** \u2013 raises risk\n2. **Original interest rate (4.875%)** \u2013 raises risk\n3. **Number of borrowers (1)** \u2013 raises risk\n4. **Property state (GA)** \u2013 raises risk\n5. **Combined loan-to-value ratio (80%)** \u2013 lowers risk (using a typical value since none was provided)\n\n*(Demo only, not a credit decision.)*",
+          "extras": {
+            "signature": "EmAKXgFpFH0Tr3Psym7q4SGolwRpTdJBPX24dj8xrRn4IL0Zhi4AIkvkI4xzF4nR4wHCVPO/3nMssLdMwNAhjXDP7AaMl1iUGvL99jmZFGNct06OX/YA4vwZXuTEICkdI/s="
+          }
+        }
+      ],
+      "tool_calls": [],
+      "usage_metadata": {
+        "input_tokens": 3056,
+        "output_tokens": 113,
+        "total_tokens": 3169,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

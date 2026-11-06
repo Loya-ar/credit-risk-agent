@@ -1,0 +1,55 @@
+{
+  "case_id": "score_02",
+  "question": "What's the default probability for a 620 credit score, 97% LTV, 50% DTI, $150k purchase at 5.5% for a primary home in Texas?",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "score_loan",
+          "args": {
+            "orig_dti": 50,
+            "orig_upb": 150000,
+            "occupancy_status": "P",
+            "orig_interest_rate": 5.5,
+            "loan_purpose": "P",
+            "credit_score": 620,
+            "orig_ltv": 97,
+            "property_state": "TX"
+          },
+          "id": "call_310642972744563150"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2488,
+        "output_tokens": 81,
+        "total_tokens": 2569,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "The default probability for this loan is 5.38%, and the model decision is **decline**. \n\n*(Note: ZIP codes are not used by the model and were left out. The cost ratio behind the threshold is an assumption, and this is a portfolio demo, not a credit decision.)*",
+          "extras": {
+            "signature": "EmAKXgFpFH0TTZBMs71SuFakZSUffZJ8Z2U69NYy809GBaIPRyas9G69fIZCMipMnXrv93j1/mA49jYmzdTbYo7JlprDz7qL83Suf1nriUoPWMghPuAgiDodC1ojTS22E8Q="
+          }
+        }
+      ],
+      "tool_calls": [],
+      "usage_metadata": {
+        "input_tokens": 2751,
+        "output_tokens": 63,
+        "total_tokens": 2814,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}

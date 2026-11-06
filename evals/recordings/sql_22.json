@@ -1,0 +1,48 @@
+{
+  "case_id": "sql_22",
+  "question": "Which loan amount band had the lowest default rate in 2016?",
+  "model": "gemini-3.5-flash-lite",
+  "passed": true,
+  "responses": [
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "run_sql",
+          "args": {
+            "query": "SELECT bucket, default_rate, loans, defaults FROM segments WHERE dimension = 'loan_amount_band' AND vintage = 2016 ORDER BY default_rate ASC LIMIT 1;"
+          },
+          "id": "call_73374442100532907"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 2456,
+        "output_tokens": 55,
+        "total_tokens": 2511,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "In the 2016 vintage, the loan amount band with the lowest default rate was **>417k** with a default rate of **0.35%** (0.003474, across 2,303 loans and 8 defaults).",
+          "extras": {
+            "signature": "EmAKXgFpFH0TpC+0Syp6g1dqOdMaM6coNzXtBRd0DqHOKwJSlZhTrUXMoBk4ClI4Wv728aSkgeOXj1dZ4n6n1VgrGcKlHfNquRalYdWEgBOo0ogsgSkeP44KFD3/EUEYhUQ="
+          }
+        }
+      ],
+      "tool_calls": [],
+      "usage_metadata": {
+        "input_tokens": 2616,
+        "output_tokens": 61,
+        "total_tokens": 2677,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    }
+  ]
+}
