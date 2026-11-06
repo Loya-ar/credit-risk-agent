@@ -21,7 +21,7 @@ A mortgage default model built on Freddie Mac loan-level data, with a 24-month d
 | LangGraph agent (Gemini 2.5 Flash): routing, one SQL repair, grounding check in code | Done; tested with a scripted model, not yet run on live Gemini |
 | CI regression gate: replays on every push, live eval nightly | Done; waiting on recordings and the `GOOGLE_API_KEY` secret |
 | Public demo data (aggregate tables, small groups pooled) | Code done; tables not generated yet |
-| Streamlit demo | Not started |
+| Streamlit demo (agent chat, loan scoring, data explorer) | Built and tested on synthetic data; not deployed yet |
 
 ## Architecture (current)
 
@@ -121,6 +121,16 @@ $env:GOOGLE_API_KEY = "..."
 python -m agent.graph "What was the default rate for 2016 loans with credit scores below 620?"
 ```
 
+## Demo app
+
+[`streamlit_app.py`](streamlit_app.py) has four tabs:
+- **Ask the agent:** chat with the Gemini agent, with example questions. Each answer can be expanded to show the SQL, rows and tool calls behind it.
+- **Score a loan:** a form that calls the model directly (no LLM): calibrated probability, decision at the threshold, and the top SHAP drivers.
+- **Explore the data:** default rate by any one breakdown and vintage, the predicted-vs-actual decile chart, and model metrics.
+- **About:** the data, the Freddie Mac terms and the caveats.
+
+Each tab says what it needs when something is missing: `public_data/` for the tables, `models/` for scoring, `GOOGLE_API_KEY` for the agent (on Streamlit Cloud, put the key in the app's secrets).
+
 ## Evaluation set (built before the agent)
 
 [`evals/cases.jsonl`](evals/cases.jsonl) has 54 questions: 24 answerable with SQL on the public tables, 7 loans to score, 3 to explain, 5 invalid loans (out of the training range, missing DTI, non-US state), 7 attempts to get past the SQL guard, 4 requests for loan-level data, and 4 out-of-scope questions (real credit decisions, protected attributes, future vintages, stock advice).
@@ -163,7 +173,8 @@ python -m risk.threshold           # cost-based thresholds -> reports/s8_thresho
 python -m risk.explain             # SHAP -> reports/
 python -m scripts.build_agent_db   # local loan-level agent DB + scoring defaults
 python -m scripts.build_public_tables  # aggregate-only tables -> public_data/
-pytest                             # 234 tests; 12 skip without local data or recordings
+streamlit run streamlit_app.py     # demo app
+pytest                             # 239 tests; 12 skip without local data or recordings
 ```
 
 ## Repo structure (current)
@@ -178,6 +189,7 @@ evals/          cases.jsonl (54 questions), scoring harness, record/replay, reco
 notebooks/      01_eda.ipynb
 tests/          label, leakage, split, train, evaluate, threshold, explain, predict, sql_guard, tools, public_tables, evals, graph, replay
 reports/        metrics, plots, threshold config
+streamlit_app.py  Streamlit demo
 MODEL_CARD.md
 ```
 

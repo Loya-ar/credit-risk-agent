@@ -21,6 +21,7 @@ rebuilt from them.
 """
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 import duckdb
@@ -28,8 +29,13 @@ import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
-PUBLIC_DIR = ROOT / "public_data"
-PUBLIC_DB_PATH = ROOT / "data" / "agent_public.duckdb"
+# PUBLIC_DATA_DIR points the app and agent at another set of CSVs (e.g. a synthetic demo).
+if os.environ.get("PUBLIC_DATA_DIR"):
+    PUBLIC_DIR = Path(os.environ["PUBLIC_DATA_DIR"])
+    PUBLIC_DB_PATH = PUBLIC_DIR / "agent_public.duckdb"
+else:
+    PUBLIC_DIR = ROOT / "public_data"
+    PUBLIC_DB_PATH = ROOT / "data" / "agent_public.duckdb"
 PUBLIC_TABLES = ("segments", "deciles", "model_metrics", "thresholds")
 
 MIN_CELL = 50
