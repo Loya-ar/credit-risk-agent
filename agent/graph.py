@@ -262,11 +262,18 @@ def build_graph(model):
     return g.compile()
 
 
+def api_key() -> str | None:
+    """GOOGLE_API_KEY, or GEMINI_API_KEY (the name AI Studio suggests)."""
+    return os.environ.get("GOOGLE_API_KEY") or os.environ.get("GEMINI_API_KEY")
+
+
 def make_model():
     from langchain_google_genai import ChatGoogleGenerativeAI
-    if not os.environ.get("GOOGLE_API_KEY"):
-        raise RuntimeError("Set GOOGLE_API_KEY (see .env.example).")
-    return ChatGoogleGenerativeAI(model=os.environ.get("AGENT_MODEL", DEFAULT_MODEL), temperature=0)
+    key = api_key()
+    if not key:
+        raise RuntimeError("Set GOOGLE_API_KEY or GEMINI_API_KEY (see .env.example).")
+    return ChatGoogleGenerativeAI(model=os.environ.get("AGENT_MODEL", DEFAULT_MODEL), temperature=0,
+                                  google_api_key=key)
 
 
 _GRAPH = None

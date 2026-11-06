@@ -159,5 +159,6 @@ def test_output_passes_harness_grading(public_db):
 
 def test_missing_api_key(monkeypatch):
     monkeypatch.delenv("GOOGLE_API_KEY", raising=False)
-    with pytest.raises(RuntimeError, match="GOOGLE_API_KEY"):
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    with pytest.raises(RuntimeError, match="GOOGLE_API_KEY or GEMINI_API_KEY"):
         agent_graph.make_model()

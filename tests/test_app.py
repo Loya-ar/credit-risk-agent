@@ -60,6 +60,7 @@ def test_without_key_or_tables(monkeypatch, tmp_path):
         raise FileNotFoundError("no tables")
     monkeypatch.setattr(public_tables, "ensure_public_db", missing)
     monkeypatch.delenv("GOOGLE_API_KEY", raising=False)
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
     at = AppTest.from_file(APP, default_timeout=60)
     at.run()
     assert not at.exception

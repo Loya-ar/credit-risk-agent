@@ -58,7 +58,7 @@ def public_db():
 
 DB = public_db()
 HAS_MODELS = predict.CALIBRATED_PATH.exists() and predict.RAW_PATH.exists()
-HAS_KEY = bool(os.environ.get("GOOGLE_API_KEY"))
+HAS_KEY = bool(os.environ.get("GOOGLE_API_KEY") or os.environ.get("GEMINI_API_KEY"))
 
 
 @st.cache_data
