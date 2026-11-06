@@ -88,7 +88,10 @@ def validate_loan(fields: dict) -> tuple[pd.DataFrame, dict]:
         spec = defaults["numeric"][f]
         value = fields.get(f)
         if _is_blank(value):
-            row[f] = filled[f] = spec["median"]
+            # CLTV can't be below LTV; with no second lien, CLTV equals LTV.
+            # (orig_ltv is required and comes before orig_cltv in NUMERIC_FEATURES.)
+            fill = row["orig_ltv"] if f == "orig_cltv" else spec["median"]
+            row[f] = filled[f] = fill
             continue
         try:
             value = float(value)

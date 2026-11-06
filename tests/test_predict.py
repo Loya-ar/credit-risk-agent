@@ -33,6 +33,19 @@ def test_required_only_fills_the_rest():
     assert not X.isna().any().any()
 
 
+def test_missing_cltv_defaults_to_ltv():
+    X, filled = validate_loan(BASE)
+    assert X.loc[0, "orig_cltv"] == BASE["orig_ltv"]
+    assert filled["orig_cltv"] == BASE["orig_ltv"]
+
+
+def test_given_values_are_kept():
+    X, filled = validate_loan({**BASE, "orig_cltv": 95})
+    assert X.loc[0, "credit_score"] == BASE["credit_score"]
+    assert X.loc[0, "orig_cltv"] == 95
+    assert "credit_score" not in filled and "orig_cltv" not in filled
+
+
 @pytest.mark.parametrize("field", REQUIRED_FIELDS)
 def test_missing_required_field_rejected(field):
     loan = {k: v for k, v in BASE.items() if k != field}
