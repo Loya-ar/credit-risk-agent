@@ -18,8 +18,8 @@ A mortgage default model built on Freddie Mac loan-level data, with a 24-month d
 | Agent tools (run_sql, score_loan, explain_score) + SQL guard | Done |
 | CI (pytest on every push) | Done |
 | Evaluation set (54 cases) + harness | Done; expected values fill in once `public_data/` is built |
-| LangGraph agent (Gemini 2.5 Flash): routing, one SQL repair, grounding check in code | Done; tested with a scripted model, not yet run on live Gemini |
-| CI regression gate: replays on every push, live eval nightly | Done; waiting on recordings and the `GOOGLE_API_KEY` secret |
+| LangGraph agent (Gemini 3.6 Flash): routing, one SQL repair, grounding check in code | Done; tested with a scripted model, not yet run on live Gemini |
+| CI regression gate: replays on every push, live eval on demand | Done; waiting on recordings and the `GOOGLE_API_KEY` secret |
 | Public demo data (aggregate tables, small groups pooled) | Code done; tables not generated yet |
 | Streamlit demo (agent chat, loan scoring, data explorer) | Built and tested on synthetic data; not deployed yet |
 
@@ -111,7 +111,7 @@ Freddie Mac allows publishing noncommercial research results and derived product
 
 ## Agent
 
-[`agent/graph.py`](agent/graph.py) is a LangGraph agent on Gemini 2.5 Flash (`temperature=0`):
+[`agent/graph.py`](agent/graph.py) is a LangGraph agent on Gemini 3.6 Flash (`temperature=0`):
 
 - **Routing:** the model chooses `run_sql` (public aggregate tables only), `score_loan`, `explain_score`, or `decline` for out-of-scope, loan-level and guard-bypass requests.
 - **Repair:** a `run_sql` error goes back to the model once; a second error ends the run. Invalid loans are never repaired, because the model mustn't change the user's values, so the validation message is returned instead.
@@ -138,18 +138,20 @@ Each tab says what it needs when something is missing: `public_data/` for the ta
 
 - **Graded on results, not SQL text:** a SQL answer passes if a `run_sql` result matches the reference query's rows (allowing rounding, percent scaling, extra columns and any row order) or if every reference value appears in the answer.
 - **Every number must be grounded:** each number in an answer has to appear in a tool output, a tool argument or the question.
-- **Metrics:** pass rate, tool-call accuracy, answer accuracy, refusal accuracy, false-refusal rate, grounding rate, leaked loan-level columns, tokens, cost and latency.
+- **Metrics:** pass rate, tool-call accuracy, answer accuracy, refusal accuracy, false-refusal rate, grounding rate, leaked loan-level columns, tokens and latency (plus an optional cost estimate for a paid key).
 - **Checks that need no LLM run in CI** (`tests/test_evals.py`): every reference query passes the guard and runs, every attack in the set is blocked by the real tools, invalid loans are rejected, the reference agent scores 100% and a bad agent close to 0%.
 
 ```powershell
 python -m scripts.run_eval --agent oracle               # harness self-test
-python -m scripts.run_eval --agent agent.graph:answer --price-in 0.3 --price-out 2.5   # needs GOOGLE_API_KEY
-python -m scripts.run_eval --agent agent.graph:answer --record   # save responses for CI replay
+python -m scripts.run_eval --agent agent.graph:answer           # needs a Gemini key
+python -m scripts.run_eval --agent agent.graph:answer --record  # save responses for CI replay
 ```
+
+**Cost: none.** Use a Gemini key from a Google project with no billing linked (the free tier). It can't be charged; requests are only rate-limited (5 a minute per model), and the agent paces itself to that (`AGENT_RPM`, default 5), so a full run takes about 25 minutes.
 
 **CI regression gate:**
 - **Every push** ([tests.yml](.github/workflows/tests.yml)): the checks that need no LLM, plus a replay of every recorded Gemini run in `evals/recordings/` through the real graph, tools and grader ([tests/test_replay.py](tests/test_replay.py)). The model's side is fixed, so a case that passed when recorded and fails now means our code changed behaviour. No API key needed.
-- **Nightly and on demand** ([eval.yml](.github/workflows/eval.yml)): the full evaluation on live Gemini, using the `GOOGLE_API_KEY` repository secret. It fails below the pass-rate threshold or on any leaked loan-level column, and writes the metrics to the job summary.
+- **On demand only** ([eval.yml](.github/workflows/eval.yml), started from the Actions tab; no schedule): the full evaluation on live Gemini, using the `GOOGLE_API_KEY` repository secret. It fails below the pass-rate threshold or on any leaked loan-level column, and writes the metrics to the job summary.
 
 ## Design decisions
 

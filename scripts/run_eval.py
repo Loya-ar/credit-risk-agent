@@ -2,13 +2,16 @@
 
   python -m scripts.run_eval --agent agent.graph:answer
   python -m scripts.run_eval --agent oracle          # harness self-test, should be 100%
-  python -m scripts.run_eval --agent agent.graph:answer --category guard --price-in 0.3 --price-out 2.5
+  python -m scripts.run_eval --agent agent.graph:answer --category guard
   python -m scripts.run_eval --agent agent.graph:answer --record --min-pass-rate 0.8
 
 Writes reports/eval/<timestamp>.json (every case, answer and grade) and prints the summary.
-Prices are USD per million tokens. --record saves each case's model responses to
-evals/recordings/ for the CI replay tests. --min-pass-rate exits 1 when the pass
-rate is lower or any loan-level column leaked (used by the nightly workflow).
+Use a free-tier Gemini key (no billing linked): it can't be charged. The agent paces
+itself to AGENT_RPM calls a minute (default 5, the free-tier limit). --price-in /
+--price-out (USD per million tokens) only matter for a paid key and default to 0.
+--record saves each case's model responses to evals/recordings/ for the CI replay
+tests. --min-pass-rate exits 1 when the pass rate is lower or any loan-level column
+leaked (used by the manual eval workflow).
 """
 from __future__ import annotations
 
@@ -48,6 +51,19 @@ def recording_agent(cases):
     return agent, sessions
 
 
+def with_progress(agent, cases):
+    """Print each case as it starts (a free-tier run takes a while)."""
+    case_ids = {c["question"]: c["id"] for c in cases}
+    count = {"n": 0}
+
+    def wrapped(question: str) -> dict:
+        count["n"] += 1
+        print(f"[{count['n']}/{len(cases)}] {case_ids.get(question, '?')}", flush=True)
+        return agent(question)
+
+    return wrapped
+
+
 def step_summary(summary: dict, failed: list[str]) -> str:
     rows = "\n".join(f"| {k} | {v} |" for k, v in summary.items() if k != "by_category")
     cats = "\n".join(f"| {k} | {v} |" for k, v in summary["by_category"].items())
@@ -80,7 +96,8 @@ def main() -> None:
     else:
         agent = load_agent(args.agent, cases, db_path)
 
-    report = run(agent, cases, db_path, price_in=args.price_in, price_out=args.price_out)
+    report = run(with_progress(agent, cases), cases, db_path,
+                 price_in=args.price_in, price_out=args.price_out)
     report["agent"] = args.agent
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)

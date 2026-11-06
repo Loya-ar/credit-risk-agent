@@ -1,12 +1,11 @@
 name: agent-eval
 
-# Full LLM evaluation on live Gemini: nightly and on demand.
-# Needs the GOOGLE_API_KEY repository secret and committed public_data/.
-# Every push already runs the cheap checks (tests.yml), including recorded replays.
+# Full LLM evaluation on live Gemini, started by hand from the Actions tab (no schedule).
+# Needs the GOOGLE_API_KEY repository secret and committed public_data/. Use a free-tier
+# key (no billing linked); the agent paces itself to the free limit of 5 calls a minute.
+# Every push already runs the no-LLM checks (tests.yml), including recorded replays.
 
 on:
-  schedule:
-    - cron: "0 7 * * *"
   workflow_dispatch:
     inputs:
       min_pass_rate:
@@ -44,7 +43,6 @@ jobs:
         if: steps.check.outputs.ready == 'true'
         run: >
           python -m scripts.run_eval --agent agent.graph:answer
-          --price-in 0.3 --price-out 2.5
           --min-pass-rate ${{ github.event.inputs.min_pass_rate || '0.8' }}
       - uses: actions/upload-artifact@v4
         if: always() && steps.check.outputs.ready == 'true'

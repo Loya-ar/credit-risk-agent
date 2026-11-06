@@ -1,4 +1,4 @@
-"""A2: the LangGraph agent (Gemini 2.5 Flash by default).
+"""A2: the LangGraph agent (Gemini 3.6 Flash by default).
 
     llm ──tool calls──> tools ──> llm ... ──final text──> check ──grounded──> END
 
@@ -35,7 +35,7 @@ from agent import tools as agent_tools
 from agent.grounding import ungrounded_numbers
 from agent.public_tables import CATEGORICAL_DIMENSIONS, NUMERIC_BANDS, OTHER
 
-DEFAULT_MODEL = "gemini-2.5-flash"
+DEFAULT_MODEL = "gemini-3.6-flash"
 MAX_LLM_CALLS = 8
 MAX_RESULT_CHARS = 6000
 LOAN_TOOLS = {"score_loan", "explain_score"}
@@ -268,12 +268,20 @@ def api_key() -> str | None:
 
 
 def make_model():
+    """Gemini, paced to AGENT_RPM model calls per minute (default 5, the free-tier limit;
+    0 turns pacing off for a paid key)."""
+    from langchain_core.rate_limiters import InMemoryRateLimiter
     from langchain_google_genai import ChatGoogleGenerativeAI
     key = api_key()
     if not key:
         raise RuntimeError("Set GOOGLE_API_KEY or GEMINI_API_KEY (see .env.example).")
+    rpm = float(os.environ.get("AGENT_RPM", "5"))
+    limiter = InMemoryRateLimiter(requests_per_second=rpm / 60, check_every_n_seconds=0.5,
+                                  max_bucket_size=1) if rpm > 0 else None
+    # A bounded timeout and few retries: an overloaded model (503) should fail the
+    # question quickly rather than hang the app or the eval.
     return ChatGoogleGenerativeAI(model=os.environ.get("AGENT_MODEL", DEFAULT_MODEL), temperature=0,
-                                  google_api_key=key)
+                                  google_api_key=key, timeout=60, max_retries=2, rate_limiter=limiter)
 
 
 _GRAPH = None
