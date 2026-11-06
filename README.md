@@ -107,6 +107,7 @@ Freddie Mac allows publishing noncommercial research results and derived product
 - **`score_loan` / `explain_score`** score loans the user types in.
 - The SQL guard only allows the tables of the database in use, so the public database can't be asked for `loans`.
 - The loan-level `data/agent.duckdb` stays local (gitignored) for development; use it with `AGENT_DB=local`.
+- The two trained model files (`models/lgbm.joblib`, `models/lgbm_calibrated.joblib`) are committed so the deployed app can score loans. A model is a derived product: its trees hold split points and leaf values learned from groups of loans, not loan rows. Everything else in `models/` stays ignored.
 
 ## Agent
 

@@ -13,7 +13,7 @@ AGENT_DB = Path(__file__).resolve().parents[1] / "data" / "agent.duckdb"
 
 needs_models = pytest.mark.skipif(
     not (CALIBRATED_PATH.exists() and RAW_PATH.exists()),
-    reason="trained models not present (gitignored)",
+    reason="trained model files not present",
 )
 needs_agent_db = pytest.mark.skipif(not AGENT_DB.exists(), reason="agent.duckdb not built")
 

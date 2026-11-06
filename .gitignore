@@ -9,7 +9,9 @@ __pycache__/
 .pytest_cache/
 .DS_Store
 .streamlit/secrets.toml
-models/
+models/*
+!models/lgbm.joblib
+!models/lgbm_calibrated.joblib
 mlflow.db
 mlruns/
 mlartifacts/

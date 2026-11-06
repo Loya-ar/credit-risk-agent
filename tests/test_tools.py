@@ -11,7 +11,7 @@ from risk.predict import CALIBRATED_PATH, RAW_PATH
 
 needs_models = pytest.mark.skipif(
     not (CALIBRATED_PATH.exists() and RAW_PATH.exists()),
-    reason="trained models not present (gitignored)",
+    reason="trained model files not present",
 )
 
 LOAN = {
