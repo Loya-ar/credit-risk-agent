@@ -115,10 +115,14 @@ def main() -> None:
         from agent.graph import DEFAULT_MODEL
         model_name = os.environ.get("AGENT_MODEL", DEFAULT_MODEL)
         grades = {g["id"]: g for g in report["grades"]}
+        errors = {c["id"] for c, r in zip(cases, report["results"]) if r.get("error")}
+        saved = 0
         for case in cases:
-            if case["id"] in sessions:
+            # A case that errored (rate limit, outage) has nothing worth replaying.
+            if case["id"] in sessions and case["id"] not in errors:
                 save_recording(case, model_name, sessions[case["id"]].responses, grades[case["id"]]["passed"])
-        print(f"Recorded {len(sessions)} cases to evals/recordings/")
+                saved += 1
+        print(f"Recorded {saved} cases to evals/recordings/ ({len(errors)} errored, not recorded)")
 
     if os.environ.get("GITHUB_STEP_SUMMARY"):
         with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as f:
