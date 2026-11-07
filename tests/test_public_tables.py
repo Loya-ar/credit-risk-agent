@@ -163,3 +163,30 @@ def test_public_mode_without_csvs(monkeypatch):
     monkeypatch.setattr(tools, "ensure_public_db", missing)
     with pytest.raises(ToolError, match="not available"):
         tools.default_db_path()
+
+
+def test_concurrent_builds_do_not_collide(public_dir, tmp_path):
+    """Streamlit runs sessions in parallel threads; on a fresh deploy several of them
+    built the DB at once and failed with a DuckDB write-write conflict."""
+    import threading
+    target = tmp_path / "fresh" / "agent_public.duckdb"
+    errors = []
+
+    def build():
+        try:
+            ensure_public_db(public_dir, target)
+        except Exception as e:  # noqa: BLE001 - any failure fails the test
+            errors.append(repr(e))
+
+    threads = [threading.Thread(target=build) for _ in range(6)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    assert errors == []
+    con = duckdb.connect(str(target), read_only=True)
+    try:
+        assert sorted(r[0] for r in con.execute("SHOW TABLES").fetchall()) == sorted(PUBLIC_TABLES)
+    finally:
+        con.close()
+    assert not list(target.parent.glob("*.tmp"))  # no temp files left behind

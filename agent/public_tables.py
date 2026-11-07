@@ -22,6 +22,7 @@ rebuilt from them.
 from __future__ import annotations
 
 import os
+import threading
 from pathlib import Path
 
 import duckdb
@@ -199,23 +200,42 @@ def build_public_db(public_dir: Path = PUBLIC_DIR, db_path: Path = PUBLIC_DB_PAT
         )
     db_path = Path(db_path)
     db_path.parent.mkdir(parents=True, exist_ok=True)
-    db_path.unlink(missing_ok=True)
-    con = duckdb.connect(str(db_path))
+    # Build into a private temp file, then swap it in with one atomic rename, so a
+    # reader (or a second builder) never sees a half-built database.
+    tmp = db_path.with_name(f"{db_path.stem}.{os.getpid()}.{threading.get_ident()}.tmp")
+    tmp.unlink(missing_ok=True)
+    con = duckdb.connect(str(tmp))
     try:
         for table in PUBLIC_TABLES:
             csv = (Path(public_dir) / f"{table}.csv").as_posix()
             con.execute(f"CREATE TABLE {table} AS SELECT * FROM read_csv_auto('{csv}', header=true)")
     finally:
         con.close()
+    os.replace(tmp, db_path)
     return db_path
 
 
+_BUILD_LOCK = threading.Lock()
+
+
+def _is_fresh(db_path: Path, csvs: list[Path]) -> bool:
+    return db_path.exists() and all(
+        c.exists() and c.stat().st_mtime <= db_path.stat().st_mtime for c in csvs
+    )
+
+
 def ensure_public_db(public_dir: Path = PUBLIC_DIR, db_path: Path = PUBLIC_DB_PATH) -> Path:
-    """Build the public DB if it is missing or older than any of its CSVs."""
+    """Build the public DB if it is missing or older than any of its CSVs.
+
+    Thread-safe: Streamlit runs sessions in parallel threads, and two of them building
+    at once used to collide ("Catalog write-write conflict"). The lock makes the others
+    wait, then re-check and reuse the first build.
+    """
     db_path = Path(db_path)
     csvs = [Path(public_dir) / f"{t}.csv" for t in PUBLIC_TABLES]
-    if db_path.exists() and all(
-        c.exists() and c.stat().st_mtime <= db_path.stat().st_mtime for c in csvs
-    ):
+    if _is_fresh(db_path, csvs):
         return db_path
-    return build_public_db(public_dir, db_path)
+    with _BUILD_LOCK:
+        if _is_fresh(db_path, csvs):
+            return db_path
+        return build_public_db(public_dir, db_path)
