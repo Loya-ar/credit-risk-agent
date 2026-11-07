@@ -28,6 +28,11 @@ try:  # Streamlit Cloud keeps the key in secrets; locally it's an environment va
 except Exception:
     pass
 
+# The demo runs on a free-tier Gemini key: cap agent questions per browser session so one
+# visitor can't use up the daily quota. (A soft limit: reloading the page starts a new session.)
+SESSION_LIMIT = int(os.environ.get("AGENT_SESSION_LIMIT", "10"))
+MAX_QUESTION_CHARS = 500
+
 PURPOSES = {"Purchase": "P", "Cash-out refinance": "C", "No-cash-out refinance": "N"}
 OCCUPANCY = {"Primary residence": "P", "Second home": "S", "Investment": "I"}
 PROPERTY_TYPES = {"Single-family": "SF", "Condo": "CO", "Planned unit": "PU",
@@ -140,7 +145,12 @@ with ask_tab:
             with st.chat_message("assistant"):
                 (st.warning if turn["result"]["refused"] else st.write)(turn["result"]["answer"])
                 show_trace(turn["result"])
-        question = st.chat_input("Ask a question") or clicked
+        used = len(history)
+        question = st.chat_input("Ask a question", max_chars=MAX_QUESTION_CHARS) or clicked
+        if question and used >= SESSION_LIMIT:
+            st.warning(f"This session has used its {SESSION_LIMIT} questions. "
+                       "The loan scoring and data tabs still work without the agent.")
+            question = None
         if question:
             with st.chat_message("user"):
                 st.write(question)
@@ -154,6 +164,8 @@ with ask_tab:
                 (st.warning if result["refused"] else st.write)(result["answer"])
                 show_trace(result)
             history.append({"question": question, "result": result})
+        st.caption(f"Questions this session: {len(history)} of {SESSION_LIMIT} "
+                   "(the demo uses a free-tier key, so usage is capped).")
 
 
 # ---------- score ----------
@@ -216,9 +228,10 @@ with score_tab:
                                "a missed default is assumed to cost that many times a wrongly declined good loan.")
                 drivers = pd.DataFrame(explanation["drivers"])
                 drivers["factor"] = explanation["summary"]
+                drivers["value"] = drivers["value"].astype(str)  # mixed numbers and codes (e.g. 'CA')
                 chart = alt.Chart(drivers).mark_bar().encode(
                     x=alt.X("shap_log_odds:Q", title="Effect on risk (log-odds; right = riskier)"),
-                    y=alt.Y("factor:N", sort=None, title=None),
+                    y=alt.Y("factor:N", sort=None, title=None, axis=alt.Axis(labelLimit=420)),
                     color=alt.condition("datum.shap_log_odds > 0", alt.value("#c2410c"), alt.value("#2563eb")),
                 ).properties(height=220)
                 st.subheader("Top drivers (SHAP)")

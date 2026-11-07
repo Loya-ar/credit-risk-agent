@@ -66,3 +66,20 @@ def test_without_key_or_tables(monkeypatch, tmp_path):
     assert not at.exception
     texts = " ".join(i.value for i in at.info)
     assert "GOOGLE_API_KEY" in texts and "build_public_tables" in texts
+
+
+def test_session_question_limit(monkeypatch, public_db, tmp_path):
+    calls = []
+    monkeypatch.setattr(public_tables, "ensure_public_db", lambda: public_db)
+    monkeypatch.setattr(predict, "CALIBRATED_PATH", tmp_path / "missing.joblib")
+    monkeypatch.setenv("GOOGLE_API_KEY", "test-key")
+    monkeypatch.setenv("AGENT_SESSION_LIMIT", "1")
+    monkeypatch.setattr(agent_graph, "answer", lambda q: calls.append(q) or {
+        "answer": "ok", "refused": False, "tool_calls": [], "usage": {}})
+    at = AppTest.from_file(APP, default_timeout=60)
+    at.run()
+    at.chat_input[0].set_value("first question").run()
+    at.chat_input[0].set_value("second question").run()
+    assert not at.exception
+    assert calls == ["first question"]  # the second never reached the agent
+    assert any("used its 1 questions" in w.value for w in at.warning)
