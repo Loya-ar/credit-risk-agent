@@ -2,7 +2,7 @@
 
 [![tests](https://github.com/Loya-ar/credit-risk-agent/actions/workflows/tests.yml/badge.svg)](https://github.com/Loya-ar/credit-risk-agent/actions/workflows/tests.yml)
 
-A mortgage default model built on Freddie Mac loan-level data, with a 24-month default label, a time-based holdout, and calibrated probabilities. A LangGraph agent answers portfolio questions through validated SQL and model-scoring tools. It is **built, but not yet fully evaluated on the live model** (see [Status](#status)).
+A mortgage default model built on Freddie Mac loan-level data, with a 24-month default label, a time-based holdout, and calibrated probabilities. A LangGraph agent answers portfolio questions through validated SQL and model-scoring tools. On a 54-case evaluation set with hand-checked answers it passed 54/54 in a live run; an earlier run of the score and explain cases passed 9/10, so results vary between runs (see [Agent results](#agent-results)).
 
 **Live demo: [credit-risk-agent-loya.streamlit.app](https://credit-risk-agent-loya.streamlit.app)** (agent chat on aggregate tables only, loan scoring with SHAP drivers, data explorer; 10 agent questions per session on a free-tier key).
 
