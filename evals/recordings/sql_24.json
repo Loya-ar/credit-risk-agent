@@ -10,35 +10,15 @@
         {
           "name": "run_sql",
           "args": {
-            "query": "SELECT mean_predicted, actual_rate FROM model_metrics WHERE version = 'calibrated' AND population = 'all_test';"
+            "query": "SELECT mean_predicted, actual_rate FROM model_metrics WHERE population = 'all_test' AND version = 'calibrated' AND model = 'lightgbm';"
           },
-          "id": "call_17388810374573314240"
+          "id": "call_17542141875202927890"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2462,
-        "output_tokens": 42,
-        "total_tokens": 2504,
-        "input_token_details": {
-          "cache_read": 0
-        }
-      }
-    },
-    {
-      "content": [],
-      "tool_calls": [
-        {
-          "name": "run_sql",
-          "args": {
-            "query": "SELECT model, version, mean_predicted, actual_rate FROM model_metrics WHERE population = 'all_test';"
-          },
-          "id": "call_7687937840384127012"
-        }
-      ],
-      "usage_metadata": {
-        "input_tokens": 2652,
-        "output_tokens": 39,
-        "total_tokens": 2691,
+        "output_tokens": 49,
+        "total_tokens": 2511,
         "input_token_details": {
           "cache_read": 0
         }
@@ -48,17 +28,17 @@
       "content": [
         {
           "type": "text",
-          "text": "For the 2016 test population (`all_test`), the actual default rate is **0.8206%** (`0.008206`). \n\nThe average predicted default probabilities for the models are:\n- **Logistic Regression (calibrated):** 0.6586% (`0.006586`) (raw: 0.5231%)\n- **LightGBM (calibrated):** 0.6533% (`0.006533`) (raw: 0.5160%)",
+          "text": "For the 2016 test loans using the calibrated LightGBM model, the average predicted default probability is 0.65% and the actual default rate is 0.82%.",
           "extras": {
-            "signature": "EmAKXgFpFH0TLY+R2dRhLme5orC6Ut1VyYKV9QztzlQczf8r78zwi7weBPiP+FMCGLjmW6UzVK800ACvBAfBPaC/M01gGqN4oaGJLy7PHyMu+5QhvJq/uhYnRfylVRnTxws="
+            "signature": "EmAKXgFpFH0TWBKx82fdA+rBIqorOe+MlQ0OezLEuyeWiGFi5n90sA3BqFR4MGZFMITOsgzblXHXiuZSddfmRTb1YNiT0KYesZ5MryO1C0oW4///VfuIeD+bAOL9zfnU9Hc="
           }
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
-        "input_tokens": 2962,
-        "output_tokens": 129,
-        "total_tokens": 3091,
+        "input_tokens": 2626,
+        "output_tokens": 41,
+        "total_tokens": 2667,
         "input_token_details": {
           "cache_read": 0
         }

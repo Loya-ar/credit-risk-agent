@@ -10,15 +10,15 @@
         {
           "name": "run_sql",
           "args": {
-            "query": "SELECT vintage, dimension, bucket, loans, defaults, default_rate FROM segments WHERE dimension = 'dti_band' AND bucket = '>50' AND vintage = 2016;"
+            "query": "SELECT loans, defaults, default_rate FROM segments WHERE dimension = 'dti_band' AND bucket = '>50' AND vintage = 2016"
           },
-          "id": "call_16019455707882446738"
+          "id": "call_2302298270757976879"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2468,
-        "output_tokens": 56,
-        "total_tokens": 2524,
+        "output_tokens": 49,
+        "total_tokens": 2517,
         "input_token_details": {
           "cache_read": 0
         }
@@ -30,15 +30,15 @@
         {
           "name": "run_sql",
           "args": {
-            "query": "SELECT DISTINCT bucket FROM segments WHERE dimension = 'dti_band';"
+            "query": "SELECT bucket, loans, defaults, default_rate FROM segments WHERE dimension = 'dti_band' AND vintage = 2016"
           },
-          "id": "call_10070994911253534728"
+          "id": "call_8067302544013895617"
         }
       ],
       "usage_metadata": {
-        "input_tokens": 2619,
-        "output_tokens": 29,
-        "total_tokens": 2648,
+        "input_tokens": 2594,
+        "output_tokens": 44,
+        "total_tokens": 2638,
         "input_token_details": {
           "cache_read": 0
         }
@@ -50,15 +50,15 @@
         {
           "name": "run_sql",
           "args": {
-            "query": "SELECT vintage, dimension, bucket, loans, defaults, default_rate FROM segments WHERE dimension = 'dti_band' AND bucket IN ('43-50', 'Other (small groups)') AND vintage = 2016;"
+            "query": "SELECT SUM(loans) as loans, SUM(defaults) as defaults, SUM(defaults)*1.0/SUM(loans) as default_rate FROM segments WHERE dimension = 'dti_band' AND vintage = 2016 AND bucket IN ('43-50')"
           },
-          "id": "call_4730572879139200273"
+          "id": "call_10549726179747338738"
         }
       ],
       "usage_metadata": {
-        "input_tokens": 2745,
-        "output_tokens": 65,
-        "total_tokens": 2810,
+        "input_tokens": 2860,
+        "output_tokens": 75,
+        "total_tokens": 2935,
         "input_token_details": {
           "cache_read": 0
         }
@@ -70,15 +70,15 @@
         {
           "name": "run_sql",
           "args": {
-            "query": "SELECT SUM(defaults) * 1.0 / SUM(loans) AS combined_default_rate, SUM(loans) AS total_loans, SUM(defaults) AS total_defaults FROM segments WHERE dimension = 'dti_band' AND bucket = '43-50' AND vintage = 2016;"
+            "query": "SELECT bucket FROM segments WHERE dimension = 'dti_band' GROUP BY bucket"
           },
-          "id": "call_11110827823475142501"
+          "id": "call_9938234359438088772"
         }
       ],
       "usage_metadata": {
-        "input_tokens": 2951,
-        "output_tokens": 84,
-        "total_tokens": 3035,
+        "input_tokens": 3067,
+        "output_tokens": 31,
+        "total_tokens": 3098,
         "input_token_details": {
           "cache_read": 0
         }
@@ -88,17 +88,17 @@
       "content": [
         {
           "type": "text",
-          "text": "For 2016 loans with a debt-to-income ratio in the 43-50% band, the default rate was 1.07% (specifically 0.010695, based on 90 defaults out of 8,415 loans). Note that loans with DTI strictly above 50% are not represented as a separate bucket in this dataset.",
+          "text": "For 2016 vintage loans with a debt-to-income ratio in the 43-50% band, the default rate is 1.07% (8,415 loans, 90 defaults).",
           "extras": {
-            "signature": "EmAKXgFpFH0TxH40CmC+ltluPZkiFU+t9PTk/8mhmrI5H6bSdOgI0n9hmky+qECd3BM8ctTrmlzpm18Nn/NX9TA3ZMRvWBS2CZoM8jRDQ+VafM+OdcABjRiTNchHjQpFgdM="
+            "signature": "EmAKXgFpFH0T9Nq08OYb5rwH6X3FKI330mOxkqIWoNlHI4B+nORFpCNC5Ff2qqQzXbiD+6gKWzbaW10Di9OQUD5KMI0PXjd7n0MSt+3ZVQXDwqitXkwuz6EIEn1i07FkB+Y="
           }
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
-        "input_tokens": 3179,
-        "output_tokens": 87,
-        "total_tokens": 3266,
+        "input_tokens": 3197,
+        "output_tokens": 50,
+        "total_tokens": 3247,
         "input_token_details": {
           "cache_read": 0
         }

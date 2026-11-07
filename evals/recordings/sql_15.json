@@ -10,15 +10,15 @@
         {
           "name": "run_sql",
           "args": {
-            "query": "SELECT bucket, loans, defaults, default_rate, mean_predicted FROM segments WHERE dimension = 'credit_score_band' AND vintage = 2016 ORDER BY bucket"
+            "query": "SELECT bucket AS credit_score_band, loans, default_rate AS actual_rate, mean_predicted FROM segments WHERE dimension = 'credit_score_band' AND vintage = 2016 ORDER BY bucket"
           },
-          "id": "call_341292986496958258"
+          "id": "call_15161436207571399717"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2458,
-        "output_tokens": 52,
-        "total_tokens": 2510,
+        "output_tokens": 60,
+        "total_tokens": 2518,
         "input_token_details": {
           "cache_read": 0
         }
@@ -28,17 +28,17 @@
       "content": [
         {
           "type": "text",
-          "text": "For 2016 test loans, here is the comparison of actual default rates versus the model's mean predicted default rates by credit score band:\n\n- **<620**: Actual 5.07%, Predicted 4.39% (217 loans, 11 defaults)\n- **620-659**: Actual 3.56%, Predicted 2.77% (1,992 loans, 71 defaults)\n- **660-699**: Actual 2.19%, Predicted 1.52% (6,039 loans, 132 defaults)\n- **700-739**: Actual 1.08%, Predicted 0.80% (10,720 loans, 116 defaults)\n- **740-779**: Actual 0.36%, Predicted 0.38% (14,605 loans, 53 defaults)\n- **780+**: Actual 0.15%, Predicted 0.16% (16,027 loans, 24 defaults)",
+          "text": "For the 2016 test vintage, here is the comparison of predicted and actual default rates by credit score band:\n\n* **<620**: Loans: 217 | Actual rate: 5.07% | Predicted rate: 4.39%\n* **620-659**: Loans: 1,992 | Actual rate: 3.56% | Predicted rate: 2.77%\n* **660-699**: Loans: 6,039 | Actual rate: 2.19% | Predicted rate: 1.52%\n* **700-739**: Loans: 10,720 | Actual rate: 1.08% | Predicted rate: 0.80%\n* **740-779**: Loans: 14,605 | Actual rate: 0.36% | Predicted rate: 0.38%\n* **780+**: Loans: 16,027 | Actual rate: 0.15% | Predicted rate: 0.16%",
           "extras": {
-            "signature": "EmAKXgFpFH0Tan9HyZHxNlrLZfVIEEUmi1xAbObtt3nJ6lpc015deHa29hva39ljEo1uh7EyW95RKbhZ7O9r6E3OIe9DvdCrucIexvsak/NSv2d4pSyRqB9IG9g5r9EblYc="
+            "signature": "EmAKXgFpFH0TIWwsDJX94Jk3UnbWkzcNnoTK24sS23ill/JYCl3S9sdSZlm7HvjrTGgfn4e2LJEMujcfVazaB+5eWY8DIWGtANxk2SCOxWlJlWGEC1cpesDmrKABmUuAgrU="
           }
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
-        "input_tokens": 2813,
-        "output_tokens": 256,
-        "total_tokens": 3069,
+        "input_tokens": 2809,
+        "output_tokens": 254,
+        "total_tokens": 3063,
         "input_token_details": {
           "cache_read": 0
         }

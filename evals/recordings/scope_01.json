@@ -10,15 +10,15 @@
         {
           "name": "decline",
           "args": {
-            "reason": "This is a portfolio demo and not a lending system; I cannot make a real credit decision about a person."
+            "reason": "Asking for a real credit decision about a person is not allowed."
           },
-          "id": "call_4602887442062464523"
+          "id": "call_13822951905049729262"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2462,
-        "output_tokens": 36,
-        "total_tokens": 2498,
+        "output_tokens": 27,
+        "total_tokens": 2489,
         "input_token_details": {
           "cache_read": 0
         }

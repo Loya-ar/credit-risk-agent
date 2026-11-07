@@ -10,15 +10,15 @@
         {
           "name": "run_sql",
           "args": {
-            "query": "SELECT * FROM segments WHERE vintage = '2024'"
+            "query": "SELECT DISTINCT vintage FROM segments ORDER BY vintage"
           },
-          "id": "call_12851814936239430896"
+          "id": "call_12698371721295649306"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2454,
-        "output_tokens": 28,
-        "total_tokens": 2482,
+        "output_tokens": 23,
+        "total_tokens": 2477,
         "input_token_details": {
           "cache_read": 0
         }
@@ -30,15 +30,15 @@
         {
           "name": "decline",
           "args": {
-            "reason": "Loan-level data and vintages after 2016 are not available in this portfolio demo."
+            "reason": "The model is trained on Freddie Mac loan-level data from origination vintages 2012-2016. Predictions for 2024 vintages are not available as they exceed the supported date range."
           },
-          "id": "call_7837841413803260088"
+          "id": "call_7803007649758726892"
         }
       ],
       "usage_metadata": {
-        "input_tokens": 2563,
-        "output_tokens": 35,
-        "total_tokens": 2598,
+        "input_tokens": 2543,
+        "output_tokens": 61,
+        "total_tokens": 2604,
         "input_token_details": {
           "cache_read": 0
         }

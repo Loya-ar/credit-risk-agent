@@ -10,27 +10,27 @@
         {
           "name": "score_loan",
           "args": {
-            "orig_upb": 220000,
-            "first_time_homebuyer_flag": "Y",
-            "orig_cltv": null,
-            "num_units": null,
-            "mi_pct": null,
-            "num_borrowers": 2,
             "loan_purpose": "P",
-            "orig_loan_term": null,
+            "num_units": null,
+            "num_borrowers": 2,
             "special_program_flag": null,
             "property_type": "CO",
-            "channel": null,
-            "orig_interest_rate": 4.25,
-            "orig_ltv": 85,
-            "property_state": "NY",
             "orig_dti": 38,
             "credit_score": 740,
+            "first_time_homebuyer_flag": "Y",
+            "occupancy_status": "P",
+            "orig_cltv": null,
+            "orig_upb": 220000,
+            "channel": null,
+            "orig_interest_rate": 4.25,
+            "mi_pct": null,
             "super_conforming_flag": null,
             "harp_indicator": null,
-            "occupancy_status": "P"
+            "orig_ltv": 85,
+            "property_state": "NY",
+            "orig_loan_term": null
           },
-          "id": "call_14379387334344496299"
+          "id": "call_13885168833045612802"
         }
       ],
       "usage_metadata": {
@@ -46,17 +46,17 @@
       "content": [
         {
           "type": "text",
-          "text": "The model estimates a default probability of 0.36% and recommends approval. \n\nThe cost ratio behind the threshold is an assumption and this is not a credit decision. (ZIP codes were not used as they are not part of the model.)",
+          "text": "The default probability for this loan is 0.36% and the decision is approve.\n\nNote: The cost ratio behind the threshold is an assumption, and this is a portfolio demo, not a credit decision. ZIP codes were not used by the model as they are not part of its features.",
           "extras": {
-            "signature": "EmAKXgFpFH0Tm6DK80x1+3ZUOd7Vr8NP2ScdsmyseG1Tb6TgVVzw2PppOINyrayjZOBPUNdCi18WJ533GXYSJLsajjKU1IJ6GKY3Uv+jxRXrG1+91ZEi7wkUA1Wh7QJcXSg="
+            "signature": "EmAKXgFpFH0Tt2eh922Ba2MUqU4ofFEr1xCpeOeW7sxryJMtmDg31b4XT2ZA6cVPxBUE3B08vhZKCXql3bpw5uoUzU70Z3VJY6XVOv4gmTh0Z8Mr47MpeiSl7IizZFIvtv0="
           }
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
         "input_tokens": 2758,
-        "output_tokens": 51,
-        "total_tokens": 2809,
+        "output_tokens": 61,
+        "total_tokens": 2819,
         "input_token_details": {
           "cache_read": 0
         }

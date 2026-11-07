@@ -10,15 +10,15 @@
         {
           "name": "run_sql",
           "args": {
-            "query": "SELECT bucket as state, default_rate, loans, defaults FROM segments WHERE dimension = 'property_state' AND vintage = 2016 ORDER BY default_rate DESC LIMIT 1"
+            "query": "SELECT bucket AS property_state, default_rate, loans, defaults FROM segments WHERE dimension = 'property_state' AND vintage = 2016 ORDER BY default_rate DESC LIMIT 1"
           },
-          "id": "call_653123162308751717"
+          "id": "call_2872595756391465868"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2454,
-        "output_tokens": 54,
-        "total_tokens": 2508,
+        "output_tokens": 56,
+        "total_tokens": 2510,
         "input_token_details": {
           "cache_read": 0
         }
@@ -28,17 +28,17 @@
       "content": [
         {
           "type": "text",
-          "text": "In 2016, Florida (FL) had the highest default rate at 3.86% (2,983 loans and 115 defaults).",
+          "text": "In 2016, Florida (FL) had the highest default rate at 3.86% (115 defaults out of 2,983 loans).",
           "extras": {
-            "signature": "EmAKXgFpFH0Tfa6L3XLCVz11GSbvyeM7l92kH1B0YVeJ/65OI63rCyAZdAF4SyhsOMI2XUTgEWjAsrEptkrGIjR20Qzfl0WMaPAlIrvu9S+OEckiyMQF+w4SkGx1pqrJtgQ="
+            "signature": "EmAKXgFpFH0T8JX0NLySoI0rXN+JXZzkh9fMRssVF3ercpsLRU1YydosRD1CGoHNqJipGWbiw9HANb1c9je5oQBF/hnaIAvqkfNOoZpw+S9tuGHgQH2DFQ2cIGCnIb6fjGo="
           }
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
-        "input_tokens": 2611,
-        "output_tokens": 37,
-        "total_tokens": 2648,
+        "input_tokens": 2617,
+        "output_tokens": 38,
+        "total_tokens": 2655,
         "input_token_details": {
           "cache_read": 0
         }

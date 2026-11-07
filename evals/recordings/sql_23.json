@@ -1,6 +1,6 @@
 {
   "case_id": "sql_23",
-  "question": "How many loans to repeat buyers (not first-time homebuyers) defaulted in the 2015 vintage?",
+  "question": "How many 2015-vintage loans not flagged as first-time homebuyer loans defaulted? (This group includes refinances.)",
   "model": "gemini-3.5-flash-lite",
   "passed": true,
   "responses": [
@@ -10,15 +10,15 @@
         {
           "name": "run_sql",
           "args": {
-            "query": "SELECT dimension, bucket, vintage, loans, defaults, default_rate FROM segments WHERE dimension = 'first_time_homebuyer' AND vintage = 2015"
+            "query": "SELECT loans, defaults, default_rate FROM segments WHERE dimension = 'first_time_homebuyer' AND vintage = 2015 AND bucket = 'N'"
           },
-          "id": "call_15403352228304779022"
+          "id": "call_425446380162962155"
         }
       ],
       "usage_metadata": {
-        "input_tokens": 2463,
+        "input_tokens": 2468,
         "output_tokens": 50,
-        "total_tokens": 2513,
+        "total_tokens": 2518,
         "input_token_details": {
           "cache_read": 0
         }
@@ -28,17 +28,17 @@
       "content": [
         {
           "type": "text",
-          "text": "In the 2015 vintage, repeat buyers (non-first-time homebuyers, bucket 'N') had 270 defaults out of 41,070 loans.",
+          "text": "For 2015-vintage loans not flagged as first-time homebuyer loans (bucket 'N'), there were **270** defaults out of 41,070 loans (a default rate of 0.66%).",
           "extras": {
-            "signature": "EmAKXgFpFH0TOiCawy/NYW34UXLFSiwoJgwOshsIQwy9OTATrxNLb/ts3EpvJM6Pm0C8jMVKvTg7lHVbFx9eAbWc/92FWo/yP01Hg47s4lWm1zlmXjJ3bh7thj2lhyMVwko="
+            "signature": "EmAKXgFpFH0T3xiGODhEp+se9iy+KfYSsF7wAUNsO0VWQxrKUWP3d32FKwwx7wdWydd0KplQZhI0EArwGBGoPyIljHnAwoLf9grPBbi0pI/ul7XmXvIEgnueQBku+ice+QE="
           }
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
-        "input_tokens": 2679,
-        "output_tokens": 40,
-        "total_tokens": 2719,
+        "input_tokens": 2615,
+        "output_tokens": 52,
+        "total_tokens": 2667,
         "input_token_details": {
           "cache_read": 0
         }

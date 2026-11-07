@@ -12,7 +12,7 @@
           "args": {
             "query": "SELECT loans, defaults, default_rate FROM segments WHERE dimension = 'all' AND vintage = 2016;"
           },
-          "id": "call_7874431616009145670"
+          "id": "call_6238304075542125507"
         }
       ],
       "usage_metadata": {
@@ -30,7 +30,7 @@
           "type": "text",
           "text": "For loans originated in 2016, the overall default rate was 0.82% (407 defaults out of 49,600 loans).",
           "extras": {
-            "signature": "EmAKXgFpFH0TWxIBY+gWQVKTek/VuTnS8fu4kQW5Tdh+Lh9Cr/slouAOm4GILuE/Y2Y5gyIE04/G+XQMtfx2fQGAUVly3sqnhvD8dCrujPTqEak2yi+D2ORl/o92TJqYMOs="
+            "signature": "EmAKXgFpFH0TN6PWnT1g7NlskOt27M1pgVwdThRsJDPbQLCZv27Hy291Xl56oqm0FPf2Zyey5GdAwVWeoi7WkMyXHlMnsNCHHSbkB+8RlkspBa4/bBXASbZZd+r/RvenPk8="
           }
         }
       ],

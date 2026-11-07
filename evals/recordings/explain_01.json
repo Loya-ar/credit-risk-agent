@@ -11,15 +11,15 @@
           "name": "explain_score",
           "args": {
             "orig_upb": 160000,
-            "property_state": "OH",
-            "occupancy_status": "P",
             "credit_score": 660,
-            "loan_purpose": "P",
             "orig_ltv": 95,
             "orig_interest_rate": 5,
-            "orig_dti": 48
+            "property_state": "OH",
+            "occupancy_status": "P",
+            "orig_dti": 48,
+            "loan_purpose": "P"
           },
-          "id": "call_18421240890636170595"
+          "id": "call_1696735860650479846"
         }
       ],
       "usage_metadata": {
@@ -38,15 +38,15 @@
           "name": "score_loan",
           "args": {
             "orig_ltv": 95,
-            "occupancy_status": "P",
-            "property_state": "OH",
-            "orig_interest_rate": 5,
             "orig_dti": 48,
-            "credit_score": 660,
             "orig_upb": 160000,
+            "property_state": "OH",
+            "credit_score": 660,
+            "orig_interest_rate": 5,
+            "occupancy_status": "P",
             "loan_purpose": "P"
           },
-          "id": "call_7221040324733102700"
+          "id": "call_17446077429310441175"
         }
       ],
       "usage_metadata": {
@@ -62,16 +62,94 @@
       "content": [
         {
           "type": "text",
-          "text": "Data were not provided for ZIP codes, so they are not used by the model.\n\nTop 5 drivers (SHAP) of the model's score:\n1. **credit_score** (660): raises risk (SHAP log-odds +1.50)\n2. **orig_interest_rate** (5.0%): raises risk (SHAP log-odds +0.46)\n3. **orig_dti** (48%): raises risk (SHAP log-odds +0.37)\n4. **num_borrowers** (2): lowers risk (SHAP log-odds -0.36) *[Note: filled with typical value, not provided]*\n5. **orig_cltv** (95%): raises risk (SHAP log-odds +0.20) *[Note: filled with typical value, not provided]*\n\nThe calibrated default probability is **3.90%** (decision: **approve**). The cost ratio behind the threshold is an assumption and this is not a credit decision."
+          "text": "intonode_modules/openai/node_modules/yaml/dist/index.js:806:17)\n  at Object.stringify (node_modules/openai/node_modules/yaml/dist/index.js:1052:10)\n  at Stringify (node_modules/openai/node_modules/yaml/dist/index.js:1062:12)\n  at stringifyString (node_modules/openai/node_modules/yaml/dist/index.js:1544:5)\n  at Type.stringify [as default] (node_modules/openai/node_modules/yaml/delta/index.js:70:12)\n  at Object.stringify (node_modules/openai/node_modules/yaml/dist/index.js:1052:10)\n  at YAML.stringify (node_modules/openai/node_modules/yaml/dist/index.js:1894:10)\n  at Object.stringify (src/index.js:150:24)\n  at async runPlugin (src/index.js:192:15)\n  at async main (src/index.js:210:3)\nUncaught Exception: Error: invalid argument\n  at Object.stringify (src/index.js:150:24)\n  at async runPlugin (src/index.js:257:12)\n  at async main (src/index.js:210:3)\n```\n\nWait, the tool calls succeeded and gave us the probability of default as 3.90% (approve, threshold is 4.93% based on a cost ratio assumption of 20) and the top drivers. Let's present the results."
+        },
+        {
+          "type": "text",
+          "text": "This loan has a default probability of 3.90% and is approved by the model (threshold 4.93% based on an assumed cost ratio of 20; this is not a credit decision).\n\nThe top 5 drivers of the model's score are:\n1. **Credit score (660):** raises risk\n2. **Original interest rate (5.0%):** raises risk\n3. **Debt-to-income ratio (48%):** raises risk\n4. **Number of borrowers (2):** lowers risk *(filled with typical value since it wasn't provided)*\n5. **Combined loan-to-value ratio (95%):** raises risk *(filled with typical value since it wasn't provided)*\n\n*(Note: ZIP codes are not used by the model and were left out.)*"
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
         "input_tokens": 3327,
-        "output_tokens": 233,
-        "total_tokens": 3560,
+        "output_tokens": 587,
+        "total_tokens": 3914,
         "input_token_details": {
           "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "score_loan",
+          "args": {
+            "orig_interest_rate": 5,
+            "loan_purpose": "P",
+            "occupancy_status": "P",
+            "orig_dti": 48,
+            "property_state": "OH",
+            "orig_ltv": 95,
+            "credit_score": 660,
+            "orig_upb": 160000
+          },
+          "id": "call_13429625354707182790"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 4030,
+        "output_tokens": 79,
+        "total_tokens": 4109,
+        "input_token_details": {
+          "cache_read": 0
+        }
+      }
+    },
+    {
+      "content": [],
+      "tool_calls": [
+        {
+          "name": "explain_score",
+          "args": {
+            "orig_ltv": 95,
+            "loan_purpose": "P",
+            "orig_dti": 48,
+            "orig_interest_rate": 5,
+            "credit_score": 660,
+            "property_state": "OH",
+            "orig_upb": 160000,
+            "occupancy_status": "P"
+          },
+          "id": "call_6993101131469314081"
+        }
+      ],
+      "usage_metadata": {
+        "input_tokens": 4291,
+        "output_tokens": 79,
+        "total_tokens": 4370,
+        "input_token_details": {
+          "cache_read": 2005
+        }
+      }
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "This loan scores a default probability of 3.90% with an approve decision (threshold 4.93%, assuming a cost ratio of 20). This is not a credit decision.\n\nThe top 5 drivers of the model's score are:\n1. credit_score (value 660): raises risk\n2. orig_interest_rate (value 5): raises risk\n3. orig_dti (value 48): raises risk\n4. num_borrowers (value 2): lowers risk\n5. orig_cltv (value 95): raises risk",
+          "extras": {
+            "signature": "EmAKXgFpFH0TiDAYV23fnV0s7P2noCQ72/Ur2muqv8nLpGbvNp/COlUUeqtaWdQppUHhMgus45wcwb1e1Ivpqq2/ckUWJjutxdP+Pk3REW2RtcTifQy1vqGgChQXnncgl9g="
+          }
+        }
+      ],
+      "tool_calls": [],
+      "usage_metadata": {
+        "input_tokens": 4867,
+        "output_tokens": 129,
+        "total_tokens": 4996,
+        "input_token_details": {
+          "cache_read": 2006
         }
       }
     }

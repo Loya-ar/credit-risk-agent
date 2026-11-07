@@ -10,42 +10,29 @@
         {
           "name": "run_sql",
           "args": {
-            "query": "SELECT * FROM segments WHERE dimension = 'interest_rate_band'"
+            "query": "SELECT * FROM segments WHERE dimension = 'interest_rate_band' AND bucket = '>5.0'"
           },
-          "id": "call_6933993904320137889"
+          "id": "call_4395014536908276479"
+        },
+        {
+          "name": "score_loan",
+          "args": {
+            "property_state": "OH",
+            "orig_ltv": 90,
+            "orig_interest_rate": 7.5,
+            "loan_purpose": "P",
+            "orig_dti": 40,
+            "credit_score": 680,
+            "occupancy_status": "P",
+            "orig_upb": 180000
+          },
+          "id": "call_4395014536908278434"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2486,
-        "output_tokens": 29,
-        "total_tokens": 2515,
-        "input_token_details": {
-          "cache_read": 0
-        }
-      }
-    },
-    {
-      "content": [],
-      "tool_calls": [
-        {
-          "name": "score_loan",
-          "args": {
-            "orig_ltv": 90,
-            "orig_interest_rate": 7.5,
-            "property_state": "OH",
-            "orig_dti": 40,
-            "orig_upb": 180000,
-            "occupancy_status": "P",
-            "loan_purpose": "P",
-            "credit_score": 680
-          },
-          "id": "call_3085110307331952149"
-        }
-      ],
-      "usage_metadata": {
-        "input_tokens": 3667,
-        "output_tokens": 81,
-        "total_tokens": 3748,
+        "output_tokens": 118,
+        "total_tokens": 2604,
         "input_token_details": {
           "cache_read": 0
         }

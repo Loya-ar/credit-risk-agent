@@ -11,15 +11,15 @@
           "name": "score_loan",
           "args": {
             "credit_score": 620,
-            "orig_dti": 50,
-            "orig_upb": 150000,
             "orig_ltv": 97,
-            "property_state": "TX",
-            "loan_purpose": "P",
             "occupancy_status": "P",
+            "orig_dti": 50,
+            "loan_purpose": "P",
+            "orig_upb": 150000,
+            "property_state": "TX",
             "orig_interest_rate": 5.5
           },
-          "id": "call_7858857226276834906"
+          "id": "call_14665816268181775655"
         }
       ],
       "usage_metadata": {
@@ -35,17 +35,17 @@
       "content": [
         {
           "type": "text",
-          "text": "Based on the model, the default probability for this loan is 5.61% and the decision is **decline**. \n\n*Note: ZIP codes are not used by the model and were left out. The cost ratio behind the threshold is an assumption, and this is a portfolio demo, not a credit decision.*",
+          "text": "The default probability for this loan is 5.61% and the decision is **decline**. \n\n*(Note: The cost ratio behind the threshold is an assumption, and this is a portfolio demo, not a credit decision.)*",
           "extras": {
-            "signature": "EmAKXgFpFH0TS924KZ4E0Zs4AD/0HQ953MP2RCFen+4CqiOycaW13JywfPNFUab+I2tLg1QllLZRlPaDSp58Oc6pI48cFF0TlBgr9Brgw2tK5lGdIpHdYubEBDYi0Se9wlE="
+            "signature": "EmAKXgFpFH0TGwgItP6qZ5869roZNsccfSsLReIu2/HqLcxFZEyoAHhPii81eP15YJ5EdO1CVYptqizfURqAdiH5ArUjBFQpXd8HzjGiH8Nlqe5Ofe9J/UXrPEe/xVFd3xs="
           }
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
         "input_tokens": 2752,
-        "output_tokens": 66,
-        "total_tokens": 2818,
+        "output_tokens": 49,
+        "total_tokens": 2801,
         "input_token_details": {
           "cache_read": 0
         }

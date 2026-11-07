@@ -10,15 +10,15 @@
         {
           "name": "run_sql",
           "args": {
-            "query": "SELECT bucket, loans, defaults, default_rate FROM segments WHERE dimension = 'loan_purpose' AND vintage = 2015 AND bucket IN ('P', 'C')"
+            "query": "SELECT bucket AS loan_purpose, loans, defaults, default_rate FROM segments WHERE dimension = 'loan_purpose' AND vintage = 2015 AND bucket IN ('P', 'C')"
           },
-          "id": "call_16702390587750896998"
+          "id": "call_6916775872071439870"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2458,
-        "output_tokens": 52,
-        "total_tokens": 2510,
+        "output_tokens": 56,
+        "total_tokens": 2514,
         "input_token_details": {
           "cache_read": 0
         }
@@ -28,17 +28,17 @@
       "content": [
         {
           "type": "text",
-          "text": "For the 2015 vintage:\n- **Cash-out refinances (C)**: Default rate is 0.59% (60 defaults out of 10,167 loans).\n- **Purchases (P)**: Default rate is 0.72% (155 defaults out of 21,419 loans).",
+          "text": "For the 2015 vintage:\n- **Cash-out refinances (C)**: 10,167 loans, 60 defaults, default rate of **0.59%** (0.005901).\n- **Purchases (P)**: 21,419 loans, 155 defaults, default rate of **0.72%** (0.007237).",
           "extras": {
-            "signature": "EmAKXgFpFH0TXZCeC7Fy7DBDJABuwKSAxvPxecphfC07Noe2HeQNRYstrM9PrSexV0jyBv/wu+/U/kEZENbIWNWQFUFqJdMCf6FXq97Qbgue9Mi5TgA2fYJhjQAjOPVl+fM="
+            "signature": "EmAKXgFpFH0Tw+OIe/74S7kBl5t92FpYbtjC+BziievZSB0n4UTNXipBpe7c5DJ45kdVYRIhHzpSy54Efx0kBEzJyntYV2F0aFLsHjZBSvVunH8eIpY5UW4TPoIkQO/zQdc="
           }
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
-        "input_tokens": 2639,
-        "output_tokens": 79,
-        "total_tokens": 2718,
+        "input_tokens": 2649,
+        "output_tokens": 99,
+        "total_tokens": 2748,
         "input_token_details": {
           "cache_read": 0
         }

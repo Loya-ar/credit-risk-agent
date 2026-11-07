@@ -12,7 +12,7 @@
           "args": {
             "query": "SELECT sum(loans) FROM segments WHERE dimension = 'all' AND vintage = 2014;"
           },
-          "id": "call_5280725759386877449"
+          "id": "call_7928491310246154100"
         }
       ],
       "usage_metadata": {
@@ -30,7 +30,7 @@
           "type": "text",
           "text": "There are 49,241 loans in the 2014 vintage.",
           "extras": {
-            "signature": "EmAKXgFpFH0T/TgMvAzw10c8Wd92iTgJefMPTc4K0FNx5Kc6VtMvcK2jJPLB+C3N6Jbnm1FkMoBWcPCg7mIqc1znSboSeuGCK4JVqiV3Wc9+K1IczvDj2Yp2sno8Tk5dTZ4="
+            "signature": "EmAKXgFpFH0TY0MuSvb3dQKe7qq+jZ1koyGvovV3ZHud+2+3g+ytJI06H+yKlneben2AWG3D+FMey6aQjNpoh9ELZtJ+i8krmnsU0Pq5kW87hvRPTV98YEwx7b7oijkP1ww="
           }
         }
       ],

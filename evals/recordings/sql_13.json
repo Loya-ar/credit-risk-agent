@@ -10,9 +10,9 @@
         {
           "name": "run_sql",
           "args": {
-            "query": "SELECT dimension, bucket, vintage, loans, defaults, default_rate FROM segments WHERE vintage = 2014 AND dimension = 'dti_band'"
+            "query": "SELECT loans, defaults, default_rate FROM segments WHERE dimension = 'dti_band' AND bucket = 'missing' AND vintage = 2014"
           },
-          "id": "call_15254514772527759334"
+          "id": "call_2781598266650843970"
         }
       ],
       "usage_metadata": {
@@ -28,17 +28,17 @@
       "content": [
         {
           "type": "text",
-          "text": "For 2014 loans with missing (no reported) DTI, the default rate was 1.9805% (144 defaults out of 7,271 loans).",
+          "text": "For 2014 loans with no reported DTI (missing DTI band), the default rate was 1.98% (144 defaults out of 7,271 loans).",
           "extras": {
-            "signature": "EmAKXgFpFH0TvDmnitzrQ1PXFB+YZ57uguqaY7J0XeVhnDMw/W6s3j4yIQdTmUY/IJV2tizbVJnILgbyfvfU5l+pTZlnhxQm0YtT2f7Y3LG3Yk5M97cp/9B+KyxNKaKmpH4="
+            "signature": "EmAKXgFpFH0T/PivGy26EF1ML1QsYUTAOIW5O/YqJakelqdiZmoU9Tmkh89MMpF71MkVxkEKZNIalWHEJYC+CPf4RdjbTHpj+4P/aeQKENP0WUFWgQE/zbM5EftJOWbtiLU="
           }
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
-        "input_tokens": 2812,
+        "input_tokens": 2600,
         "output_tokens": 43,
-        "total_tokens": 2855,
+        "total_tokens": 2643,
         "input_token_details": {
           "cache_read": 0
         }

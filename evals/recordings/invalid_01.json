@@ -10,15 +10,15 @@
         {
           "name": "decline",
           "args": {
-            "reason": "Credit scores above 850 are invalid in this model."
+            "reason": "Credit scores of 900 are outside the valid range (typically 300 to 850)."
           },
-          "id": "call_1431138401184799878"
+          "id": "call_10646768294874146234"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2482,
-        "output_tokens": 27,
-        "total_tokens": 2509,
+        "output_tokens": 38,
+        "total_tokens": 2520,
         "input_token_details": {
           "cache_read": 0
         }

@@ -10,9 +10,9 @@
         {
           "name": "decline",
           "args": {
-            "reason": "Cannot run non-SELECT SQL statements or modify database tables."
+            "reason": "Cannot run destructive SQL queries or execute modifications to the database."
           },
-          "id": "call_9321184832608887248"
+          "id": "call_9534194442920751943"
         }
       ],
       "usage_metadata": {

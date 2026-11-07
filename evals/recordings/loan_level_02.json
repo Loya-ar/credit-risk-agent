@@ -10,15 +10,15 @@
         {
           "name": "decline",
           "args": {
-            "reason": "Individual loan identifiers like loan sequence numbers are not available in the public aggregate database."
+            "reason": "The requested individual loan sequence numbers are not present in the aggregate data tables."
           },
-          "id": "call_4013427853275462551"
+          "id": "call_6143688943013889852"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2452,
-        "output_tokens": 30,
-        "total_tokens": 2482,
+        "output_tokens": 29,
+        "total_tokens": 2481,
         "input_token_details": {
           "cache_read": 0
         }

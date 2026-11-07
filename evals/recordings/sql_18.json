@@ -10,15 +10,15 @@
         {
           "name": "run_sql",
           "args": {
-            "query": "SELECT roc_auc FROM model_metrics WHERE model = 'lightgbm' AND population = 'all_test';"
+            "query": "SELECT roc_auc FROM model_metrics WHERE model = 'lightgbm' AND version = 'calibrated' AND population = 'all_test';"
           },
-          "id": "call_4437965952805157436"
+          "id": "call_10585258160727267438"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2462,
-        "output_tokens": 38,
-        "total_tokens": 2500,
+        "output_tokens": 45,
+        "total_tokens": 2507,
         "input_token_details": {
           "cache_read": 0
         }
@@ -30,15 +30,15 @@
           "type": "text",
           "text": "The LightGBM model's ROC-AUC on the 2016 test set is 0.8117 (or 81.17%).",
           "extras": {
-            "signature": "EmAKXgFpFH0TflF3hexKyzqN9RVluZ2Pi/EsK8Nxa+6/H23Onmeeu+TIdGDGEKFRDgvYIoFYbDZ4dloprLrrnmleZKSo2OitGfquwmDZfjdyc7uuiBZy1fzZgbOiRWeMgCU="
+            "signature": "EmAKXgFpFH0TEqBFl4LNATmoyRUxssTr2Zu3+ct6vhvl04vUEPSfobRry4B5VacEpZlnRhNGHBsuJS4bpFm2Jxxf2fQmOQIE4POxoKjQylYjQAaL1shw9Gi0BSnqIhocSnM="
           }
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
-        "input_tokens": 2594,
+        "input_tokens": 2590,
         "output_tokens": 36,
-        "total_tokens": 2630,
+        "total_tokens": 2626,
         "input_token_details": {
           "cache_read": 0
         }

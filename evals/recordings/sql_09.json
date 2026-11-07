@@ -10,15 +10,15 @@
         {
           "name": "run_sql",
           "args": {
-            "query": "SELECT vintage, dimension, bucket, loans, defaults, default_rate FROM segments WHERE dimension = 'property_state' AND bucket = 'FL' AND vintage = 2016"
+            "query": "SELECT loans, defaults, default_rate FROM segments WHERE dimension = 'property_state' AND bucket = 'FL' AND vintage = 2016"
           },
-          "id": "call_7498169808151830652"
+          "id": "call_1043850996022636216"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2455,
-        "output_tokens": 53,
-        "total_tokens": 2508,
+        "output_tokens": 47,
+        "total_tokens": 2502,
         "input_token_details": {
           "cache_read": 0
         }
@@ -28,17 +28,17 @@
       "content": [
         {
           "type": "text",
-          "text": "For Florida loans from the 2016 vintage, the default rate was 3.86% (115 defaults out of 2,983 loans).",
+          "text": "The default rate for Florida loans in 2016 was 3.86% (based on 2,983 loans and 115 defaults).",
           "extras": {
-            "signature": "EmAKXgFpFH0THBqBDfgtWCuMVrIEGmwO8Jg/BoDv7FoGE8wJA/WbwAz5/nQmp7Kjjih7/K5OyPn+kwu0QemLc0ZS5sJJa9X7toTyvMa00+3fuqapmEc/3qGEkOKu6Yu9i88="
+            "signature": "EmAKXgFpFH0TD9hnEwy2K/YIJtmfnoY/1MSaqTc0taXrDDm/c9XcJjzypRQAKIrnsJqv5M9bZ0N910bp+y3uSEEUdLSAECvU+J8T2nfEr2O95DtxCPRZbRz0iNSV3MwDTEA="
           }
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
-        "input_tokens": 2634,
-        "output_tokens": 37,
-        "total_tokens": 2671,
+        "input_tokens": 2595,
+        "output_tokens": 36,
+        "total_tokens": 2631,
         "input_token_details": {
           "cache_read": 0
         }

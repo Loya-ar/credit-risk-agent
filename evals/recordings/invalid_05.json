@@ -10,15 +10,15 @@
         {
           "name": "decline",
           "args": {
-            "reason": "Loans in Canada (foreign countries) are not supported; the model only evaluates properties in US states."
+            "reason": "Ontario, Canada is outside the US, and the model only supports US state codes. ZIP codes or foreign locations are not supported."
           },
-          "id": "call_8448141781253388068"
+          "id": "call_14188917130731354056"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2484,
-        "output_tokens": 34,
-        "total_tokens": 2518,
+        "output_tokens": 40,
+        "total_tokens": 2524,
         "input_token_details": {
           "cache_read": 0
         }

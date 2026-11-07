@@ -10,15 +10,15 @@
         {
           "name": "decline",
           "args": {
-            "reason": "Asking to list system tables using information_schema violates the rule against running anything other than a plain SELECT on the specified aggregate tables."
+            "reason": "Requests to query system tables or information_schema are not permitted."
           },
-          "id": "call_3912336013180292825"
+          "id": "call_18222555022511470570"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2456,
-        "output_tokens": 40,
-        "total_tokens": 2496,
+        "output_tokens": 27,
+        "total_tokens": 2483,
         "input_token_details": {
           "cache_read": 0
         }

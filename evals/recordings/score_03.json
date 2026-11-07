@@ -10,16 +10,16 @@
         {
           "name": "score_loan",
           "args": {
-            "occupancy_status": "P",
             "property_state": "CA",
-            "credit_score": 800,
+            "occupancy_status": "P",
             "orig_ltv": 60,
-            "orig_dti": 20,
             "orig_interest_rate": 3.5,
+            "credit_score": 800,
             "orig_upb": 300000,
-            "loan_purpose": "N"
+            "loan_purpose": "N",
+            "orig_dti": 20
           },
-          "id": "call_15554650817052758263"
+          "id": "call_13222857078031296527"
         }
       ],
       "usage_metadata": {
@@ -35,17 +35,17 @@
       "content": [
         {
           "type": "text",
-          "text": "- Default probability: 0.06% (0.00056)\n- Decision: Approve\n\nNote: The cost ratio behind the threshold (20) is an assumption, and this is a portfolio demo, not a credit decision. (ZIP codes were not used as they are not part of the model.)",
+          "text": "**Score and Decision:**\n- **Default Probability:** 0.06% (0.000564)\n- **Decision:** Approve\n\n*Note:* ZIP codes are not used by the model and were not included. The cost ratio behind the threshold (20) is an assumption, and this is a portfolio demo, not a credit decision.",
           "extras": {
-            "signature": "EmAKXgFpFH0TNQ26AYlPicsRYl54UOF8N2jFRwm4quQS6V2V+ptzee3Vnp1iUvqQzxdM8QfVF1H31Bs68REi+9o/+lNfMn3TRVdfnPKhWwjy4uPI7OJvGBqMMb03YJ20JRo="
+            "signature": "EmAKXgFpFH0TYdq0d5mNRDTw8in950fZ8MMl4Of52RyMJfd/q1MzaiEqd9m65U6VqvhC7/f3hXW8fxOGIjT9rENe9lFcBYMDPTyPvEfyYrQm1bnjGvovgNGyPliHJuu+1D0="
           }
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
         "input_tokens": 2752,
-        "output_tokens": 68,
-        "total_tokens": 2820,
+        "output_tokens": 76,
+        "total_tokens": 2828,
         "input_token_details": {
           "cache_read": 0
         }

@@ -10,15 +10,15 @@
         {
           "name": "run_sql",
           "args": {
-            "query": "SELECT loans, defaults, default_rate FROM segments WHERE dimension = 'credit_score_band' AND bucket = '<620' AND vintage = 2016"
+            "query": "SELECT loans, defaults, default_rate FROM segments WHERE dimension = 'credit_score_band' AND bucket = '<620' AND vintage = 2016;"
           },
-          "id": "call_1046538979241190638"
+          "id": "call_3608794794346056884"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2465,
-        "output_tokens": 51,
-        "total_tokens": 2516,
+        "output_tokens": 52,
+        "total_tokens": 2517,
         "input_token_details": {
           "cache_read": 0
         }
@@ -30,15 +30,15 @@
           "type": "text",
           "text": "For borrowers with credit scores below 620 in the 2016 vintage, the default rate was 5.07% (11 defaults out of 217 loans).",
           "extras": {
-            "signature": "EmAKXgFpFH0TZ6mJFrX89Xaf9ZD6IhQG4z50FduR0gZUNIV09FjLxcd9uHOPtHlQyotOzjhEBf5F0ZEF/tKQd/5SEqyK68bJrXkT54lM66BbIUtoRU+VmDD8+uRQ4+kA+wI="
+            "signature": "EmAKXgFpFH0T88IusKIs6qGRUqvOtqlpXQ0ymWXofQwK+NJrj625TCrJQLym5cyCclAb02dSbXN2EN7Huur4/8BkwZNInmRgP90XR2K1zHTZocUY1+mCORaXLCfyT1fbXIY="
           }
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
-        "input_tokens": 2611,
+        "input_tokens": 2612,
         "output_tokens": 41,
-        "total_tokens": 2652,
+        "total_tokens": 2653,
         "input_token_details": {
           "cache_read": 0
         }

@@ -10,15 +10,15 @@
         {
           "name": "decline",
           "args": {
-            "reason": "The requested original loan amount ($5,000,000) exceeds the maximum loan amount supported by the model's Freddie Mac training data (conforming loan limits), and jumbo loans are outside the scope of this model."
+            "reason": "The original loan amount ($5,000,000) exceeds the maximum loan amount supported by the model's training data and features (super-conforming limits), and single-loan scoring requires valid model inputs."
           },
-          "id": "call_15608322955597632126"
+          "id": "call_10732618151686146089"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2485,
-        "output_tokens": 62,
-        "total_tokens": 2547,
+        "output_tokens": 61,
+        "total_tokens": 2546,
         "input_token_details": {
           "cache_read": 0
         }

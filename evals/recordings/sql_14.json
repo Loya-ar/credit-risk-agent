@@ -12,7 +12,7 @@
           "args": {
             "query": "SELECT test_decline_rate FROM thresholds"
           },
-          "id": "call_1849068192366359156"
+          "id": "call_1266900090572898286"
         }
       ],
       "usage_metadata": {
@@ -32,7 +32,7 @@
           "args": {
             "query": "SELECT cost_ratio_ASSUMED, test_decline_rate FROM thresholds"
           },
-          "id": "call_16726993475054303669"
+          "id": "call_12211092710315635122"
         }
       ],
       "usage_metadata": {
@@ -48,21 +48,17 @@
       "content": [
         {
           "type": "text",
-          "text": "The model decline rate for 2016 loans depends on the assumed cost ratio (the cost of a default relative to the cost of a declined good loan):\n\n- At a cost ratio of 10: **0.11%** (decline rate of 0.00107)\n- At a cost ratio of 20:"
-        },
-        {
-          "type": "text",
-          "text": " **1.09%** (decline rate of 0.01095)\n- At a cost ratio of 40: **7.90%** (decline rate of 0.07897)\n\nNote that these cost ratios are assumed parameters, and this is a portfolio demo rather than an operational lending system.",
+          "text": "Depending on the assumed cost ratio, the model declines the following share of 2016 test loans:\n- At a cost ratio of 10: 0.11% (decline rate 0.00107)\n- At a cost ratio of 20: 1.09% (decline rate 0.01095)\n- At a cost ratio of 40: 7.90% (decline rate 0.07897)",
           "extras": {
-            "signature": "EmAKXgFpFH0T7c6u+u1z86jae6JT72eWeyUTznGR0SKlWqOUXrEO3NnbjlOSQCRqHdtx97WA1Wzlu4q8b7zGs2YMP/GMG6AZg01Ou5Ubrc8g1WJYk8n3tuZ/6iuZrZ1kH7o="
+            "signature": "EmAKXgFpFH0TAmWglWXyr33W2Ulnn018StDZYt+huBLCwqdIP9J7NnUGs4PeIW1T6b6QKtgycloV0pPLtOAXH0J/yPBWBacKNX64t3PX9sC/7FAY1tpijivl1EoweVQ8nLo="
           }
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
         "input_tokens": 2751,
-        "output_tokens": 152,
-        "total_tokens": 2903,
+        "output_tokens": 112,
+        "total_tokens": 2863,
         "input_token_details": {
           "cache_read": 0
         }

@@ -10,15 +10,15 @@
         {
           "name": "decline",
           "args": {
-            "reason": "I cannot provide investment advice or answer questions about buying stock."
+            "reason": "This is a portfolio demo about a mortgage default model, not investment advice. I cannot advise on whether to buy Freddie Mac stock."
           },
-          "id": "call_9277568032488569577"
+          "id": "call_15051166848605086282"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2452,
-        "output_tokens": 26,
-        "total_tokens": 2478,
+        "output_tokens": 40,
+        "total_tokens": 2492,
         "input_token_details": {
           "cache_read": 0
         }

@@ -12,7 +12,7 @@
           "args": {
             "query": "SELECT bucket, loans, defaults, default_rate FROM segments WHERE dimension = 'ltv_band' AND vintage = 2016 AND bucket IN ('>95', '<=60', '60-80');"
           },
-          "id": "call_7479510409005369680"
+          "id": "call_7728771421689224693"
         }
       ],
       "usage_metadata": {
@@ -32,7 +32,7 @@
           "args": {
             "query": "SELECT SUM(defaults) * 1.0 / SUM(loans) AS combined_lte_80_rate FROM segments WHERE dimension = 'ltv_band' AND vintage = 2016 AND bucket IN ('<=60', '60-80');"
           },
-          "id": "call_14983227956227334128"
+          "id": "call_1820151105225442023"
         }
       ],
       "usage_metadata": {
@@ -48,17 +48,17 @@
       "content": [
         {
           "type": "text",
-          "text": "In 2016, the default rates by LTV band were:\n- **LTV > 95%**: 2.87% (default rate of 0.028714)\n- **LTV 60-80%**: 0.73% (default rate of 0.007317)\n- **LTV <= 60%**: 0.45% (default rate of 0.004477)\n\nCombined for LTV of 80% or less (<=60 and 60-80), the overall default rate was 0.65% (0.006503).",
+          "text": "In 2016, the default rates for the requested LTV bands were:\n- **LTV > 95%**: 2.87% (default rate of 0.028714)\n- **LTV 60-80%**: 0.73% (default rate of 0.007317)\n- **LTV \u2264 60%**: 0.45% (default rate of 0.004477)\n\nCombined for LTV of 80% or less (\u226460 and 60-80), the overall default rate was **0.65%** (0.006503).",
           "extras": {
-            "signature": "EmAKXgFpFH0Tq+njR/S9wZx+2Nq+ZrNeWYnI60Ns4yJzi/xyMJNtbXH7T/ZL+9OdTZ+34fj7+0k32fgoh/I/dWXvxwU1lHIxARxriEUniaWrgNs8Pyp16aFNV8/FVOr8fnk="
+            "signature": "EmAKXgFpFH0T22i87rjiEcklC7qRiU4oD5V4nXUWciFN+2Tpn6PZwK7Lev4juQgb8zk7/MI/BtbKZLhGZw8/0gKBq0jnMsljSDN1FxTN3Dkn1u0yc3cHPfCWfJiWtsD9SPY="
           }
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
         "input_tokens": 2898,
-        "output_tokens": 156,
-        "total_tokens": 3054,
+        "output_tokens": 159,
+        "total_tokens": 3057,
         "input_token_details": {
           "cache_read": 0
         }

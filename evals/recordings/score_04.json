@@ -10,33 +10,33 @@
         {
           "name": "score_loan",
           "args": {
+            "property_state": "AZ",
+            "orig_upb": 200000,
+            "num_borrowers": null,
+            "occupancy_status": "I",
             "channel": null,
+            "harp_indicator": null,
+            "orig_cltv": null,
+            "orig_loan_term": null,
+            "num_units": null,
+            "super_conforming_flag": null,
             "special_program_flag": null,
             "mi_pct": null,
-            "orig_loan_term": null,
-            "orig_interest_rate": 4.75,
-            "orig_upb": 200000,
-            "occupancy_status": "I",
-            "orig_cltv": null,
-            "orig_dti": 35,
-            "property_type": "SF",
-            "orig_ltv": 75,
-            "loan_purpose": "C",
-            "property_state": "AZ",
             "first_time_homebuyer_flag": null,
+            "orig_interest_rate": 4.75,
+            "loan_purpose": "C",
+            "orig_ltv": 75,
             "credit_score": 720,
-            "harp_indicator": null,
-            "num_units": null,
-            "num_borrowers": null,
-            "super_conforming_flag": null
+            "property_type": null,
+            "orig_dti": 35
           },
-          "id": "call_868702604401614483"
+          "id": "call_13935599013532358459"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2487,
-        "output_tokens": 162,
-        "total_tokens": 2649,
+        "output_tokens": 160,
+        "total_tokens": 2647,
         "input_token_details": {
           "cache_read": 0
         }
@@ -46,17 +46,17 @@
       "content": [
         {
           "type": "text",
-          "text": "The default probability for this cash-out refinance on an investment property in Arizona is 0.41% (decision: approve).\n\nThe cost ratio behind the decision threshold is an assumption, and this is a portfolio demo, not a credit decision.",
+          "text": "The default probability for this cash-out refinance on an investment property in Arizona is 0.41%, and the model decision is **approve**. \n\nPlease note that the cost ratio behind the threshold is an assumption, and this is a portfolio demo, not a credit decision. *(Note: ZIP codes are not used by the model and were omitted.)*",
           "extras": {
-            "signature": "EmAKXgFpFH0ToV++lMtVQZdZiCedvuYR+BWU9QAcf2pfPcOYlVhlOAa5V3hKeBmtFcBcUSsUPeJ6WAeDWs6t1v33jvfyoJeLXUGhVXxyoadnlRhSiOHGJ4BVF7ENY1XP8QU="
+            "signature": "EmAKXgFpFH0TuDP9dlEgVCOMMPhmoUxBvkblotGCZ96sTCdg2rDIgSEvwlUP5VvZn6pg7Zdh2mxj82gX9DzNDJZ1j0zYmL3JvXBYb21fI9oESCtWEDbnJAUvLUxiVGa3NXw="
           }
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
         "input_tokens": 2751,
-        "output_tokens": 51,
-        "total_tokens": 2802,
+        "output_tokens": 73,
+        "total_tokens": 2824,
         "input_token_details": {
           "cache_read": 0
         }

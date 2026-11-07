@@ -10,15 +10,15 @@
         {
           "name": "decline",
           "args": {
-            "reason": "The model is trained on aggregate segments and test set deciles, and the database does not contain individual loans or loan IDs."
+            "reason": "The model data consists of public aggregate tables and a portfolio scoring model, but individual loans, loan IDs, and individual loan-level listings are not available."
           },
-          "id": "call_10532800243890791242"
+          "id": "call_16457279743610972285"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2455,
-        "output_tokens": 39,
-        "total_tokens": 2494,
+        "output_tokens": 45,
+        "total_tokens": 2500,
         "input_token_details": {
           "cache_read": 0
         }

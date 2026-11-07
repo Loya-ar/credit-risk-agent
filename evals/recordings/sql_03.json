@@ -12,7 +12,7 @@
           "args": {
             "query": "SELECT vintage, loans, defaults, default_rate FROM segments WHERE dimension = 'all' ORDER BY vintage;"
           },
-          "id": "call_15429683023606333906"
+          "id": "call_9829289827510890425"
         }
       ],
       "usage_metadata": {
@@ -28,17 +28,17 @@
       "content": [
         {
           "type": "text",
-          "text": "Default rates by vintage:\n\n- 2012: 0.77% (376 defaults out of 49,112 loans)\n- 2013: 0.65% (324 defaults out of 49,487 loans)\n- 2014: 0.75% (368 defaults out of 49,241 loans)\n- 2015: 0.71% (346 defaults out of 48,600 loans)\n- 2016: 0.82% (407 defaults out of 49,600 loans)",
+          "text": "Here is the default rate for each vintage:\n\n- **2012:** 0.77% (376 defaults out of 49,112 loans)\n- **2013:** 0.65% (324 defaults out of 49,487 loans)\n- **2014:** 0.75% (368 defaults out of 49,241 loans)\n- **2015:** 0.71% (346 defaults out of 48,600 loans)\n- **2016:** 0.82% (407 defaults out of 49,600 loans)",
           "extras": {
-            "signature": "EmAKXgFpFH0TM6Ig5QCxJ8cod6VDxSNHPSbzcIO7tcsy/uwYCQsVPDZRIbhbess8zUMtiAa/Pkgiunp8zWBDasrfUD5crrgISfQ8IZsz7QnZOjKcI84ttfuVOD9Xs7/6Yz8="
+            "signature": "EmAKXgFpFH0T1NanEcWaF2bx+rzlP7onQL/v/kAs4pf9zcm2ZCsin1csnH390a9JWJJsNFcn5XsLE0SqccJTp+Zw+oRf0CwXT5JN81UHpj9j2+r2f7+l1nrH/ie7qgT58A8="
           }
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
         "input_tokens": 2673,
-        "output_tokens": 155,
-        "total_tokens": 2828,
+        "output_tokens": 159,
+        "total_tokens": 2832,
         "input_token_details": {
           "cache_read": 0
         }

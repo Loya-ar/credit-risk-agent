@@ -10,15 +10,15 @@
         {
           "name": "run_sql",
           "args": {
-            "query": "SELECT vintage, loans, defaults, default_rate FROM segments WHERE dimension = 'all' ORDER BY default_rate DESC"
+            "query": "SELECT vintage, loans, defaults, default_rate FROM segments WHERE dimension = 'all' ORDER BY default_rate DESC;"
           },
-          "id": "call_8925069236325784621"
+          "id": "call_16173378047313317693"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2448,
-        "output_tokens": 39,
-        "total_tokens": 2487,
+        "output_tokens": 40,
+        "total_tokens": 2488,
         "input_token_details": {
           "cache_read": 0
         }
@@ -28,17 +28,17 @@
       "content": [
         {
           "type": "text",
-          "text": "The 2016 vintage had the highest default rate at 0.82% (407 defaults out of 49,600 loans).",
+          "text": "The 2016 vintage had the highest default rate at 0.82% (default rate 0.008206, with 407 defaults out of 49,600 loans).",
           "extras": {
-            "signature": "EmAKXgFpFH0TaHqUBPn+Q0b/oFsiUa06JM6aLpV96oW93PregD6oNGoY8DA4yDVQ3lSKOyXk03pCGcMUq/H9Bu3AeD37SAU0/gE6xjgWM0oOiSc55/1QFeD3yZOSqHGGlkQ="
+            "signature": "EmAKXgFpFH0TzvCI2GH7SO9R1xEb06YjQoTpSwPChh6A2Yd/jFQ2RlnoKSpFp6M5Nbj2r0uxT7Ubg9ZvXNJohF3JE3t9hlBImWHBidcaVJgP4EIIbL75qt7DRZU2Af6QQqU="
           }
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
-        "input_tokens": 2678,
-        "output_tokens": 35,
-        "total_tokens": 2713,
+        "input_tokens": 2679,
+        "output_tokens": 49,
+        "total_tokens": 2728,
         "input_token_details": {
           "cache_read": 0
         }

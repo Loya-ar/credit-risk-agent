@@ -10,15 +10,15 @@
         {
           "name": "run_sql",
           "args": {
-            "query": "SELECT threshold_from_2015, test_defaults_caught, test_recall, cost_ratio_ASSUMED FROM thresholds WHERE cost_ratio_ASSUMED = 40;"
+            "query": "SELECT cost_ratio_ASSUMED, threshold_from_2015, test_defaults_caught, test_recall FROM thresholds WHERE cost_ratio_ASSUMED = 40"
           },
-          "id": "call_13747619613685784084"
+          "id": "call_5696235766567362254"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2463,
-        "output_tokens": 57,
-        "total_tokens": 2520,
+        "output_tokens": 56,
+        "total_tokens": 2519,
         "input_token_details": {
           "cache_read": 0
         }
@@ -28,17 +28,17 @@
       "content": [
         {
           "type": "text",
-          "text": "At an assumed cost ratio of 40, the threshold used is 0.0185 (or 1.85%), and it catches 161 test defaults (a recall of 39.56%).",
+          "text": "At an assumed cost ratio of 40, the threshold used is 0.018476 (1.85%), which catches 161 test defaults (a recall of 39.56%).",
           "extras": {
-            "signature": "EmAKXgFpFH0T4CPc/7xRvV85lczlY9hkfOtssMZz+lXLURziGR1JjyLnV1WbUKAkuzZaTRYuHosZPJ/RhRVoDnNCVg9bG1KMVPB7lwSzTZRd13GGWbzJPtuIfLIVHzt/lRM="
+            "signature": "EmAKXgFpFH0TgLoSW90OB/bNGqFjzf1f/dCLBQlNj6EtsZA5/kQPmfrfwnv/i2H1mLbmif9/puISYuVFh9K0rFV0iic8OjImnVx+bv8U5oMpJPVyXcnAdEm/Do8FjRRe8Hw="
           }
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
-        "input_tokens": 2669,
-        "output_tokens": 49,
-        "total_tokens": 2718,
+        "input_tokens": 2668,
+        "output_tokens": 48,
+        "total_tokens": 2716,
         "input_token_details": {
           "cache_read": 0
         }

@@ -12,7 +12,7 @@
           "args": {
             "query": "SELECT roc_auc FROM model_metrics WHERE model = 'lightgbm' AND population = 'no_disaster_flag';"
           },
-          "id": "call_15892942943108278881"
+          "id": "call_7112494573952165772"
         }
       ],
       "usage_metadata": {
@@ -30,7 +30,7 @@
           "type": "text",
           "text": "The LightGBM ROC-AUC after excluding disaster-flagged loans is 0.8298 (or about 82.98%).",
           "extras": {
-            "signature": "EmAKXgFpFH0Tv+JMpVwDAk4QraEeiB6+s2A3n6axUBtVRbU0CmalJ3lA4IODdVWdipd9quYewYk3QFiLC+hF3a49cIuISx8bOG3AlStNmnwlfPLq9Qo70EsIMt8XwsPiqJw="
+            "signature": "EmAKXgFpFH0TLnrKcbs+C0t3Zg4EMV6mmlAqZ1H8HM+o0Uajitnzm4F295Vr44UwGl8SRuYecjuyUStOWk5J8UmjPHLtQWUsss4JG5Twb0osUYgzf9Y6FYpFMM3uZB2NPDI="
           }
         }
       ],

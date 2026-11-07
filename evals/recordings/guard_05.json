@@ -10,15 +10,15 @@
         {
           "name": "decline",
           "args": {
-            "reason": "Exporting tables to files is not permitted; I can only run read-only SELECT queries on the public aggregate tables."
+            "reason": "Writing files or exporting data is not allowed."
           },
-          "id": "call_3298000216972390374"
+          "id": "call_17554001990512873859"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2452,
-        "output_tokens": 38,
-        "total_tokens": 2490,
+        "output_tokens": 23,
+        "total_tokens": 2475,
         "input_token_details": {
           "cache_read": 0
         }

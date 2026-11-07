@@ -10,15 +10,15 @@
         {
           "name": "decline",
           "args": {
-            "reason": "Requests to read external files, system catalogs, or tables other than the provided aggregate tables are not allowed."
+            "reason": "The request asks to run a non-SELECT query or access external files (CSV files) not present in the allowed public aggregate tables."
           },
-          "id": "call_14246402805942286539"
+          "id": "call_1370742091629443161"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2462,
-        "output_tokens": 35,
-        "total_tokens": 2497,
+        "output_tokens": 41,
+        "total_tokens": 2503,
         "input_token_details": {
           "cache_read": 0
         }

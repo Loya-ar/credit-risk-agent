@@ -17,7 +17,7 @@ A mortgage default model built on Freddie Mac loan-level data, with a 24-month d
 | Model card | Done ([MODEL_CARD.md](MODEL_CARD.md)) |
 | Agent tools (run_sql, score_loan, explain_score) + SQL guard | Done |
 | CI (pytest on every push) | Done |
-| Evaluation set (54 cases) + harness | Built; full live run **TBD** (partial run: 9/10, see [Agent results](#agent-results)) |
+| Evaluation set (54 cases) + harness | Done; expected answers hand-checked against the raw data; live run 54/54 (see [Agent results](#agent-results)) |
 | LangGraph agent (Gemini 3.5 Flash-Lite, free tier): routing, one SQL repair, grounding check in code | Built; known failure: can invent loan fields |
 | CI regression gate: recorded runs replayed on every push, live eval on demand | Done; catches code changes, not prompt changes. The on-demand run needs the `GOOGLE_API_KEY` repository secret |
 | Public demo data (aggregate tables, small groups pooled) | Done (`public_data/`, smallest group 66 loans) |
@@ -136,9 +136,24 @@ Each tab says what it needs when something is missing: `public_data/` for the ta
 
 ## Agent results
 
-**Full 54-case live run: TBD.** It will be re-run after the expected answers are checked by hand, and the result reported here.
+Every expected answer was first checked against the raw loan data, not only the public tables. That caught one bad case: sql_23 asked about "repeat buyers", but its expected answer also counted refinances, so the question was reworded.
 
-**Partial live run** on `gemini-3.5-flash-lite` (free-tier key, no billing), 7 November 2026: score and explain cases only, re-recorded after a change to how a blank `mi_pct` is filled.
+**Full live run** on `gemini-3.5-flash-lite` (free-tier key, no billing), 7 November 2026, after the hand check:
+
+| Category | Cases | Passed |
+|---|---|---|
+| SQL on public tables | 24 | 24 |
+| Score a loan | 7 | 7 |
+| Explain a score | 3 | 3 |
+| Invalid loans (refuse) | 5 | 5 |
+| Guard bypass attempts (refuse) | 7 | 7 |
+| Loan-level requests (refuse) | 4 | 4 |
+| Out of scope (refuse) | 4 | 4 |
+| **Total** | **54** | **54** |
+
+Tool-call accuracy, answer accuracy, refusal accuracy and grounding were all 100%, with no false refusals and no leaked loan-level columns. 261,407 input and 6,938 output tokens; mean 22.5 s per question. These responses are the ones recorded in `evals/recordings/` and replayed on every push. One passing case still had an invented field: explain_03 was sent `property_type = SF`, which the question didn't give.
+
+**The same code is not always 54/54.** An earlier run the same day, on the 10 score and explain cases only:
 
 | Category | Cases | Passed |
 |---|---|---|
@@ -148,7 +163,7 @@ Each tab says what it needs when something is missing: `public_data/` for the ta
 
 Tool-call accuracy 100%, answer accuracy 90%, grounding 100%, no leaked loan-level columns. 56,692 input and 2,103 output tokens; mean 25.8 s per question, mostly the 5-calls-a-minute free-tier pacing.
 
-**The failure (explain_02):** the question gave 8 loan fields. The agent added 9 more on its own (for example `num_borrowers = 1`), and the invented `num_borrowers` became the top driver, so the answer didn't match the expected top driver. It is recorded as a failure in `evals/recordings/`.
+**The failure (explain_02):** the question gave 8 loan fields. The agent added 9 more on its own (for example `num_borrowers = 1`), and the invented `num_borrowers` became the top driver, so the answer didn't match the expected top driver. (The CI recordings now come from the full run above, where explain_02 passed; the failed run's report is kept locally.)
 
 Caveats: 54 questions is a small set written by the same person who built the agent, and the model ignores temperature, so a rerun can differ (the on-demand workflow fails below 90%). Free-tier limits are tight: newer Flash models allowed only 20 requests a day, which is why the Lite model is the default.
 

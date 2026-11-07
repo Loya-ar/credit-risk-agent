@@ -10,15 +10,15 @@
         {
           "name": "run_sql",
           "args": {
-            "query": "SELECT bucket, vintage, loans, defaults, default_rate FROM segments WHERE dimension = 'credit_score_band' AND vintage = 2015 ORDER BY bucket"
+            "query": "SELECT bucket, loans, defaults, default_rate FROM segments WHERE dimension = 'credit_score_band' AND vintage = 2015 ORDER BY bucket"
           },
-          "id": "call_3035012304049160965"
+          "id": "call_4131909301618472046"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2457,
-        "output_tokens": 50,
-        "total_tokens": 2507,
+        "output_tokens": 48,
+        "total_tokens": 2505,
         "input_token_details": {
           "cache_read": 0
         }
@@ -28,17 +28,17 @@
       "content": [
         {
           "type": "text",
-          "text": "Here are the default rates by credit score band for 2015 loans:\n\n* **<620**: 4.55% (16 defaults out of 352 loans)\n* **620-659**: 3.31% (60 defaults out of 1,810 loans)\n* **660-699**: 1.91% (114 defaults out of 5,966 loans)\n* **700-739**: 0.77% (77 defaults out of 9,988 loans)\n* **740-779**: 0.30% (43 defaults out of 14,340 loans)\n* **780+**: 0.22% (36 defaults out of 16,144 loans)",
+          "text": "Here is the default rate by credit score band for 2015 loans:\n\n- **<620**: 4.55% (16 defaults out of 352 loans)\n- **620-659**: 3.31% (60 defaults out of 1,810 loans)\n- **660-699**: 1.91% (114 defaults out of 5,966 loans)\n- **700-739**: 0.77% (77 defaults out of 9,988 loans)\n- **740-779**: 0.30% (43 defaults out of 14,340 loans)\n- **780+**: 0.22% (36 defaults out of 16,144 loans)",
           "extras": {
-            "signature": "EmAKXgFpFH0Tl//nFhYXDxlJV8mrpDtyB3OvJgCVaIsWrM4M2u1AjpFkJPqGsGJjbfBflD4qyu2cyOoBmtnU94OF+1mW54pS3ydwvTgZvwM6yyHulRNuYwWPM28KB3U/5gg="
+            "signature": "EmAKXgFpFH0Tgf4qTfJpgf8+SyT1T5AtP1h+pxuqkRU89ytUnwcmgaur28kP09FjS0J7JFcMYr7ad89Y9ltawLK8rjKeGznbOOXSdt1goFy+5JXjvEL1iJ1jAMdjLUQA8rg="
           }
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
-        "input_tokens": 2780,
+        "input_tokens": 2742,
         "output_tokens": 198,
-        "total_tokens": 2978,
+        "total_tokens": 2940,
         "input_token_details": {
           "cache_read": 0
         }

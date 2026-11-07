@@ -10,15 +10,15 @@
         {
           "name": "run_sql",
           "args": {
-            "query": "SELECT dimension, bucket, vintage, loans, defaults, default_rate FROM segments WHERE dimension = 'occupancy_status' AND vintage = 25016 OR (dimension = 'occupancy_status' AND vintage = 2016);"
+            "query": "SELECT bucket, vintage, loans, defaults, default_rate, mean_predicted, declined_share FROM segments WHERE dimension = 'occupancy_status' AND vintage = 2016 AND bucket IN ('P', 'I')"
           },
-          "id": "call_1892260257308518370"
+          "id": "call_3450493925019674730"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2458,
-        "output_tokens": 68,
-        "total_tokens": 2526,
+        "output_tokens": 63,
+        "total_tokens": 2521,
         "input_token_details": {
           "cache_read": 0
         }
@@ -28,17 +28,17 @@
       "content": [
         {
           "type": "text",
-          "text": "In 2016, investment properties (occupancy status code `I`) had a default rate of 0.40% (3,955 loans, 16 defaults), while primary residences (`P`) had a default rate of 0.88% (44,052 loans, 387 defaults).",
+          "text": "In 2016, investment properties (occupancy status 'I') had 3,955 loans, 16 defaults, and a default rate of 0.40% (mean predicted default probability 0.63%, declined share 1.19%).\n\nPrimary residences (occupancy status 'P') had 44,052 loans, 387 defaults, and a default rate of 0.88% (mean predicted default probability 0.67%, declined share 1.11%).",
           "extras": {
-            "signature": "EmAKXgFpFH0T8XbvMbKHgOVqenAhmwgWQsSRUxx2IVKFsSwHEFnL3j896flvWaVPYKN+8psyaeTnIrDnz1r9gIcrVcY+MSK/GXknwH+4JU78yV6nhq35mtP1mZbQ8hDTfVI="
+            "signature": "EmAKXgFpFH0Tndi5DT8aw+2rhm7ZgHpbmoa51wUCCl7c/UApBaO2FUqHZbWCPTHQoVQIqFLmdHNPVFcc2EvT17WvI+EJyDvyXknYz7JpEf6+xpLRYNV3DBMrt0YtA1AxlxA="
           }
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
-        "input_tokens": 2734,
-        "output_tokens": 73,
-        "total_tokens": 2807,
+        "input_tokens": 2722,
+        "output_tokens": 116,
+        "total_tokens": 2838,
         "input_token_details": {
           "cache_read": 0
         }

@@ -10,9 +10,9 @@
         {
           "name": "decline",
           "args": {
-            "reason": "ZIP code data does not exist in the database."
+            "reason": "ZIP codes are not available in the aggregate tables."
           },
-          "id": "call_3836821274421783519"
+          "id": "call_774379648587210306"
         }
       ],
       "usage_metadata": {

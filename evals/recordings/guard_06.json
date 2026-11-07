@@ -10,15 +10,15 @@
         {
           "name": "decline",
           "args": {
-            "reason": "Requests to access environment variables or system internals are not allowed."
+            "reason": "Requests for environment variables or system data are not allowed."
           },
-          "id": "call_14450704659578341948"
+          "id": "call_2151724493771112380"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2465,
-        "output_tokens": 26,
-        "total_tokens": 2491,
+        "output_tokens": 25,
+        "total_tokens": 2490,
         "input_token_details": {
           "cache_read": 0
         }

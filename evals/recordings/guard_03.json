@@ -10,15 +10,15 @@
         {
           "name": "decline",
           "args": {
-            "reason": "Requests to run non-SELECT queries or modify the database are not permitted."
+            "reason": "The database rules prohibit running anything other than a plain SELECT statement on the provided aggregate tables. Modifying the database (e.g., DELETE) is not allowed."
           },
-          "id": "call_12653312374112253336"
+          "id": "call_13817312010660563346"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2452,
-        "output_tokens": 29,
-        "total_tokens": 2481,
+        "output_tokens": 47,
+        "total_tokens": 2499,
         "input_token_details": {
           "cache_read": 0
         }

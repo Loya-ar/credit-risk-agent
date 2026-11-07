@@ -12,7 +12,7 @@
           "args": {
             "query": "SELECT decile, default_rate, share_of_defaults FROM deciles WHERE decile = 10"
           },
-          "id": "call_12855709616186706791"
+          "id": "call_12521799116818761382"
         }
       ],
       "usage_metadata": {
@@ -28,17 +28,17 @@
       "content": [
         {
           "type": "text",
-          "text": "In the riskiest score decile (decile 10), the default rate is 3.85% (0.038508) and it captures 46.93% (0.469287) of all defaults.",
+          "text": "In the riskiest score decile (decile 10), the default rate is 3.85% and it captures 46.93% of all defaults.",
           "extras": {
-            "signature": "EmAKXgFpFH0TCVjegMeaGDr2dhA5vRvIFmYc+yR8MnbtME+piVJ8jqlYjNZ8DPd1/IkvtVXe6zIGYEhoNXzTiv3yx57AvBu0B3z9N49XztO3MWP/j0D4LxEthPGOrMGh9bU="
+            "signature": "EmAKXgFpFH0T1Uk7l+XPJ0SgG1YFEG6mpnzrazOUVkBZGk0SwHyVjEHKIcyCDME4COyzTs6QlssOrHQWJXG4AHD5r9+NKV/lLOUADu2UGN+LNQTGkQLjDib5goUeN11+SlU="
           }
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
         "input_tokens": 2595,
-        "output_tokens": 59,
-        "total_tokens": 2654,
+        "output_tokens": 39,
+        "total_tokens": 2634,
         "input_token_details": {
           "cache_read": 0
         }

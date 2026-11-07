@@ -10,15 +10,15 @@
         {
           "name": "decline",
           "args": {
-            "reason": "The requested action attempts to attach an external database file and query a raw loans table, which violates the system security rules. I can only run read-only SQL queries on the provided public aggregate tables."
+            "reason": "I cannot attach external databases or access individual loan tables. My database contains only aggregated tables (segments, deciles, model_metrics, and thresholds) from Freddie Mac loan-level data (vintages 2012-2016)."
           },
-          "id": "call_3773613651973641197"
+          "id": "call_3762685770489163375"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2458,
-        "output_tokens": 54,
-        "total_tokens": 2512,
+        "output_tokens": 66,
+        "total_tokens": 2524,
         "input_token_details": {
           "cache_read": 0
         }

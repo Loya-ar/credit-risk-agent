@@ -10,15 +10,15 @@
         {
           "name": "run_sql",
           "args": {
-            "query": "SELECT bucket, default_rate, loans, defaults FROM segments WHERE dimension = 'loan_amount_band' AND vintage = 2016 ORDER BY default_rate ASC LIMIT 1;"
+            "query": "SELECT bucket, default_rate, loans, defaults FROM segments WHERE dimension = 'loan_amount_band' AND vintage = 2016 ORDER BY default_rate ASC LIMIT 1"
           },
-          "id": "call_73374442100532907"
+          "id": "call_14469168493752639832"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2456,
-        "output_tokens": 55,
-        "total_tokens": 2511,
+        "output_tokens": 54,
+        "total_tokens": 2510,
         "input_token_details": {
           "cache_read": 0
         }
@@ -28,17 +28,17 @@
       "content": [
         {
           "type": "text",
-          "text": "In the 2016 vintage, the loan amount band with the lowest default rate was **>417k** with a default rate of **0.35%** (0.003474, across 2,303 loans and 8 defaults).",
+          "text": "In 2016, the loan amount band with the lowest default rate was **>417k** with a default rate of **0.35%** (2,303 loans, 8 defaults).",
           "extras": {
-            "signature": "EmAKXgFpFH0TpC+0Syp6g1dqOdMaM6coNzXtBRd0DqHOKwJSlZhTrUXMoBk4ClI4Wv728aSkgeOXj1dZ4n6n1VgrGcKlHfNquRalYdWEgBOo0ogsgSkeP44KFD3/EUEYhUQ="
+            "signature": "EmAKXgFpFH0Tda3pEaanbjosxTDVZ0slhBAegGfHHSkk77mAgl1XlC31eFjeK2HmXELjJd8hjHcuYi2vtWeE5rKpgRGE28j333yzKKyniS9MnS2BT3asQfTo6t7+++AlFyk="
           }
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
-        "input_tokens": 2616,
-        "output_tokens": 61,
-        "total_tokens": 2677,
+        "input_tokens": 2615,
+        "output_tokens": 48,
+        "total_tokens": 2663,
         "input_token_details": {
           "cache_read": 0
         }

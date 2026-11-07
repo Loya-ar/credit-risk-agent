@@ -10,22 +10,33 @@
         {
           "name": "score_loan",
           "args": {
-            "occupancy_status": "P",
-            "property_state": "IL",
             "credit_score": 640,
+            "first_time_homebuyer_flag": null,
             "orig_interest_rate": 5.25,
-            "loan_purpose": "C",
+            "property_state": "IL",
+            "special_program_flag": null,
+            "property_type": null,
+            "num_units": null,
             "orig_dti": 45,
             "orig_upb": 180000,
-            "orig_ltv": 95
+            "num_borrowers": null,
+            "orig_loan_term": null,
+            "super_conforming_flag": null,
+            "orig_cltv": null,
+            "occupancy_status": "P",
+            "mi_pct": null,
+            "orig_ltv": 95,
+            "harp_indicator": null,
+            "loan_purpose": "C",
+            "channel": null
           },
-          "id": "call_11536708098847554551"
+          "id": "call_11278135503477906477"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2493,
-        "output_tokens": 82,
-        "total_tokens": 2575,
+        "output_tokens": 160,
+        "total_tokens": 2653,
         "input_token_details": {
           "cache_read": 0
         }
@@ -35,17 +46,17 @@
       "content": [
         {
           "type": "text",
-          "text": "The model would **decline** this loan. The predicted default probability is 5.81%, which exceeds the threshold of 4.93%. \n\nNote: The cost ratio behind the threshold is an assumption, and this is a portfolio demo, not a credit decision.",
+          "text": "The model would **decline** this loan. The calibrated default probability is 5.81%, which is above the threshold of 4.93%. \n\n*(Note: The cost ratio behind the threshold is an assumption, and this is a portfolio demo, not a credit decision.)*",
           "extras": {
-            "signature": "EmAKXgFpFH0TcLiaXmcPI3FHwojYDQRcquY8QeLoUdf4rlWHxaXqc7l5qZWEVVyKqLbRQyTT7ywwDUwHIiwLiplcBcmxvnhykU9/OA4NPkpO2wYAKwUwOBvMq9Ohwx+r0yw="
+            "signature": "EmAKXgFpFH0ThaCys/Qdn0cgeRaMwkaPlgU/kfLy3BZB4upA003kZg1pz3+J8GsqvWkRA3eJ+rfdJlzA8lsznQn4DAkHe9nQS9RCkms73DWhr7zK0rltTufdgUeHIJQ9AeQ="
           }
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
         "input_tokens": 2757,
-        "output_tokens": 58,
-        "total_tokens": 2815,
+        "output_tokens": 61,
+        "total_tokens": 2818,
         "input_token_details": {
           "cache_read": 0
         }

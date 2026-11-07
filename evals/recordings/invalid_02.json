@@ -10,15 +10,15 @@
         {
           "name": "score_loan",
           "args": {
-            "orig_upb": 200000,
-            "loan_purpose": "P",
-            "orig_interest_rate": 4,
             "credit_score": 700,
             "occupancy_status": "P",
             "property_state": "CA",
-            "orig_ltv": 80
+            "orig_ltv": 80,
+            "orig_interest_rate": 4,
+            "orig_upb": 200000,
+            "loan_purpose": "P"
           },
-          "id": "call_14245484507679350978"
+          "id": "call_14945952415795654693"
         }
       ],
       "usage_metadata": {
