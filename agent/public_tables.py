@@ -216,12 +216,30 @@ def build_public_db(public_dir: Path = PUBLIC_DIR, db_path: Path = PUBLIC_DB_PAT
 
 
 _BUILD_LOCK = threading.Lock()
+_VALIDATED: set[str] = set()  # DB files already confirmed complete in this process
 
 
 def _is_fresh(db_path: Path, csvs: list[Path]) -> bool:
-    return db_path.exists() and all(
+    """Newer than every CSV and has all the public tables (a crash can leave a partial file)."""
+    if not (db_path.exists() and all(
         c.exists() and c.stat().st_mtime <= db_path.stat().st_mtime for c in csvs
-    )
+    )):
+        return False
+    key = f"{db_path}:{db_path.stat().st_mtime_ns}"
+    if key in _VALIDATED:
+        return True
+    try:
+        con = duckdb.connect(str(db_path), read_only=True)
+        try:
+            tables = {r[0] for r in con.execute("SHOW TABLES").fetchall()}
+        finally:
+            con.close()
+    except duckdb.Error:
+        return False
+    if not set(PUBLIC_TABLES) <= tables:
+        return False
+    _VALIDATED.add(key)
+    return True
 
 
 def ensure_public_db(public_dir: Path = PUBLIC_DIR, db_path: Path = PUBLIC_DB_PATH) -> Path:

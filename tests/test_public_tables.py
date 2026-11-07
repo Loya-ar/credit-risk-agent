@@ -190,3 +190,18 @@ def test_concurrent_builds_do_not_collide(public_dir, tmp_path):
     finally:
         con.close()
     assert not list(target.parent.glob("*.tmp"))  # no temp files left behind
+
+
+def test_partial_db_is_rebuilt(public_dir, tmp_path):
+    """A crash mid-build can leave a newer-than-CSV file missing tables; it must not be reused."""
+    target = tmp_path / "partial" / "agent_public.duckdb"
+    target.parent.mkdir()
+    con = duckdb.connect(str(target))
+    con.execute("CREATE TABLE segments AS SELECT 1 AS x")  # only one of the four tables
+    con.close()
+    ensure_public_db(public_dir, target)
+    con = duckdb.connect(str(target), read_only=True)
+    try:
+        assert sorted(r[0] for r in con.execute("SHOW TABLES").fetchall()) == sorted(PUBLIC_TABLES)
+    finally:
+        con.close()
