@@ -23,8 +23,9 @@ from risk import predict
 st.set_page_config(page_title="Credit risk agent", page_icon="🏠", layout="wide")
 
 try:  # Streamlit Cloud keeps the key in secrets; locally it's an environment variable.
-    if not os.environ.get("GOOGLE_API_KEY") and "GOOGLE_API_KEY" in st.secrets:
-        os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
+    for name in ("GOOGLE_API_KEY", "GEMINI_API_KEY"):  # the agent accepts either name
+        if not os.environ.get(name) and name in st.secrets:
+            os.environ[name] = st.secrets[name]
 except Exception:
     pass
 

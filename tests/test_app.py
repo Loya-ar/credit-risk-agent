@@ -15,6 +15,13 @@ from risk import predict
 APP = str(Path(__file__).resolve().parents[1] / "streamlit_app.py")
 
 
+@pytest.fixture(autouse=True)
+def no_local_secrets(monkeypatch, tmp_path):
+    """Run every app test from an empty folder: Streamlit caches st.secrets per process,
+    so a developer's .streamlit/secrets.toml read by one test would leak into the others."""
+    monkeypatch.chdir(tmp_path)
+
+
 @pytest.fixture
 def app(monkeypatch, public_db, tmp_path):
     monkeypatch.setattr(public_tables, "ensure_public_db", lambda: public_db)
@@ -59,7 +66,6 @@ def test_without_key_or_tables(monkeypatch, tmp_path):
     def missing():
         raise FileNotFoundError("no tables")
     monkeypatch.setattr(public_tables, "ensure_public_db", missing)
-    monkeypatch.chdir(tmp_path)  # so a local .streamlit/secrets.toml can't supply a key
     monkeypatch.delenv("GOOGLE_API_KEY", raising=False)
     monkeypatch.delenv("GEMINI_API_KEY", raising=False)
     at = AppTest.from_file(APP, default_timeout=60)
