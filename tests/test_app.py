@@ -59,6 +59,7 @@ def test_without_key_or_tables(monkeypatch, tmp_path):
     def missing():
         raise FileNotFoundError("no tables")
     monkeypatch.setattr(public_tables, "ensure_public_db", missing)
+    monkeypatch.chdir(tmp_path)  # so a local .streamlit/secrets.toml can't supply a key
     monkeypatch.delenv("GOOGLE_API_KEY", raising=False)
     monkeypatch.delenv("GEMINI_API_KEY", raising=False)
     at = AppTest.from_file(APP, default_timeout=60)
