@@ -5,7 +5,7 @@
 
 ## 1. Intended use
 
-- **For:** demonstrating credit-risk modeling practice (label design, time-based validation, calibration, cost-based thresholds, explainability) and serving as a scoring tool for the portfolio agent in this repo.
+- **For:** demonstrating credit-risk modeling practice (label design, time-based validation, calibration, cost-based thresholds, explainability) and serving as a scoring tool for the portfolio agent in this repo and the [live demo](https://credit-risk-agent-loya.streamlit.app), which labels every score "Demo only, not a credit decision."
 - **Not for:** approving, declining, or pricing real loans; any decision about a real person. The model has not been validated, monitored, or reviewed for fair-lending compliance.
 
 ## 2. Data
@@ -140,7 +140,18 @@ TreeSHAP values computed by LightGBM (`pred_contrib=True`) in log-odds, with one
 
 **Limits:** SHAP explains the model, not causes in the world. Features carrying the same information (missing DTI and HARP; LTV and CLTV) can split credit between them arbitrarily. Explanations are of the raw LightGBM score; Platt calibration is monotonic, so directions carry over to the calibrated probability.
 
-## 11. Limitations
+## 11. Scoring one loan (how the demo and agent use the model)
+
+`risk/predict.py` turns one user-entered loan into the 19 features and scores it with the saved pipeline and Platt calibrator, so serving uses the same preprocessing as training. A test re-scores real test loans and matches the stored probabilities.
+
+- **Required fields:** credit_score, orig_ltv, orig_dti, orig_upb, orig_interest_rate, loan_purpose, occupancy_status, property_state. DTI is required because a blank DTI looks like a HARP loan to the model.
+- **Rejected, not adjusted:** unknown fields (e.g. ZIP code), invalid category codes, and numbers outside the training range (e.g. credit score above 840). The model is not asked to extrapolate.
+- **Filled with typical training values (2012–2014 only) and reported back:** every other field gets the training median or most common value, with two exceptions:
+  - a blank CLTV is set to the LTV (CLTV is never below LTV; no training loan has CLTV < LTV);
+  - a blank MI coverage on a non-HARP loan with LTV above 80 gets that group's training median (30), because 99.69% of those training loans carry MI, versus 21.95% of HARP loans with LTV above 80.
+- **Why training values only:** taking defaults from the 2016 test vintage would leak test information into the inputs.
+
+## 12. Limitations
 
 - **Selection bias:** only loans Freddie Mac purchased are in the data, so applicants lenders declined are never seen. The model cannot be assumed to work on a general applicant population.
 - **Macro conditions differ by vintage:** five post-crisis years, one housing market cycle; the test year was disaster-affected.
@@ -151,12 +162,12 @@ TreeSHAP values computed by LightGBM (`pred_contrib=True`) in log-odds, with one
 - **Cost ratios are assumptions;** a real lender would estimate them from its own loss and revenue data.
 - **No monitoring, no recalibration schedule, no challenger process:** all would be required before any real use.
 
-## 12. Open questions
+## 13. Open questions
 
 - Why 10,545 HARP loans have LTV of 60% or less (unexpected if HARP served mainly underwater borrowers).
 - Why the non-HARP default rate rose from 2012 to 2014 even excluding disaster-flagged defaults (untested).
 
-## 13. Reproduce
+## 14. Reproduce
 
 ```bash
 python scripts/prepare_data.py     # needs Freddie Mac sample files in data/raw/
@@ -165,6 +176,8 @@ python -m risk.train
 python -m risk.evaluate
 python -m risk.threshold
 python -m risk.explain
+python -m scripts.build_agent_db        # scoring defaults (and the local loan-level agent DB)
+python -m scripts.build_public_tables   # aggregate-only tables for the public demo
 pytest
 ```
 
