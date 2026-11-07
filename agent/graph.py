@@ -306,4 +306,8 @@ def answer(question: str, model=None) -> dict:
 
 
 if __name__ == "__main__":
+    # Read the key from .env for command-line runs only. Library code and tests use the
+    # real environment, so a local .env can't leak into tests. Existing variables win.
+    from dotenv import load_dotenv
+    load_dotenv()
     print(json.dumps(answer(" ".join(sys.argv[1:])), indent=2, default=str))

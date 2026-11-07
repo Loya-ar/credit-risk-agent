@@ -72,6 +72,9 @@ def step_summary(summary: dict, failed: list[str]) -> str:
 
 
 def main() -> None:
+    # Key from .env for command-line runs; variables already set (e.g. in CI) win.
+    from dotenv import load_dotenv
+    load_dotenv()
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--agent", required=True, help="module:function, or 'oracle'")
     parser.add_argument("--category", action="append", help="only these categories (repeatable)")

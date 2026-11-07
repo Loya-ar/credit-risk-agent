@@ -118,10 +118,9 @@ Freddie Mac allows publishing noncommercial research results and derived product
 - **Grounding, checked in code:** every number in the final answer must appear in a tool output, a tool argument or the question ([`agent/grounding.py`](agent/grounding.py), the same check the harness uses). The model gets one rewrite; after that the answer is withheld.
 - **Known failure:** the prompt forbids inventing values, but the model sometimes fills in loan fields the user never gave (see explain_02 under [Agent results](#agent-results)). The grounding check doesn't catch this, because an invented value becomes a tool argument.
 
-The code reads the key from environment variables only; it does not load `.env` automatically. `GOOGLE_API_KEY` or `GEMINI_API_KEY` both work.
+Put the key in `.env` (copy `.env.example`; `GOOGLE_API_KEY` or `GEMINI_API_KEY` both work). The agent CLI and the eval runner read `.env`; library code and tests only use real environment variables, so a local key can't leak into tests. The Streamlit app uses its secrets instead.
 
 ```powershell
-$env:GOOGLE_API_KEY = "..."
 python -m agent.graph "What was the default rate for 2016 loans with credit scores below 620?"
 ```
 

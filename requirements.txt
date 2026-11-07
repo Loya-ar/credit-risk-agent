@@ -9,6 +9,7 @@ mlflow==3.17.1
 numpy==2.4.6
 pandas==3.0.6
 pyarrow==25.0.1
+python-dotenv==1.2.4
 scikit-learn==1.9.1
 sqlglot==30.23.0
 streamlit==1.67.0
