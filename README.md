@@ -188,6 +188,14 @@ python -m scripts.run_eval --agent agent.graph:answer --record  # save responses
 - **Every push** ([tests.yml](.github/workflows/tests.yml)): the checks that need no LLM, plus a replay of every recorded Gemini run in `evals/recordings/` through the real graph, tools and grader ([tests/test_replay.py](tests/test_replay.py)). The model's side is fixed, so a case that passed when recorded and fails now means our code changed behaviour. No API key needed. **Limit:** the replay returns the recorded model responses whatever the prompt says, so a change to the prompt alone is not caught on push. Prompt changes need the on-demand live run.
 - **On demand only** ([eval.yml](.github/workflows/eval.yml), started from the Actions tab; no schedule): the full evaluation on live Gemini, using the `GOOGLE_API_KEY` repository secret. It fails below the pass-rate threshold or on any leaked loan-level column, and writes the metrics to the job summary.
 
+**Gate demo** ([PR #1](https://github.com/Loya-ar/credit-risk-agent/pull/1), closed without merging): a deliberate bug made `score_loan` return the probability as a percent instead of a fraction. Every unit test still passed; the replay of recorded Gemini runs failed 2 cases (score_01, score_03), so CI went red. Reverting the bug turned it green. The other 5 score cases still passed, because the grader accepts a fraction shown as a percent, so the replay catches this kind of bug in some cases, not all.
+
+| Bug pushed: CI fails | Bug reverted: CI passes |
+|---|---|
+| ![CI failing on the demo PR](docs/gate_fail.png) | ![CI passing after the revert](docs/gate_pass.png) |
+
+CI reports the failure on the PR; whether it also blocks merging depends on branch protection for `main`.
+
 ## Design decisions
 
 - **90+ days delinquent within 24 months:** a common industry-style serious-delinquency definition, with a fixed window so every loan gets the same amount of time to default.
