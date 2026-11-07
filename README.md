@@ -4,6 +4,8 @@
 
 A mortgage default model built on Freddie Mac loan-level data, with a 24-month default label, a time-based holdout, and calibrated probabilities. A LangGraph agent answers portfolio questions through validated SQL and model-scoring tools. It is **built, but not yet fully evaluated on the live model** (see [Status](#status)).
 
+**Live demo: [credit-risk-agent-loya.streamlit.app](https://credit-risk-agent-loya.streamlit.app)** (agent chat on aggregate tables only, loan scoring with SHAP drivers, data explorer; 10 agent questions per session on a free-tier key).
+
 > **Portfolio project on public data.** Not used for real credit decisions, and not work done at a job.
 
 ## Status
@@ -21,7 +23,7 @@ A mortgage default model built on Freddie Mac loan-level data, with a 24-month d
 | LangGraph agent (Gemini 3.5 Flash-Lite, free tier): routing, one SQL repair, grounding check in code | Built; known failure: can invent loan fields |
 | CI regression gate: recorded runs replayed on every push, live eval on demand | Done; catches code changes, not prompt changes. The on-demand run needs the `GOOGLE_API_KEY` repository secret |
 | Public demo data (aggregate tables, small groups pooled) | Done (`public_data/`, smallest group 66 loans) |
-| Streamlit demo (agent chat, loan scoring, data explorer) | Built and tested; not deployed yet |
+| Streamlit demo (agent chat, loan scoring, data explorer) | Deployed on Streamlit Community Cloud ([live](https://credit-risk-agent-loya.streamlit.app)) |
 
 ## Architecture (current)
 
@@ -132,7 +134,7 @@ python -m agent.graph "What was the default rate for 2016 loans with credit scor
 - **Explore the data:** default rate by any one breakdown and vintage, the predicted-vs-actual decile chart, and model metrics.
 - **About:** the data, the Freddie Mac terms and the caveats.
 
-Each tab says what it needs when something is missing: `public_data/` for the tables, `models/` for scoring, `GOOGLE_API_KEY` for the agent (on Streamlit Cloud, put the key in the app's secrets).
+Each tab says what it needs when something is missing: `public_data/` for the tables, `models/` for scoring, `GOOGLE_API_KEY` for the agent (on Streamlit Cloud, put the key in the app's secrets). The agent tab allows 10 questions per browser session (`AGENT_SESSION_LIMIT`) so one visitor can't use up the free-tier quota; reloading starts a new session, so it's a soft limit.
 
 ## Agent results
 
