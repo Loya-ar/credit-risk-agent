@@ -2,7 +2,7 @@
 
 [![tests](https://github.com/Loya-ar/credit-risk-agent/actions/workflows/tests.yml/badge.svg)](https://github.com/Loya-ar/credit-risk-agent/actions/workflows/tests.yml)
 
-A mortgage default model built on Freddie Mac loan-level data, with a 24-month default label, a time-based holdout, and calibrated probabilities. A LangGraph agent that answers portfolio questions through validated SQL and model-scoring tools is **in progress** (see [Status](#status)).
+A mortgage default model built on Freddie Mac loan-level data, with a 24-month default label, a time-based holdout, and calibrated probabilities. A LangGraph agent answers portfolio questions through validated SQL and model-scoring tools. It is **built, but not yet fully evaluated on the live model** (see [Status](#status)).
 
 > **Portfolio project on public data.** Not used for real credit decisions, and not work done at a job.
 
@@ -17,9 +17,9 @@ A mortgage default model built on Freddie Mac loan-level data, with a 24-month d
 | Model card | Done ([MODEL_CARD.md](MODEL_CARD.md)) |
 | Agent tools (run_sql, score_loan, explain_score) + SQL guard | Done |
 | CI (pytest on every push) | Done |
-| Evaluation set (54 cases) + harness | Done; **54/54 on live Gemini** (see [Agent results](#agent-results)) |
-| LangGraph agent (Gemini 3.5 Flash-Lite, free tier): routing, one SQL repair, grounding check in code | Done |
-| CI regression gate: 54 recorded runs replayed on every push, live eval on demand | Done; the on-demand run needs the `GOOGLE_API_KEY` repository secret |
+| Evaluation set (54 cases) + harness | Built; full live run **TBD** (partial run: 9/10, see [Agent results](#agent-results)) |
+| LangGraph agent (Gemini 3.5 Flash-Lite, free tier): routing, one SQL repair, grounding check in code | Built; known failure: can invent loan fields |
+| CI regression gate: recorded runs replayed on every push, live eval on demand | Done; catches code changes, not prompt changes. The on-demand run needs the `GOOGLE_API_KEY` repository secret |
 | Public demo data (aggregate tables, small groups pooled) | Done (`public_data/`, smallest group 66 loans) |
 | Streamlit demo (agent chat, loan scoring, data explorer) | Built and tested; not deployed yet |
 
@@ -34,7 +34,7 @@ flowchart LR
     E --> F[LogReg baseline<br/>+ LightGBM]
     F --> G[Platt calibration<br/>fitted on 2015]
     G --> H[Metrics, thresholds, SHAP]
-    G -.-> I[Agent tools<br/>in progress]
+    G --> I[Agent tools<br/>+ LangGraph agent]
 ```
 
 ## Data
@@ -111,11 +111,14 @@ Freddie Mac allows publishing noncommercial research results and derived product
 
 ## Agent
 
-[`agent/graph.py`](agent/graph.py) is a LangGraph agent on Gemini 3.5 Flash-Lite (`temperature=0`, free tier):
+[`agent/graph.py`](agent/graph.py) is a LangGraph agent on Gemini 3.5 Flash-Lite (free tier). The code sets `temperature=0`, but this model ignores it (the library warns that it uses fixed sampling defaults), so the same question can get different answers on different runs.
 
 - **Routing:** the model chooses `run_sql` (public aggregate tables only), `score_loan`, `explain_score`, or `decline` for out-of-scope, loan-level and guard-bypass requests.
 - **Repair:** a `run_sql` error goes back to the model once; a second error ends the run. Invalid loans are never repaired, because the model mustn't change the user's values, so the validation message is returned instead.
 - **Grounding, checked in code:** every number in the final answer must appear in a tool output, a tool argument or the question ([`agent/grounding.py`](agent/grounding.py), the same check the harness uses). The model gets one rewrite; after that the answer is withheld.
+- **Known failure:** the prompt forbids inventing values, but the model sometimes fills in loan fields the user never gave (see explain_02 under [Agent results](#agent-results)). The grounding check doesn't catch this, because an invented value becomes a tool argument.
+
+The code reads the key from environment variables only; it does not load `.env` automatically. `GOOGLE_API_KEY` or `GEMINI_API_KEY` both work.
 
 ```powershell
 $env:GOOGLE_API_KEY = "..."
@@ -134,22 +137,21 @@ Each tab says what it needs when something is missing: `public_data/` for the ta
 
 ## Agent results
 
-Live run on `gemini-3.5-flash-lite` with a free-tier key (no billing), November 2026:
+**Full 54-case live run: TBD.** It will be re-run after the expected answers are checked by hand, and the result reported here.
+
+**Partial live run** on `gemini-3.5-flash-lite` (free-tier key, no billing), 7 November 2026: score and explain cases only, re-recorded after a change to how a blank `mi_pct` is filled.
 
 | Category | Cases | Passed |
 |---|---|---|
-| SQL on public tables | 24 | 24 |
 | Score a loan | 7 | 7 |
-| Explain a score | 3 | 3 |
-| Invalid loans (refuse) | 5 | 5 |
-| Guard bypass attempts (refuse) | 7 | 7 |
-| Loan-level requests (refuse) | 4 | 4 |
-| Out of scope (refuse) | 4 | 4 |
-| **Total** | **54** | **54** |
+| Explain a score | 3 | 2 |
+| **Total** | **10** | **9** |
 
-Tool-call accuracy, answer accuracy, refusal accuracy and grounding were all 100%, with no false refusals and no leaked loan-level columns. About 260k input and 6k output tokens; mean 28 s per answerable question, mostly the 5-calls-a-minute free-tier pacing. The responses are recorded in `evals/recordings/` and replayed on every push.
+Tool-call accuracy 100%, answer accuracy 90%, grounding 100%, no leaked loan-level columns. 56,692 input and 2,103 output tokens; mean 25.8 s per question, mostly the 5-calls-a-minute free-tier pacing.
 
-Caveats: 54 questions is a small set written by the same person who built the agent, and an LLM isn't deterministic, so a rerun can differ (the on-demand workflow fails below 90%). Free-tier limits are tight: newer Flash models allowed only 20 requests a day, which is why the Lite model is the default.
+**The failure (explain_02):** the question gave 8 loan fields. The agent added 9 more on its own (for example `num_borrowers = 1`), and the invented `num_borrowers` became the top driver, so the answer didn't match the expected top driver. It is recorded as a failure in `evals/recordings/`.
+
+Caveats: 54 questions is a small set written by the same person who built the agent, and the model ignores temperature, so a rerun can differ (the on-demand workflow fails below 90%). Free-tier limits are tight: newer Flash models allowed only 20 requests a day, which is why the Lite model is the default.
 
 ## Evaluation set (built before the agent)
 
@@ -169,7 +171,7 @@ python -m scripts.run_eval --agent agent.graph:answer --record  # save responses
 **Cost: none.** Use a Gemini key from a Google project with no billing linked (the free tier). It can't be charged; requests are only rate-limited (5 a minute per model), and the agent paces itself to that (`AGENT_RPM`, default 5), so a full run takes about 25 minutes.
 
 **CI regression gate:**
-- **Every push** ([tests.yml](.github/workflows/tests.yml)): the checks that need no LLM, plus a replay of every recorded Gemini run in `evals/recordings/` through the real graph, tools and grader ([tests/test_replay.py](tests/test_replay.py)). The model's side is fixed, so a case that passed when recorded and fails now means our code changed behaviour. No API key needed.
+- **Every push** ([tests.yml](.github/workflows/tests.yml)): the checks that need no LLM, plus a replay of every recorded Gemini run in `evals/recordings/` through the real graph, tools and grader ([tests/test_replay.py](tests/test_replay.py)). The model's side is fixed, so a case that passed when recorded and fails now means our code changed behaviour. No API key needed. **Limit:** the replay returns the recorded model responses whatever the prompt says, so a change to the prompt alone is not caught on push. Prompt changes need the on-demand live run.
 - **On demand only** ([eval.yml](.github/workflows/eval.yml), started from the Actions tab; no schedule): the full evaluation on live Gemini, using the `GOOGLE_API_KEY` repository secret. It fails below the pass-rate threshold or on any leaked loan-level column, and writes the metrics to the job summary.
 
 ## Design decisions
@@ -196,7 +198,7 @@ python -m risk.explain             # SHAP -> reports/
 python -m scripts.build_agent_db   # local loan-level agent DB + scoring defaults
 python -m scripts.build_public_tables  # aggregate-only tables -> public_data/
 streamlit run streamlit_app.py     # demo app
-pytest                             # 239 tests; 12 skip without local data or recordings
+pytest                             # 298 passed with local data (7 Nov 2026); some skip without it
 ```
 
 ## Repo structure (current)
