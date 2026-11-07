@@ -116,6 +116,11 @@ def validate_loan(fields: dict) -> tuple[pd.DataFrame, dict]:
             raise LoanInputError(f"{f}={value!r} is not a valid code. Allowed: {spec['allowed']}.")
         row[f] = value
 
+    # A blank mi_pct on a high-LTV non-HARP loan gets that group's training median,
+    # because almost all such loans carry MI. (Done last: it needs harp_indicator.)
+    if "mi_pct" in filled and row["orig_ltv"] > 80 and row["harp_indicator"] != "Y":
+        row["mi_pct"] = filled["mi_pct"] = defaults["mi_pct_median_high_ltv_non_harp"]
+
     return pd.DataFrame([row], columns=FEATURES), filled
 
 

@@ -2,7 +2,7 @@
   "case_id": "explain_02",
   "question": "What drives the risk for a 780 credit score, 70% LTV, 25% DTI, $350,000 no-cash-out refi at 3.75% on a primary home in Washington?",
   "model": "gemini-3.5-flash-lite",
-  "passed": true,
+  "passed": false,
   "responses": [
     {
       "content": [],
@@ -10,22 +10,31 @@
         {
           "name": "explain_score",
           "args": {
-            "property_state": "WA",
-            "occupancy_status": "P",
+            "super_conforming_flag": "N",
             "orig_ltv": 70,
-            "orig_dti": 25,
+            "property_state": "WA",
+            "credit_score": 780,
+            "first_time_homebuyer_flag": "N",
+            "special_program_flag": "N",
+            "occupancy_status": "P",
+            "num_units": 1,
+            "orig_loan_term": 360,
+            "num_borrowers": 1,
             "orig_interest_rate": 3.75,
-            "loan_purpose": "N",
+            "orig_cltv": 70,
+            "channel": "R",
             "orig_upb": 350000,
-            "credit_score": 780
+            "loan_purpose": "N",
+            "property_type": "SF",
+            "orig_dti": 25
           },
-          "id": "call_13023259543032269361"
+          "id": "call_9262742949203720717"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2496,
-        "output_tokens": 82,
-        "total_tokens": 2578,
+        "output_tokens": 161,
+        "total_tokens": 2657,
         "input_token_details": {
           "cache_read": 0
         }
@@ -35,17 +44,17 @@
       "content": [
         {
           "type": "text",
-          "text": "The top 5 drivers of the model's score for this loan (all lowering risk) are:\n\n1. **Debt-to-income ratio (25%)**: lowers risk (SHAP log-odds -0.46)\n2. **Number of borrowers (2 - typical value)**: lowers risk (SHAP log-odds -0.42)\n3. **Credit score (780)**: lowers risk (SHAP log-odds -0.41)\n4. **Combined loan-to-value ratio (70% - typical value)**: lowers risk (SHAP log-odds -0.13)\n5. **Original interest rate (3.75%)**: lowers risk (SHAP log-odds -0.12)\n\n*(Note: ZIP codes are not used by the model and were left out.)*",
+          "text": "The top 5 drivers of the model's score for this loan are:\n\n1. **Number of borrowers = 1**: raises risk (SHAP log-odds +0.54)\n2. **Debt-to-income ratio = 25%**: lowers risk (SHAP log-odds -0.43)\n3. **Credit score = 780**: lowers risk (SHAP log-odds -0.34)\n4. **Combined loan-to-value ratio = 70%**: lowers risk (SHAP log-odds -0.13)\n5. **Original interest rate = 3.75%**: lowers risk (SHAP log-odds -0.12)",
           "extras": {
-            "signature": "EmAKXgFpFH0TDiXPmBa79UCWznvcDutVbwm3JxZXTIacqbn1FgSbybsFRLBje7qVCWF9hlYaKyrM3azuxxkVOxDBkDqgq3qv3AVjGVjODkkpsKHVuAUpqMFGv/63i/o7RWM="
+            "signature": "EmAKXgFpFH0TfJvNT72I2shZ0tAuFc9/DX9DZpb5lYfbszzmN3D8lFvTUlTQc9JAU60YFcuFNIsvblps+zaS5NxX+RdBVJBuFpZPyM6L3R/VtFVBZIqjYf8QJ5SOt8+AC9I="
           }
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
-        "input_tokens": 3083,
-        "output_tokens": 184,
-        "total_tokens": 3267,
+        "input_tokens": 3070,
+        "output_tokens": 157,
+        "total_tokens": 3227,
         "input_token_details": {
           "cache_read": 0
         }

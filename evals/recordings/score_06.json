@@ -10,26 +10,33 @@
         {
           "name": "score_loan",
           "args": {
-            "num_borrowers": 2,
-            "orig_dti": 38,
-            "num_units": 1,
-            "occupancy_status": "P",
-            "credit_score": 740,
-            "property_type": "CO",
-            "loan_purpose": "P",
-            "first_time_homebuyer_flag": "Y",
-            "property_state": "NY",
-            "orig_ltv": 85,
             "orig_upb": 220000,
-            "orig_interest_rate": 4.25
+            "first_time_homebuyer_flag": "Y",
+            "orig_cltv": null,
+            "num_units": null,
+            "mi_pct": null,
+            "num_borrowers": 2,
+            "loan_purpose": "P",
+            "orig_loan_term": null,
+            "special_program_flag": null,
+            "property_type": "CO",
+            "channel": null,
+            "orig_interest_rate": 4.25,
+            "orig_ltv": 85,
+            "property_state": "NY",
+            "orig_dti": 38,
+            "credit_score": 740,
+            "super_conforming_flag": null,
+            "harp_indicator": null,
+            "occupancy_status": "P"
           },
-          "id": "call_18085021151825614457"
+          "id": "call_14379387334344496299"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2493,
-        "output_tokens": 116,
-        "total_tokens": 2609,
+        "output_tokens": 164,
+        "total_tokens": 2657,
         "input_token_details": {
           "cache_read": 0
         }
@@ -39,16 +46,16 @@
       "content": [
         {
           "type": "text",
-          "text": "Default probability: 0.35% (Decision: approve). \n\nNote: The cost ratio behind the threshold is an assumption, and this is a portfolio demo, not a credit decision. ZIP codes are not used by the model and were omitted.",
+          "text": "The model estimates a default probability of 0.36% and recommends approval. \n\nThe cost ratio behind the threshold is an assumption and this is not a credit decision. (ZIP codes were not used as they are not part of the model.)",
           "extras": {
-            "signature": "EmAKXgFpFH0Ta6Lq1b3G5Xwp5vZ4CmoMXjB9R/qNCifIuOoDvTdUb17/pCwgUTqa8tkTkRExXG4BG/83Ehy/GfrJ0FnXK7SQxzLyd41L4NEqNh/GVccolPaomR+ptmLPVnU="
+            "signature": "EmAKXgFpFH0Tm6DK80x1+3ZUOd7Vr8NP2ScdsmyseG1Tb6TgVVzw2PppOINyrayjZOBPUNdCi18WJ533GXYSJLsajjKU1IJ6GKY3Uv+jxRXrG1+91ZEi7wkUA1Wh7QJcXSg="
           }
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
-        "input_tokens": 2757,
-        "output_tokens": 52,
+        "input_tokens": 2758,
+        "output_tokens": 51,
         "total_tokens": 2809,
         "input_token_details": {
           "cache_read": 0

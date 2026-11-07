@@ -56,10 +56,16 @@ def feature_defaults(train: pd.DataFrame) -> dict:
             "missing_share": round(float(train[f].isna().mean()), 4),
         }
 
+    # A blank mi_pct can't use the overall median (0) for high-LTV non-HARP loans:
+    # almost all of them carry mortgage insurance. Use that group's own median.
+    high_ltv_non_harp = (train["orig_ltv"] > 80) & (train["harp_indicator"] != "Y")
+    mi_median_group = float(train.loc[high_ltv_non_harp, "mi_pct"].median())
+
     return {
         "source": f"training vintages {list(TRAIN_VINTAGES)}",
         "numeric": numeric,
         "categorical": categorical,
+        "mi_pct_median_high_ltv_non_harp": mi_median_group,
     }
 
 

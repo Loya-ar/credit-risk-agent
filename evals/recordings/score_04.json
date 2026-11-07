@@ -10,33 +10,33 @@
         {
           "name": "score_loan",
           "args": {
-            "orig_ltv": 75,
-            "first_time_homebuyer_flag": null,
-            "orig_cltv": null,
             "channel": null,
-            "harp_indicator": null,
-            "property_type": null,
-            "num_units": null,
+            "special_program_flag": null,
+            "mi_pct": null,
+            "orig_loan_term": null,
+            "orig_interest_rate": 4.75,
             "orig_upb": 200000,
             "occupancy_status": "I",
-            "credit_score": 720,
-            "orig_interest_rate": 4.75,
-            "mi_pct": null,
-            "super_conforming_flag": null,
-            "num_borrowers": null,
+            "orig_cltv": null,
             "orig_dti": 35,
-            "special_program_flag": null,
-            "orig_loan_term": null,
+            "property_type": "SF",
+            "orig_ltv": 75,
             "loan_purpose": "C",
-            "property_state": "AZ"
+            "property_state": "AZ",
+            "first_time_homebuyer_flag": null,
+            "credit_score": 720,
+            "harp_indicator": null,
+            "num_units": null,
+            "num_borrowers": null,
+            "super_conforming_flag": null
           },
-          "id": "call_12138658298407275194"
+          "id": "call_868702604401614483"
         }
       ],
       "usage_metadata": {
         "input_tokens": 2487,
-        "output_tokens": 160,
-        "total_tokens": 2647,
+        "output_tokens": 162,
+        "total_tokens": 2649,
         "input_token_details": {
           "cache_read": 0
         }
@@ -46,17 +46,17 @@
       "content": [
         {
           "type": "text",
-          "text": "The model default probability for this loan is 0.41% (decision: approve).\n\nNote: The cost ratio behind the threshold is an assumption, and this is a portfolio demo, not a real credit decision. Missing fields (channel, property type, etc.) were filled with typical values by the scoring tool.",
+          "text": "The default probability for this cash-out refinance on an investment property in Arizona is 0.41% (decision: approve).\n\nThe cost ratio behind the decision threshold is an assumption, and this is a portfolio demo, not a credit decision.",
           "extras": {
-            "signature": "EmAKXgFpFH0TK8GGz18y668Mli2AdDv5kCLceJHvPJv9ZI+kMNxnPMFgiBnJxuE04VS8VcjIcBm2IA34lm8Tqtyx6KW7OlnY4vz9XRe2tPI5zgsxofg3quQfof2RoDYlteg="
+            "signature": "EmAKXgFpFH0ToV++lMtVQZdZiCedvuYR+BWU9QAcf2pfPcOYlVhlOAa5V3hKeBmtFcBcUSsUPeJ6WAeDWs6t1v33jvfyoJeLXUGhVXxyoadnlRhSiOHGJ4BVF7ENY1XP8QU="
           }
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
         "input_tokens": 2751,
-        "output_tokens": 65,
-        "total_tokens": 2816,
+        "output_tokens": 51,
+        "total_tokens": 2802,
         "input_token_details": {
           "cache_read": 0
         }

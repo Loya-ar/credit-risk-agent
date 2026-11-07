@@ -10,16 +10,16 @@
         {
           "name": "explain_score",
           "args": {
-            "orig_dti": 48,
-            "orig_interest_rate": 5,
-            "loan_purpose": "P",
             "orig_upb": 160000,
-            "orig_ltv": 95,
+            "property_state": "OH",
             "occupancy_status": "P",
             "credit_score": 660,
-            "property_state": "OH"
+            "loan_purpose": "P",
+            "orig_ltv": 95,
+            "orig_interest_rate": 5,
+            "orig_dti": 48
           },
-          "id": "call_605472009183610925"
+          "id": "call_18421240890636170595"
         }
       ],
       "usage_metadata": {
@@ -37,22 +37,22 @@
         {
           "name": "score_loan",
           "args": {
-            "property_state": "OH",
-            "credit_score": 660,
-            "orig_dti": 48,
-            "occupancy_status": "P",
-            "loan_purpose": "P",
-            "orig_interest_rate": 5,
             "orig_ltv": 95,
-            "orig_upb": 160000
+            "occupancy_status": "P",
+            "property_state": "OH",
+            "orig_interest_rate": 5,
+            "orig_dti": 48,
+            "credit_score": 660,
+            "orig_upb": 160000,
+            "loan_purpose": "P"
           },
-          "id": "call_14847901619512227883"
+          "id": "call_7221040324733102700"
         }
       ],
       "usage_metadata": {
-        "input_tokens": 3064,
-        "output_tokens": 80,
-        "total_tokens": 3144,
+        "input_tokens": 3066,
+        "output_tokens": 79,
+        "total_tokens": 3145,
         "input_token_details": {
           "cache_read": 0
         }
@@ -62,17 +62,14 @@
       "content": [
         {
           "type": "text",
-          "text": "The top drivers (SHAP) of the model's score for this loan are:\n\n1. **Credit score (660)**: raises risk\n2. **Original interest rate (5.0%)**: raises risk\n3. **Debt-to-income ratio (48.0%)**: raises risk\n4. **Number of borrowers (2.0)**: lowers risk (using a typical imputed value since none was provided)\n5. **Combined loan-to-value ratio (95.0%)**: raises risk (using a typical imputed value since none was provided)\n\nThe model gives this loan a default probability of **3.67%** and a decision of **approve**. \n\nNote: The cost ratio behind the threshold is an assumption and this is not a credit decision. ZIP codes are not used by the model and were left out.",
-          "extras": {
-            "signature": "EmAKXgFpFH0T26mNkupMoeWXQoBOP13r2hyQR3dzgi9eDilqh4FxJAgUGTGL2rutJQUSQ/zmjgW/ULf9ApCpn9Sp/1rFy14iVJkLS3+9DMC+loVrMVpRrwX4iqA+48Sm1dg="
-          }
+          "text": "Data were not provided for ZIP codes, so they are not used by the model.\n\nTop 5 drivers (SHAP) of the model's score:\n1. **credit_score** (660): raises risk (SHAP log-odds +1.50)\n2. **orig_interest_rate** (5.0%): raises risk (SHAP log-odds +0.46)\n3. **orig_dti** (48%): raises risk (SHAP log-odds +0.37)\n4. **num_borrowers** (2): lowers risk (SHAP log-odds -0.36) *[Note: filled with typical value, not provided]*\n5. **orig_cltv** (95%): raises risk (SHAP log-odds +0.20) *[Note: filled with typical value, not provided]*\n\nThe calibrated default probability is **3.90%** (decision: **approve**). The cost ratio behind the threshold is an assumption and this is not a credit decision."
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
-        "input_tokens": 3324,
-        "output_tokens": 181,
-        "total_tokens": 3505,
+        "input_tokens": 3327,
+        "output_tokens": 233,
+        "total_tokens": 3560,
         "input_token_details": {
           "cache_read": 0
         }

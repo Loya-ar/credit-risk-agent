@@ -10,27 +10,27 @@
         {
           "name": "explain_score",
           "args": {
-            "loan_purpose": "P",
-            "property_type": "SF",
-            "special_program_flag": null,
-            "orig_cltv": null,
+            "property_state": "GA",
+            "orig_interest_rate": 4.875,
+            "credit_score": 690,
             "mi_pct": null,
             "orig_dti": 42,
+            "orig_cltv": null,
             "occupancy_status": "I",
+            "property_type": "SF",
             "harp_indicator": null,
-            "num_borrowers": 1,
-            "orig_upb": 190000,
-            "property_state": "GA",
-            "channel": null,
-            "orig_ltv": 80,
-            "num_units": null,
-            "credit_score": 690,
-            "orig_interest_rate": 4.875,
-            "orig_loan_term": null,
             "first_time_homebuyer_flag": null,
-            "super_conforming_flag": null
+            "num_borrowers": 1,
+            "orig_loan_term": null,
+            "orig_ltv": 80,
+            "super_conforming_flag": null,
+            "loan_purpose": "P",
+            "special_program_flag": null,
+            "orig_upb": 190000,
+            "num_units": null,
+            "channel": null
           },
-          "id": "call_12277021823420509084"
+          "id": "call_239013156858056371"
         }
       ],
       "usage_metadata": {
@@ -46,17 +46,17 @@
       "content": [
         {
           "type": "text",
-          "text": "The top 5 risk factors (SHAP drivers) for this loan are:\n\n1. **Credit score (690)** \u2013 raises risk\n2. **Original interest rate (4.875%)** \u2013 raises risk\n3. **Number of borrowers (1)** \u2013 raises risk\n4. **Property state (GA)** \u2013 raises risk\n5. **Combined loan-to-value ratio (80%)** \u2013 lowers risk (using a typical value since none was provided)\n\n*(Demo only, not a credit decision.)*",
+          "text": "The top risk factors (SHAP drivers) for this loan are:\n\n1. **Credit score (690)**: raises risk\n2. **Original interest rate (4.875%)**: raises risk\n3. **Number of borrowers (1)**: raises risk\n4. **Property state (GA)**: raises risk\n5. **Combined LTV (80%)** (filled with typical value): lowers risk\n\n*(Note: ZIP codes are not used by the model and were omitted.)*",
           "extras": {
-            "signature": "EmAKXgFpFH0Tr3Psym7q4SGolwRpTdJBPX24dj8xrRn4IL0Zhi4AIkvkI4xzF4nR4wHCVPO/3nMssLdMwNAhjXDP7AaMl1iUGvL99jmZFGNct06OX/YA4vwZXuTEICkdI/s="
+            "signature": "EmAKXgFpFH0TfxpsCH5Fx//W2sYEBdg0f3bOWjGT6pqLnvLUgUujuxsu+TdqbIjY53o6CP2x6J9tyd7WgdXnj0F5QR305CqWCbSyzpnOGJEiij+jxppN190Cg3lrwKhdLEM="
           }
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
         "input_tokens": 3056,
-        "output_tokens": 113,
-        "total_tokens": 3169,
+        "output_tokens": 107,
+        "total_tokens": 3163,
         "input_token_details": {
           "cache_read": 0
         }

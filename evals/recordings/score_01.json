@@ -10,16 +10,16 @@
         {
           "name": "score_loan",
           "args": {
-            "orig_upb": 250000,
+            "property_state": "FL",
             "credit_score": 700,
-            "orig_interest_rate": 4.5,
-            "orig_ltv": 90,
-            "orig_dti": 40,
             "loan_purpose": "P",
             "occupancy_status": "P",
-            "property_state": "FL"
+            "orig_upb": 250000,
+            "orig_dti": 40,
+            "orig_interest_rate": 4.5,
+            "orig_ltv": 90
           },
-          "id": "call_704101565730618947"
+          "id": "call_2267740665739023179"
         }
       ],
       "usage_metadata": {
@@ -35,17 +35,17 @@
       "content": [
         {
           "type": "text",
-          "text": "Default probability: 0.80% (0.00798).\nDecision: Approve.\n\nNote: The cost ratio behind the threshold is an assumption (20:1), this uses typical values for fields not provided (such as channel, mortgage insurance, and number of borrowers), and this is a portfolio demo, not a credit decision. ZIP codes are not used by the model and were not included.",
+          "text": "Default probability: 0.84%\nDecision: approve\n\nNote: The cost ratio behind the threshold is an assumption and this is not a credit decision. (ZIP codes were not provided and are not used by the model.)",
           "extras": {
-            "signature": "EmAKXgFpFH0TKCRVkC/tF87yFqQM+p6T5pr2ruFqOetBNWEJ31g8RMaph8A490LBRv+8lUznoDCaFSzyOu8nloVAvU5yoZlB8ZpgzgGB3UJYExRVfdGPgCoQnrZ3T5s7YmI="
+            "signature": "EmAKXgFpFH0TVI9blp03QnEf8euW75sSpZpeZXs1O62LcxwMjpGu13AsoEBhxufkU1a2WTsYiWEa9k8xFPbFhcAlQJ/Wqb/3IXx6z8y4p45HwlVhHyM3QcC5W/l5oECJFiU="
           }
         }
       ],
       "tool_calls": [],
       "usage_metadata": {
-        "input_tokens": 2749,
-        "output_tokens": 87,
-        "total_tokens": 2836,
+        "input_tokens": 2750,
+        "output_tokens": 47,
+        "total_tokens": 2797,
         "input_token_details": {
           "cache_read": 0
         }

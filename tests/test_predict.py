@@ -46,6 +46,25 @@ def test_given_values_are_kept():
     assert "credit_score" not in filled and "orig_cltv" not in filled
 
 
+def test_missing_mi_high_ltv_non_harp_gets_group_median():
+    # BASE has LTV 90 and no harp_indicator (filled with the mode, "N").
+    X, filled = validate_loan(BASE)
+    assert X.loc[0, "mi_pct"] == 30.0
+    assert filled["mi_pct"] == 30.0
+
+
+@pytest.mark.parametrize("extra", [{"harp_indicator": "Y"}, {"orig_ltv": 80}])
+def test_missing_mi_otherwise_gets_overall_median(extra):
+    X, filled = validate_loan({**BASE, **extra})
+    assert X.loc[0, "mi_pct"] == 0.0
+
+
+def test_given_mi_is_kept_on_high_ltv():
+    X, filled = validate_loan({**BASE, "mi_pct": 12})
+    assert X.loc[0, "mi_pct"] == 12
+    assert "mi_pct" not in filled
+
+
 @pytest.mark.parametrize("field", REQUIRED_FIELDS)
 def test_missing_required_field_rejected(field):
     loan = {k: v for k, v in BASE.items() if k != field}
