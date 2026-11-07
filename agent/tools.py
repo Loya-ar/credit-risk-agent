@@ -142,7 +142,9 @@ def _check_features(features) -> dict:
 def score_loan(features: dict) -> dict:
     features = _check_features(features)
     try:
-        return predict.score(features)
+        result = predict.score(features)
+        result["probability"] = round(result["probability"] * 100, 2)  # show as a percent
+        return result
     except predict.LoanInputError as e:
         raise ToolError(str(e)) from None
     except FileNotFoundError as e:
