@@ -106,7 +106,7 @@ The top features by mean |SHAP| (log-odds) are `credit_score` 0.648, `num_borrow
 Freddie Mac allows publishing noncommercial research results and derived products only if they can't be used to recreate any part of the dataset ([FAQ](https://www.freddiemac.com/fmac-resources/research/pdf/faq.pdf), Q9). So the deployed agent never sees loan rows:
 
 - **`run_sql`** queries an aggregate-only database built from `public_data/`: `segments` (default rate by one dimension at a time, such as credit score band, LTV band or state, per vintage, plus model predictions for 2016), `deciles`, `model_metrics` and `thresholds`. Groups under 50 loans are pooled into "Other (small groups)", and pooling never drops loans, so a hidden group can't be recovered by subtracting from the total.
-- **`score_loan` / `explain_score`** score loans the user types in.
+- **`score_loan` / `explain_score`** score loans the user types in. Out-of-range values and unknown fields are rejected, not adjusted; missing optional fields are filled from training data (a blank CLTV becomes the LTV, and a blank MI on a non-HARP loan above 80% LTV gets that group's median of 30). Details in [MODEL_CARD.md](MODEL_CARD.md#11-scoring-one-loan-how-the-demo-and-agent-use-the-model).
 - The SQL guard only allows the tables of the database in use, so the public database can't be asked for `loans`.
 - The loan-level `data/agent.duckdb` stays local (gitignored) for development; use it with `AGENT_DB=local`.
 - The two trained model files (`models/lgbm.joblib`, `models/lgbm_calibrated.joblib`) are committed so the deployed app can score loans. A model is a derived product: its trees hold split points and leaf values learned from groups of loans, not loan rows. Everything else in `models/` stays ignored.
@@ -206,6 +206,7 @@ CI reports the failure on the PR; whether it also blocks merging depends on bran
 - **Origination-only features:** nothing from the performance file except the label, enforced by `tests/test_leakage.py`. ZIP code is dropped.
 - **Calibration:** threshold and cost decisions need probabilities that mean what they say, not just a good ranking.
 - **Interest rate caveat:** the original rate already reflects the lender's risk pricing, so part of its signal is the lender's own risk assessment.
+- **Thread-safe public database build:** on its first deploy the app crashed because parallel Streamlit sessions built the same DuckDB file at once ("Catalog write-write conflict"). The build now takes a lock, writes a temp file and swaps it in atomically; a test runs six builds at once.
 
 ## Quickstart
 
@@ -222,7 +223,7 @@ python -m risk.explain             # SHAP -> reports/
 python -m scripts.build_agent_db   # local loan-level agent DB + scoring defaults
 python -m scripts.build_public_tables  # aggregate-only tables -> public_data/
 streamlit run streamlit_app.py     # demo app
-pytest                             # 298 passed with local data (7 Nov 2026); some skip without it
+pytest                             # 301 passed with local data (7 Nov 2026); some skip without it
 ```
 
 ## Repo structure (current)
